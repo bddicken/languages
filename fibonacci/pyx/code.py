@@ -8,7 +8,7 @@ def fibonacci(n: cython.int) -> cython.int:
     b: cython.int = 1
     for _ in range(n):
         a, b = b, b + a
-        return a
+    return a
 
 
 u: cython.int = int(sys.argv[1])

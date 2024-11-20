@@ -5,10 +5,10 @@ function run {
 }
 
 run "C" "./c/code 40" 
-run "Go" "./go/code 40" 
-run "Node" "node ./js/code.js 40" 
-run "Bun" "bun ./js/code.js 40" 
-run "Deno" "deno ./js/code.js 40" 
-run "PyPy" "pypy ./py/code.py 40" 
+# run "Go" "./go/code 40" 
+# run "Node" "node ./js/code.js 40" 
+# run "Bun" "bun ./js/code.js 40" 
+# run "Deno" "deno ./js/code.js 40" 
+# run "PyPy" "pypy ./py/code.py 40" 
 run "Cython" "python ./pyx/code.py 40"
 

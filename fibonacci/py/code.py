@@ -2,10 +2,11 @@ import sys
 
 
 def fibonacci(n):
-    a, b = 0, 1
-    for _ in range(n):
-        a, b = b, b + a
-    return a
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return fibonacci(n - 1) + fibonacci(n - 2)
 
 
 u = int(sys.argv[1])

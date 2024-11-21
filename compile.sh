@@ -11,3 +11,4 @@ mv code.cpython* build pyx/ -f
 
 # Java
 javac jvm/code.java
+RUSTFLAGS="-Zlocation-detail=none" cargo +nightly build --manifest-path rust/Cargo.toml --release 

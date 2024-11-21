@@ -10,4 +10,4 @@ run "Node" "node ./js/code.js 40"
 run "Bun" "bun ./js/code.js 40" 
 run "Deno" "deno ./js/code.js 40" 
 run "PyPy" "pypy ./py/code.py 40" 
-
+run "Rust" "./rust/target/release/rust 40"

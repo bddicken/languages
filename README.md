@@ -21,6 +21,7 @@ To run one of the benchmarks:
   Bun = 0.83
   Deno = 1.13
   PyPy = 1.61
+  Java = 0.64
   $
   ```
 
@@ -47,5 +48,3 @@ Emphasizes loop, conditional, and basic math performance.
 ## fibonacci
 
 Emphasizes function call overhead and recursion.
-
-

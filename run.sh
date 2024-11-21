@@ -11,4 +11,6 @@ run "Bun" "bun ./js/code.js 40"
 run "Deno" "deno ./js/code.js 40" 
 run "PyPy" "pypy ./py/code.py 40" 
 run "Cython" "python ./pyx/code.py 40"
-
+run "Java" "java jvm.code 40"
+run "Ruby" "ruby ./ruby/code.rb 40"
+run "PHP" "php ./php/code.php 40"

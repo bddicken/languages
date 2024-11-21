@@ -8,3 +8,6 @@ go build -o go/code go/code.go
 python3 -m pip install cython setuptools
 python3 pyx/setup.py build_ext --inplace 
 mv code.cpython* build pyx/ -f
+
+# Java
+javac jvm/code.java

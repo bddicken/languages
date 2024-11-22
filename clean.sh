@@ -5,7 +5,7 @@ rm c/code
 rm go/code
 
 # Cython
-rm -r pyx/code.c pyx/code.cpython* pyx/build
+rm -r pyx/*.c pyx/*.cpython* pyx/*.html pyx/build
 
 # Java
 rm jvm/code.class

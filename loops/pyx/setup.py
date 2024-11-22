@@ -1,4 +1,5 @@
 from Cython.Build import cythonize
-from setuptools import setup
+from setuptools import Extension, setup
 
-setup(ext_modules=cythonize("pyx/code.py"))
+package = Extension("loops_f", ["pyx/*.pyx"])
+setup(ext_modules=cythonize([package]))

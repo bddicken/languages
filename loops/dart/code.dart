@@ -11,7 +11,7 @@ void main(List<String> args) {
   ); // Array of 10k elements initialized to 0
   for (int i = 0; i < 10000; i++) {
     // 10k outer loop iterations
-    for (int j = 0; j < 10000; j++) {
+    for (int j = 0; j < 100000; j++) {
       // 100k inner loop iterations, per outer loop iteration
       a[i] = a[i] + j % u; // Simple sum
     }

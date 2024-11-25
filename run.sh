@@ -12,7 +12,6 @@ function run {
 }
 
 run "Ruby YJIT" "miniruby --yjit ./ruby/code.rb 40"
-run "Kotlin" "java -jar kotlin/code.jar 40"
 run "C" "./c/code 40"
 run "Go" "./go/code 40"
 run "Rust" "./rust/target/release/code 40"
@@ -38,3 +37,6 @@ run "Lua" "lua ./lua/code.lua 40"
 run "Swift" "./swift/code 40"
 run "Julia" "julia ./julia/code.jl 40"
 run "Ruby" "ruby ./ruby/code.rb 40"
+run "Kotlin JVM" "java -jar kotlin/jvm/code.jar 40"
+run "Kotlin JS" "node ./kotlin/js/build/app/code.js 40"
+run "Kotlin Native" "./kotlin/native/code.kexe 40"

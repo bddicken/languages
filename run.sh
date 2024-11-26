@@ -11,7 +11,9 @@ function run {
   runOnce "$1" "$2"
 }
 
-run "Kotlin" "java -jar kotlin/code.jar 40"
+run "Kotlin JVM" "java -jar kotlin/jvm/code.jar 40"
+run "Kotlin JS" "node ./kotlin/js/build/app/code.js 40"
+run "Kotlin Native" "./kotlin/native/code.kexe 40"
 run "C" "./c/code 40" 
 run "Go" "./go/code 40" 
 run "Rust" "./rust/target/release/code 40"

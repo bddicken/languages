@@ -4,7 +4,7 @@ javac jvm/code.java
 RUSTFLAGS="-Zlocation-detail=none" cargo +nightly build --manifest-path rust/Cargo.toml --release
 dart compile exe dart/code.dart -o dart/code --target-os=macos
 kotlinc-jvm -include-runtime kotlin/jvm/code.kt -d kotlin/jvm/code.jar
-kotlinc-native kotlin/native/code.kt -o kotlin/native/code
+kotlinc-native -opt kotlin/native/code.kt -o kotlin/native/code
 
 # Kotlin/JS workaround
 # https://youtrack.jetbrains.com/issue/KT-67089/K-JS-CLI-Compiling-.kt-.js-in-one-shot-is-not-possible

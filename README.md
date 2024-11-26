@@ -44,7 +44,7 @@ You are also welcome to add new top-level benchmarks dirs
 ## loops
 
 Emphasizes loop, conditional, and basic math performance.  
-Note:  The assembly code was built and compile on Ubuntu.  To get the rest of code loops to work on Ubuntu, you may need to run dos2unix utility on the code files.  Also, the "Dart" code on Ubuntu without compiling it like this: "dart run code.dart 40"
+Note:  The assembly code was built and compiled on Ubuntu.  To get the rest of code loops to work on Ubuntu, you may need to run dos2unix utility on the code files.  Also, the "Dart" code on Ubuntu can ithout compiling it like this: "dart run code.dart 40"
 
 ## fibonacci
 

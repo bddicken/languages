@@ -1,23 +1,32 @@
 package main
+
 import (
-    "fmt"
-    "strconv"
-    "os"
+	"fmt"
+	"os"
+	"strconv"
 )
 
-func fibonacci(n int) int {
-  if n == 0 { return 0 }
-  if n == 1 { return 1 }
-  return fibonacci(n-1) + fibonacci(n-2)
+func main() {
+	input, e := strconv.Atoi(os.Args[1])
+	if e != nil {
+		panic(e)
+	}
+
+	var r int
+
+	f := fibonacci()
+	for i := 0; i < input; i++ {
+		r += f()
+	}
+
+	fmt.Println(r)
 }
 
-func main() {
-  input, e := strconv.Atoi(os.Args[1])
-  if e != nil { panic(e) }
-  u := int(input)
-  r := 0
-  for i := 0; i < u; i++ {
-    r += fibonacci(i)
-  }
-  fmt.Println(r)
+func fibonacci() func() int {
+	a := 0
+	b := 1
+	return func() int {
+		a, b = b, a+b
+		return b - a
+	}
 }

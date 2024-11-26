@@ -49,3 +49,8 @@ Note:  The assembly code was built and compiled on Ubuntu.  To get the rest of c
 ## fibonacci
 
 Emphasizes function call overhead and recursion.
+
+## Future Enhancements
+1. Standalone Implementations:  Replace the use of atoi, rand, and printf with custom assembly implememntations.
+2. Input Validation:  Add checks for non-numeric input.
+3. Performance Optimizations:  Unroll loops for better execution speed.

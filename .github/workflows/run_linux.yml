@@ -5,7 +5,56 @@ on:
     branches: [ "main" ]
 
 jobs:
-  Run-tests:
+  Run-application:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set reusable strings
+        id: strings
+        shell: bash
+        run: |
+          echo "test_dir=${{ github.workspace }}/loops" >> "$GITHUB_OUTPUT"
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Install and compile Rust
+        working-directory: ${{ steps.strings.outputs.test_dir }}
+        run: cargo build --manifest-path rust/Cargo.toml --release
+
+      - uses: fwilhe2/setup-kotlin@main
+      - name: Install and compile Kotlin
+        working-directory: ${{ steps.strings.outputs.test_dir }}
+        run: kotlinc -include-runtime kotlin/code.kt -d kotlin/code.jar
+
+      - name: Install and compile Dart
+        working-directory: ${{ steps.strings.outputs.test_dir }}
+        run: |
+          wget -q https://storage.googleapis.com/dart-archive/channels/stable/release/latest/linux_packages/dart_3.5.4-1_amd64.deb
+          sudo dpkg -i dart_3.5.4-1_amd64.deb
+          dart compile exe dart/code.dart -o dart/code --target-os=linux
+
+      - name: Install and compile Clang
+        working-directory: ${{ steps.strings.outputs.test_dir }}
+        run: |
+          sudo apt install clang
+          clang -O3 c/code.c -o c/code
+
+      - name: Install and compile Go
+        working-directory: ${{ steps.strings.outputs.test_dir }}
+        run: |
+          sudo apt install golang-go
+          go build -o go/code go/code.go
+
+      - name: Install and compile Java
+        working-directory: ${{ steps.strings.outputs.test_dir }}
+        run: |
+          sudo apt install default-jre default-jdk
+          javac jvm/code.java
+
+      - name: Run
+        working-directory: loops
+        run: bash ../run.sh

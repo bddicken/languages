@@ -1,3 +1,5 @@
+https://benjdd.com/languages/
+
 # Languages
 
 A repo for collaboratively building small benchmarks to compare languages.

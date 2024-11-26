@@ -1,7 +1,7 @@
 import sys
 
 def fibonacci(n):
-  return fibonacci(n,0,1)
+  return fibonacci_accumulator(n,0,1)
 
 def fibonacci_accumulator(n,a,b):
     if (n == 0):

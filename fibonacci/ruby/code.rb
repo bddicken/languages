@@ -1,7 +1,10 @@
 def fibonacci(n)
-    return 0 if n == 0
-    return 1 if n == 1
-    fibonacci(n - 1) + fibonacci(n - 2)
+    fibonacci_accumulator(n, 0, 1)
+end
+
+def fibonacci_accumulator(n, a, b)
+  return a if n == 0
+  fibonacci_accumulator(n - 1, b, a + b)
 end
 
 u = ARGV[0].to_i

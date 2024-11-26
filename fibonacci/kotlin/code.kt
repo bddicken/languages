@@ -1,7 +1,9 @@
 fun fibonacci(n: Int): Int {
-    if (n == 0) return 0
-    if (n == 1) return 1
-    return fibonacci(n-1) + fibonacci(n-2)
+    return fibonacciAccumulator(n,0,12)
+}
+fun fibbonaciAccumulator(n: Int, a: Int, b: Int): Int {
+    if (n == 0) return a
+    return fibbonaciAccumulator(n-1, b, a+b)
 }
 
 fun main(args: Array<String>) {

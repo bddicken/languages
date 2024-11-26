@@ -8,7 +8,5 @@ def fibonacci(n):
   return fibonacci(n-1) + fibonacci(n-2)
 
 u = int(sys.argv[1])
-r = 0
-for i in range(u):
-  r += fibonacci(i)
+r = sum(fibonacci(i) for i in range(u))
 print(r)

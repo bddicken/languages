@@ -1,14 +1,8 @@
-def fibonacci(n)
-    return 0 if n == 0
-    return 1 if n == 1
-    fibonacci(n - 1) + fibonacci(n - 2)
-end
+require 'matrix'
 
-u = ARGV[0].to_i
-r = 0
+def fib(u) = (Matrix[[0, 1], [1, 1]]**u)[1, 1].pred
 
-(1...u).each do |i|
-    r += fibonacci(i)
-end
+u = Integer ARGV.shift
+r = fib u
 
 puts r

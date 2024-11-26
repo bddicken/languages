@@ -2,10 +2,12 @@
 #include "stdlib.h"
 #include "stdint.h"
 
+int32_t fibonacci_accumulator(int32_t n, int32_t a, int32_t b) {
+  if (n == 0) return a;
+  return fibonacci_accumulator(n-1, b, a+b);
+}
 int32_t fibonacci(int32_t n) {
-  if (n == 0) return 0;
-  if (n == 1) return 1;
-  return fibonacci(n-1) + fibonacci(n-2);
+  return fibonacci_accumulator(n,0,1);
 }
 
 int main (int argc, char** argv) {

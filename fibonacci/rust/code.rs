@@ -4,17 +4,18 @@ fn main() {
         .unwrap()
         .parse()
         .unwrap();
-    let mut r = 0;
-    for i in 1..u {
-        r += fibonacci(i);
-    }
+    let r = (1..u)
+        .map(|i| fibonacci(i))
+        .fold(0, |acc, x| acc + x);
     println!("{}", r);
 }
 
 fn fibonacci(n: i32) -> i32 {
+    fibbonaci_accumulator(n, 0, 1)
+}
+fn fibbonaci_accumulator(n: i32, a: i32, b: i32) -> i32 {
     match n {
-        0 => 0,
-        1 => 1,
-        _ => fibonacci(n - 1) + fibonacci(n - 2),
+        0 => a,
+        _ => fibbonaci_accumulator(n - 1, b, a + b),
     }
 }

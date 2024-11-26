@@ -1,8 +1,10 @@
 # Recursive Fibonacci function
+fibonacciAcc <- function(n,a,b) {
+  if (n == 0) return(a)
+  return(fibonacciAcc(n - 1, b, a + b))
+}
 fibonacci <- function(n) {
-  if (n == 0) return(0)
-  if (n == 1) return(1)
-  return(fibonacci(n - 1) + fibonacci(n - 2))
+  return (fibonacciAcc(n,0,1))
 }
 
 # Parse command-line argument for `u`

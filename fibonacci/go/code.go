@@ -1,19 +1,26 @@
 package main
+
 import (
-    "fmt"
-    "strconv"
-    "os"
+  "fmt"
+  "os"
+  "strconv"
 )
 
 func fibonacci(n int) int {
-  if n == 0 { return 0 }
-  if n == 1 { return 1 }
-  return fibonacci(n-1) + fibonacci(n-2)
+  return fibbonaciAccumulator(n, 0, 1)
+}
+func fibbonaciAccumulator(n int, a int, b int) int {
+  if n == 0 {
+    return a
+  }
+  return fibbonaciAccumulator(n-1, b, a+b)
 }
 
 func main() {
   input, e := strconv.Atoi(os.Args[1])
-  if e != nil { panic(e) }
+  if e != nil {
+    panic(e)
+  }
   u := int(input)
   r := 0
   for i := 0; i < u; i++ {

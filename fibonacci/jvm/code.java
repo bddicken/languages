@@ -1,15 +1,15 @@
 package jvm;
 
 public class code {
-
     private static int fibonacci(int n) {
+        return fibonacciAccumulator(n,0,1);
+    }
+
+    private static int fibonacciAccumulator(int n, int acc1, int acc2) {
         if (n == 0) {
-            return 0;
+            return acc1;
         }
-        if (n == 1) {
-            return 1;
-        }
-        return fibonacci(n - 1) + fibonacci(n - 2);
+        return fibonacciAccumulator(n - 1, acc2, acc1 + acc2);
     }
 
     public static void main(String[] args) {

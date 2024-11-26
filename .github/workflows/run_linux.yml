@@ -1,0 +1,11 @@
+name: Compare the execution time
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  Run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4

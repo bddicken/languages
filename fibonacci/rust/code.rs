@@ -4,9 +4,9 @@ fn main() {
         .unwrap()
         .parse()
         .unwrap();
-    let r = (1..u).map(|i| fibonacci(i))
-        .collect::<Vec<i32>>()
-        .into_iter().fold(0, |acc, x| acc + x);
+    let r = (1..u)
+        .map(|i| fibonacci(i))
+        .fold(0, |acc, x| acc + x);
     println!("{}", r);
 }
 

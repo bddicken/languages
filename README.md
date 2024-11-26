@@ -43,8 +43,14 @@ You are also welcome to add new top-level benchmarks dirs
 
 ## loops
 
-Emphasizes loop, conditional, and basic math performance.
+Emphasizes loop, conditional, and basic math performance.  
+Note:  The assembly code was built and compiled on Ubuntu.  To get the rest of code loops to work on Ubuntu, you may need to run dos2unix utility on the code files.  Also, the "Dart" code on Ubuntu can run without compiling it like this: "dart run code.dart 40"
 
 ## fibonacci
 
 Emphasizes function call overhead and recursion.
+
+## Future Enhancements
+1. Standalone Implementations:  Replace the use of atoi, rand, and printf with custom assembly implememntations.
+2. Input Validation:  Add checks for non-numeric input.
+3. Performance Optimizations:  Unroll loops for better execution speed.

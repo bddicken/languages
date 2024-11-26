@@ -12,7 +12,7 @@ function run {
 }
 
 run "Kotlin" "java -jar kotlin/code.jar 40"
-run "C" "./c/code 40" 
+run "C" "./c/code 40"
 run "Go" "./go/code 40" 
 run "Rust" "./rust/target/release/code 40"
 run "Node" "node ./js/code.js 40" 
@@ -25,3 +25,5 @@ run "PHP" "php ./php/code.php 40"
 run "R" "Rscript ./r/code.R 40"
 run "Python" "python3 ./py/code.py 40" 
 run "Dart" "./dart/code 40"
+#Run the following on x86
+#run "Assembly" "./assembly/code 40"

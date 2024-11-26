@@ -4,7 +4,7 @@ javac jvm/code.java
 RUSTFLAGS="-Zlocation-detail=none" cargo +nightly build --manifest-path rust/Cargo.toml --release
 kotlinc -include-runtime kotlin/code.kt -d kotlin/code.jar
 #kotlinc-native -include-runtime kotlin/code.kt -d kotlin/code
-dart compile exe dart/code.dart -o dart/code --target-os=macosa
+dart compile exe dart/code.dart -o dart/code --target-os=macos
 #--------------------------------------------
 #note:  assembly compiled on x86 machine
 #nasm -f elf64 code.asm -o code.o

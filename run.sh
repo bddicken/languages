@@ -1,5 +1,5 @@
 function runOnce  {
-  { /usr/bin/time $2 ; } 2> /tmp/o 1> /dev/null
+  { /usr/bin/env time $2 ; } 2> /tmp/o 1> /dev/null
   printf "$1 = "
   cat /tmp/o | awk -v N=1 '{print $N"s"}'
 }
@@ -25,3 +25,4 @@ run "PHP" "php ./php/code.php 40"
 run "R" "Rscript ./r/code.R 40"
 run "Python" "python3 ./py/code.py 40" 
 run "Dart" "./dart/code 40"
+run "Nim" "./nim/code 40"

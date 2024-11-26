@@ -1,8 +1,11 @@
 
 function fibonacci(n) {
-  if (n == 0) return 0;
-  if (n == 1) return 1;
-  return fibonacci(n-1) + fibonacci(n-2);
+  return fibonacci_accumulator(n, 0, 1);
+}
+
+function fibonacci_accumulator(n, a, b) {
+  if (n == 0) return a;
+  return fibonacci_accumulator(n - 1, b, a + b);
 }
 
 var u = Number(process.argv[2]);

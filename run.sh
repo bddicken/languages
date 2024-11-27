@@ -13,6 +13,7 @@ function run {
 
 run "Kotlin" "java -jar kotlin/code.jar 40"
 run "C" "./c/code 40" 
+run "Ada" "./ada/bin/code 40"
 run "Go" "./go/code 40" 
 run "Rust" "./rust/target/release/code 40"
 run "Node" "node ./js/code.js 40" 

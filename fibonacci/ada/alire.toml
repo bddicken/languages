@@ -1,0 +1,12 @@
+name = "code"
+description = ""
+version = "0.1.0-dev"
+
+authors = ["Artem Paraev"]
+maintainers = ["Artem Paraev <artemparaev.dev@gmail.com>"]
+maintainers-logins = ["iharuspex"]
+licenses = "MIT OR Apache-2.0 WITH LLVM-exception"
+website = ""
+tags = []
+
+executables = ["code"]

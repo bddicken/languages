@@ -14,7 +14,7 @@ else
             a[i] = 0
         end
         for i = 1, 10000 do
-            for j = 1, 10000 do
+            for j = 1, 100000 do
                 a[i] = a[i] + j % number
             end
             a[i] = a[i] + r

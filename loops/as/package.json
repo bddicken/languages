@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "scripts": {
+    "build": "asc -Ospeed --converge ./code.ts -o ./code.wasm"
+  },
+  "dependencies": {
+    "assemblyscript": "^0.27.31"
+  }
+}

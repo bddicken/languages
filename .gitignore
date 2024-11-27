@@ -1,3 +1,6 @@
 *.class
+*.lockb
+*.wasm
 code
 .idea/
+node_modules/

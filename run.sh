@@ -1,27 +1,30 @@
-function runOnce  {
-  { /usr/bin/time $2 ; } 2> /tmp/o 1> /dev/null
-  printf "$1 = "
-  cat /tmp/o | awk -v N=1 '{print $N"s"}'
-}
+#!/bin/bash
 
 function run {
-  echo ""
-  runOnce "$1" "$2"
-  runOnce "$1" "$2"
-  runOnce "$1" "$2"
+  echo "Benchmark[$1] $2 = $( { /usr/bin/time -f %e $3 >/dev/null; } 2>&1 )"
 }
 
-run "Kotlin" "java -jar kotlin/code.jar 40"
-run "C" "./c/code 40" 
-run "Go" "./go/code 40" 
-run "Rust" "./rust/target/release/code 40"
-run "Node" "node ./js/code.js 40" 
-run "Bun" "bun ./js/code.js 40" 
-run "Deno" "deno ./js/code.js 40" 
-run "PyPy" "pypy ./py/code.py 40" 
-run "Java" "java jvm.code 40"
-run "Ruby" "ruby ./ruby/code.rb 40"
-run "PHP" "php ./php/code.php 40"
-run "R" "Rscript ./r/code.R 40"
-run "Python" "python3 ./py/code.py 40" 
-run "Dart" "./dart/code 40"
+benchmarks=("loops" "fibonacci")
+
+for dir in "${benchmarks[@]}"; do
+    if [ -d "$dir" ]; then
+        cd "$dir" || exit
+
+		run "${dir}" "Kotlin" "java -jar kotlin/code.jar 40"
+        run "${dir}" "C" "./c/code 40" 
+        run "${dir}" "Go" "./go/code 40" 
+        run "${dir}" "Rust" "./rust/target/release/code 40"
+        run "${dir}" "Node" "node ./js/code.js 40" 
+        run "${dir}" "Bun" "bun ./js/code.js 40" 
+        run "${dir}" "Deno" "deno ./js/code.js 40" 
+        run "${dir}" "PyPy" "pypy3 ./py/code.py 40" 
+        run "${dir}" "Java" "java -cp java Code 40"
+        run "${dir}" "Ruby" "ruby ./ruby/code.rb 40"
+        run "${dir}" "PHP" "php ./php/code.php 40"
+		run "${dir}" "R" "Rscript ./r/code.R 40"
+		run "${dir}" "Python" "python3 ./py/code.py 40" 
+		run "${dir}" "Dart" "./dart/code 40"
+
+        cd .. || exit
+    fi
+done

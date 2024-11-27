@@ -11,6 +11,8 @@ function run {
   runOnce "$1" "$2"
 }
 
+cd loops
+
 run "Kotlin" "java -jar kotlin/code.jar 40"
 run "C" "./c/code 40" 
 run "Go" "./go/code 40" 
@@ -21,7 +23,7 @@ run "Deno" "deno ./js/code.js 40"
 run "PyPy" "pypy ./py/code.py 40" 
 run "Java" "java jvm.code 40"
 run "Ruby" "ruby ./ruby/code.rb 40"
-run "PHP" "php ./php/code.php 40"
+run "PHP" "php -dopcache.jit=on -dopcache.jit_buffer_size=64M -dopcache.enable_cli=1 -dxdebug.mode=off ./php/code.php 40"
 run "R" "Rscript ./r/code.R 40"
 run "Python" "python3 ./py/code.py 40" 
 run "Dart" "./dart/code 40"

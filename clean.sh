@@ -10,6 +10,8 @@ for dir in "${benchmarks[@]}"; do
         rm go/code
         rm java/Code.class
         rm -r rust/target
+        rm -rf kotlin/code.jar
+        rm dart/code
         
         cd .. || exit
     fi

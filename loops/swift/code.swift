@@ -4,9 +4,9 @@ func main() {
     var a = [Int](repeating: 0, count: 10000)   // Array of 10k elements initialized to 0
     for i in 0..<10000 {                        // 10k outer loop iterations
         for j in 0..<100000 {                   // 100k inner loop iterations, per outer loop iteration
-            a[i] += j % u                       // Simple sum
+            a[i] &+= j % u                      // Simple sum, unchecked
         }
-        a[i] += r                               // Add a random value to each element in array
+        a[i] &+= r                              // Add a random value to each element in array, unchecked
     }
     print(a[r])                                 // Print out a single element from the array
 }

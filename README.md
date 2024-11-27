@@ -20,26 +20,34 @@ docker run -it --name languages-container languages /bin/bash
   
   ```
   $ bash ../run.sh
-  Benchmark[loops] C = 1.24
-  Benchmark[loops] Go = 1.48
-  Benchmark[loops] Node = 1.93
-  Benchmark[loops] Bun = 2.60
-  Benchmark[loops] Deno = 1.79
-  Benchmark[loops] PyPy = 5.31
-  Benchmark[loops] Java = 1.32
-  Benchmark[loops] Ruby = 67.46
-  Benchmark[loops] PHP = 21.50
-  Benchmark[loops] Rust = 1.20
+  Benchmark[loops] Kotlin = 1.34
+  Benchmark[loops] C = 1.26
+  Benchmark[loops] Go = 1.49
+  Benchmark[loops] Rust = 1.27
+  Benchmark[loops] Node = 1.66
+  Benchmark[loops] Bun = 2.42
+  Benchmark[loops] Deno = 1.62
+  Benchmark[loops] PyPy = 5.24
+  Benchmark[loops] Java = 1.35
+  Benchmark[loops] Ruby = 68.56
+  Benchmark[loops] PHP = 14.24
+  Benchmark[loops] R = 175.21
+  Benchmark[loops] Python = 125.74
+  Benchmark[loops] Dart = 1.91
+  Benchmark[fibonacci] Kotlin = 0.45
   Benchmark[fibonacci] C = 0.28
-  Benchmark[fibonacci] Go = 0.68
-  Benchmark[fibonacci] Node = 1.61
-  Benchmark[fibonacci] Bun = 1.00
-  Benchmark[fibonacci] Deno = 1.67
-  Benchmark[fibonacci] PyPy = 4.08
-  Benchmark[fibonacci] Java = 0.48
-  Benchmark[fibonacci] Ruby = 19.46
-  Benchmark[fibonacci] PHP = 9.05
+  Benchmark[fibonacci] Go = 0.64
   Benchmark[fibonacci] Rust = 0.29
+  Benchmark[fibonacci] Node = 1.52
+  Benchmark[fibonacci] Bun = 0.98
+  Benchmark[fibonacci] Deno = 1.55
+  Benchmark[fibonacci] PyPy = 4.11
+  Benchmark[fibonacci] Java = 0.48
+  Benchmark[fibonacci] Ruby = 19.53
+  Benchmark[fibonacci] PHP = 9.04
+  Benchmark[fibonacci] R = 158.52
+  Benchmark[fibonacci] Python = 20.99
+  Benchmark[fibonacci] Dart = 0.90
   $
   ```
 

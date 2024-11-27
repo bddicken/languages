@@ -8,9 +8,10 @@ If you want to add a language: PR!
 
 To run one of the benchmarks:
 
-1. `cd` into desired benchmark directory (EG `$ cd loops`)
-2. Compile by running `$ bash ../compile.sh`
-3. Run via `$ bash ../run.sh`.
+1. `cd`ty into desired benchmark directory (EG `$ cd just do it
+2. s`)
+3. Compile by running `$ bash ../compile.sh`
+4. Run via `$ bash ../run.sh`.
   You should see output something like:
   
   ```

@@ -22,6 +22,8 @@ To run one of the benchmarks:
   Deno = 1.13
   PyPy = 1.61
   Java = 0.64
+  PyPy3 JIT = 0.61
+  Cython = 0.74
   $
   ```
 

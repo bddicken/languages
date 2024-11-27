@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
-	"runtime"
 	"strconv"
 	"sync"
 )
@@ -20,21 +19,14 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(10000)
 
-	iChan := make(chan int, runtime.NumCPU())
-	go func() {
-		for i := range iChan {
-			go func() {
-				for j := int32(0); j < 100000; j++ { // 100k inner loop iterations, per outer loop iteration
-					a[i] = a[i] + j%u // Simple sum
-				}
-				a[i] += r // Add a random value to each element in array
-				wg.Done()
-			}()
-		}
-	}()
-
 	for i := 0; i < 10000; i++ { // 10k outer loop iterations
-		iChan <- i
+		go func() {
+			for j := int32(0); j < 100000; j++ { // 100k inner loop iterations, per outer loop iteration
+				a[i] = a[i] + j%u // Simple sum
+			}
+			a[i] += r // Add a random value to each element in array
+			wg.Done()
+		}()
 	}
 
 	wg.Wait()

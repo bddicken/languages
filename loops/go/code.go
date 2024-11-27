@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"runtime"
 	"strconv"
+	"sync"
 )
 
 func main() {
@@ -12,14 +14,29 @@ func main() {
 	if e != nil {
 		panic(e)
 	}
-	u := int(input)
-	r := int(rand.Intn(10000))   // Get a random number 0 <= r < 10k
-	var a [10000]int             // Array of 10k elements initialized to 0
-	for i := 0; i < 10000; i++ { // 10k outer loop iterations
-		for j := 0; j < 100000; j++ { // 100k inner loop iterations, per outer loop iteration
-			a[i] = a[i] + j%u // Simple sum
+	u := int32(input)
+	r := int32(rand.Intn(10000)) // Get a random number 0 <= r < 10k
+	var a [10000]int32           // Array of 10k elements initialized to 0
+	var wg sync.WaitGroup
+	wg.Add(10000)
+
+	iChan := make(chan int, runtime.NumCPU())
+	go func() {
+		for i := range iChan {
+			go func() {
+				for j := int32(0); j < 100000; j++ { // 100k inner loop iterations, per outer loop iteration
+					a[i] = a[i] + j%u // Simple sum
+				}
+				a[i] += r // Add a random value to each element in array
+				wg.Done()
+			}()
 		}
-		a[i] += r // Add a random value to each element in array
+	}()
+
+	for i := 0; i < 10000; i++ { // 10k outer loop iterations
+		iChan <- i
 	}
+
+	wg.Wait()
 	fmt.Println(a[r]) // Print out a single element from the array
 }

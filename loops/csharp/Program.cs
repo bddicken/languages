@@ -4,7 +4,7 @@ var a = new int[10_000];
 
 for (var i = 0; i < 10_000; i++)
 {
-    for (int j = 0; j < 10_000; j++)
+    for (int j = 0; j < 100_000; j++)
     {
         a[i] = a[i] + j % u;
     }

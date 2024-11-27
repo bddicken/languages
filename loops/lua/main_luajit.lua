@@ -24,7 +24,7 @@ local function processInput()
     local result = 0
     for i = 1, 10000 do
         local sum = 0
-        for j = 1, 10000 do
+        for j = 1, 100000 do
             sum = sum + (j % number)
         end
         result = sum + r

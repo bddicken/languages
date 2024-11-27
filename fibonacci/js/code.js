@@ -11,8 +11,8 @@
 //   r += fibonacci(i);
 // }
 
-//Reducción de complejidad computaciona
-function fibonacci(n: number, memo: Record<number, number> = {}): number {
+//Reducción de complejidad computacional
+function fibonacci(n, memo> = {}) {
     if (n in memo) return memo[n];
     if (n == 0) return 0;
     if (n == 1) return 1;

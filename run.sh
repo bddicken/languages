@@ -11,8 +11,6 @@ function run {
   runOnce "$1" "$2"
 }
 
-cd loops
-
 run "Kotlin" "java -jar kotlin/code.jar 40"
 run "C" "./c/code 40" 
 run "Go" "./go/code 40" 

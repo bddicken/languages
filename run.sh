@@ -25,3 +25,5 @@ run "PHP" "php ./php/code.php 40"
 run "R" "Rscript ./r/code.R 40"
 run "Python" "python3 ./py/code.py 40" 
 run "Dart" "./dart/code 40"
+run "Nim" "./nim/code 40"
+

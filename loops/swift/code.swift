@@ -1,5 +1,3 @@
-import Foundation
-
 func main() {
     let u = Int(CommandLine.arguments[1])!
     let r = Int.random(in: 0...9999)            // Get a random integer 0 <= r < 10k

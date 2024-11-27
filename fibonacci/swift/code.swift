@@ -1,5 +1,3 @@
-import Foundation
-
 func fibonacci(n: Int) -> Int {
     if n < 2 {
         return n

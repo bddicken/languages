@@ -11,7 +11,7 @@ func main() {
   if e != nil { panic(e) }
   u := int(input)
   r := int(rand.Intn(10000))           // Get a random number 0 <= r < 10k
-  var a[10000]int                      // Array of 10k elements initialized to 0
+  var a[10000]int = make(int, 10000)   // Array of 10k elements initialized to 0
   for i := 0; i < 10000; i++ {         // 10k outer loop iterations
     for j := 0; j < 100000; j++ {      // 100k inner loop iterations, per outer loop iteration
       a[i] = a[i] + j%u                // Simple sum

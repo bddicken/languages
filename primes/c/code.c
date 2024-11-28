@@ -1,65 +1,75 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+int PRIME(int limit) {
+    int X, SQUARE, I, K, LIM, PRIM;
 
-long* calc_primes(long limit, int* primes_count) {
-    long candidate = 1;         // The current number being tested for primality
-    long next_square = 4;       // The square of the next prime in the list, starting with 2^2
-    int num_primes = 1;         // Number of primes currently in the list
-    long* primes = (long*)malloc(sizeof(long) * 100);  // Allocate memory for primes
-    primes[0] = 2;              // List of found primes, starting with the first prime, 2
-    long* composites = (long*)malloc(sizeof(long) * 100); // Allocate memory for composites
-    composites[0] = 0;          // List of multiples of found primes for sieving, initialized with a dummy value
+    // Allocate arrays on the heap
+    int *P = (int*)malloc((limit + 1) * sizeof(int));
+    int *V = (int*)malloc((limit / 2 + 1) * sizeof(int));
 
-    while (candidate < limit) {
-        while (1) {
-            candidate += 2; // Only test odd numbers for primality
-            if (candidate >= limit) {
-                *primes_count = num_primes;
-                return primes;
-            }
-
-            // Update the list of composite values if we’ve reached the next prime square
-            if (next_square <= candidate) {
-                composites[num_primes] = next_square;
-                num_primes++;
-                next_square = primes[num_primes - 1] * primes[num_primes - 1];
-            }
-
-            int index = 1;
-            int is_prime = 1;
-
-            // Check if candidate is a prime by verifying it is not a multiple of any smaller primes
-            while (is_prime && index < num_primes) {
-                if (composites[index] < candidate) {
-                    composites[index] += primes[index - 1]; // Move to the next multiple for the prime
-                }
-                is_prime = (candidate != composites[index]);
-                index++;
-            }
-
-            // Exit loop if candidate was determined to be a prime
-            if (is_prime) {
-                break;
-            }
-        }
-
-        // Add candidate to the list of primes
-        primes[num_primes] = candidate;
-        num_primes++;
+    if (P == NULL || V == NULL) {
+        printf("Memory allocation failed.\n");
+        exit(1);
     }
 
-    *primes_count = num_primes;
-    return primes;
+    P[1] = 2;
+
+    X = 1;
+    LIM = 1;
+    SQUARE = 4;
+    int count = 1;
+
+    for (I = 2; I <= limit; I++) {
+        do {
+            X += 2;
+
+            if (X >= limit){
+                free(P);
+                free(V);
+                return count;
+            }
+
+            if (SQUARE <= X) {
+                V[LIM] = SQUARE;
+                LIM++;
+                SQUARE = P[LIM] * P[LIM];
+            }
+            K = 2;
+            PRIM = 1;
+            while (PRIM && K < LIM) {
+                if (V[K] < X) {
+                    V[K] += P[K];
+                }
+                PRIM = X != V[K];
+                K++;
+            }
+        } while (!PRIM);
+
+        P[I] = X;
+        count++;
+    }
+
+    // Free the allocated memory
+    free(P);
+    free(V);
+    return count;
 }
 
-int main(int argc, char **argv) {
-    long limit = atoi(argv[1]) * 100000;
-    int primes_count = 0;
-    long* primes = calc_primes(limit, &primes_count);
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        printf("Usage: %s <limit>\n", argv[0]);
+        return 1;
+    }
 
-    printf("Number of primes less than %ld: %d\n", limit, primes_count);
+    int limit = atoi(argv[1]) * 100000;
+    if (limit < 2) {
+        printf("Limit must be at least 2.\n");
+        return 1;
+    }
 
-    // Free the dynamically allocated memory
-    free(primes);
+    int count = PRIME (limit);
+
+    printf("Number of primes less than or equal to %d: %ld\n", limit, count);
     return 0;
 }

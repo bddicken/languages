@@ -1,21 +1,21 @@
-# Recursive Fibonacci function
+# Updated Function with Pre-alloted vector
 fibonacci <- function(n) {
-  if (n == 0) return(0)
-  if (n == 1) return(1)
-  return(fibonacci(n - 1) + fibonacci(n - 2))
+    fib <- vector("integer", n)
+    if (n < 2) {
+        return(n)
+    }
+    fib[1:2] <- c(1, 2)
+    for (k in 3:n) {
+        fib[k] <- fib[k - 1] + fib[k - 2]
+    }
+    return(fib)
 }
-
 # Parse command-line argument for `u`
 args <- commandArgs(trailingOnly = TRUE)
-u <- as.numeric(args[1])
+u <- as.integer(args[1])
 
-# Initialize result
-r <- 0
-
-# Sum up Fibonacci values for numbers from 1 to `u`
-for (i in 1:(u - 1)) {
-  r <- r + fibonacci(i)
-}
+# Sum all fibonacci numbers up to `u`
+r <- sum(fibonacci(u))
 
 # Print the result
 cat(r, "\n")

@@ -32,3 +32,11 @@
   "Main function to execute loop-test using a command-line argument."
   (let ((num (parse-arguments)))
     (loop-test num)))
+
+;; Ensure the program starts by calling MAIN
+#-sbcl
+(error "This script is designed to be run with SBCL.")
+
+#+sbcl
+(main)
+

@@ -1,15 +1,13 @@
 
 function runOnce  {
-  { time $2 ; } 2> /tmp/o 1> /dev/null
-  printf "$1 = "
-  cat /tmp/o | sed -n 's/real\s*\([0-9]*m\)\?\([0-9]*,[0-9]*\)s/\1 \2/p' | awk '{ min=($1 == "" ? 0 : $1) * 60; sec=$2; gsub(",", ".", sec); print min + sec }'
+  ../custom-time/target/release/custom-time "$1" "$2"
 }
 
 function run {
   echo ""
   runOnce "$1" "$2"
-  runOnce "$1" "$2"
-  runOnce "$1" "$2"
+  # runOnce "$1" "$2"
+  # runOnce "$1" "$2"
 }
 
 run "Kotlin" "java -jar kotlin/code.jar 40"

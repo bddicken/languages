@@ -5,4 +5,4 @@ RUSTFLAGS="-Zlocation-detail=none" cargo +nightly build --manifest-path rust/Car
 kotlinc -include-runtime kotlin/code.kt -d kotlin/code.jar
 #kotlinc-native -include-runtime kotlin/code.kt -d kotlin/code
 dart compile exe dart/code.dart -o dart/code --target-os=macos
-ldc2 -O3 d/code.d --of=d/code
+ldc2 -O3 --release d/code.d --of=d/code

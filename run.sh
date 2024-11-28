@@ -2,7 +2,7 @@
 function runOnce  {
   { time $2 ; } 2> /tmp/o 1> /dev/null
   printf "$1 = "
-  cat /tmp/o | sed -n 's/real\s*\([0-9]*m\)\?\([0-9]*,[0-9]*\)s/\2/p' | tr ',' '.' | awk '{ print $1 }'
+  cat /tmp/o | sed -n 's/real\s*\([0-9]*m\)\?\([0-9]*,[0-9]*\)s/\1 \2/p' | awk '{ min=($1 == "" ? 0 : $1) * 60; sec=$2; gsub(",", ".", sec); print min + sec }'
 }
 
 function run {

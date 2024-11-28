@@ -1,3 +1,5 @@
 *.class
 code
 .idea/
+bin
+obj

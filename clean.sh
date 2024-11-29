@@ -11,3 +11,4 @@ rm fortran/code
 rm zig/code
 rm lua/code
 rm -f swift/code
+rm ocaml/code ocaml/code.cm*

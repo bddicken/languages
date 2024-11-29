@@ -1,33 +1,51 @@
 {pkgs ? import <nixpkgs> {}}:
 pkgs.mkShell {
-  name = "benchmark-env";
+  buildInputs = with pkgs; [
+    # Build tools
+    rustup
+    gnustep.stdenv
+    gnustep.libobjc
+    gnustep.base
+    gnustep.make
+    clang
+    go
+    openjdk
+    kotlin
+    kotlin-native
+    dart
+    sbcl
+    scala-cli
+    ldc
+    odin
+    lua
+    luajit
+    zig
+    swift
+    ruby
+    python3
+    pypy3
+    php
+    R
+    julia
+    gfortran
+    glibc
 
-  buildInputs = [
-    pkgs.clang # C compiler
-    pkgs.go # Go compiler
-    pkgs.openjdk # Java JDK (includes javac)
-    pkgs.rustup # Rustup for managing Rust toolchains
-    pkgs.kotlin # Kotlin compiler
-    pkgs.kotlin-native # Kotlin/Native compiler
-    pkgs.dart # Dart SDK
-    pkgs.nodejs # Node.js runtime
-    pkgs.bun # Bun runtime
-    pkgs.deno # Deno runtime
-    pkgs.pypy3 # PyPy3 interpreter
-    pkgs.python3 # Python3 interpreter
-    pkgs.ruby # Ruby interpreter
-    pkgs.php # PHP interpreter
-    pkgs.R # R interpreter
-    pkgs.time # GNU time command for timing execution
-    pkgs.gnumake # Make, useful for build scripts
-    pkgs.sbcl
+    # JavaScript runtimes
+    nodejs
+    bun
+    deno
   ];
 
+  # Additional setup for specific tools
   shellHook = ''
-    # Ensure Rust nightly is available
+    # Rust setup
     rustup install nightly
     rustup default nightly
 
-    echo "Development environment is ready. All necessary tools are available."
+    # Scala CLI power mode
+    export SCALA_CLI_POWER=true
+
+    # Dart configuration
+    export DART_VM_OPTIONS="--enable-asserts"
   '';
 }

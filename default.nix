@@ -20,6 +20,7 @@ pkgs.mkShell {
     pkgs.R # R interpreter
     pkgs.time # GNU time command for timing execution
     pkgs.gnumake # Make, useful for build scripts
+    pkgs.sbcl
   ];
 
   shellHook = ''

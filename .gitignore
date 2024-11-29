@@ -2,3 +2,4 @@
 code
 .idea/
 **/*/code.jar
+*.o

@@ -1,59 +1,60 @@
+package jvm;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 public class code {
 
-    public static List<Long> calcPrimes(long limit) {
-        long candidate = 1;           // The current number being tested for primality
-        long nextSquare = 4;          // The square of the next prime in the list, starting with 2^2
-        int numPrimes = 1;            // Number of primes currently in the list
-        List<Long> primes = new ArrayList<>();  // List of found primes
-        primes.add(2L);               // Initialize the list with the first prime, 2
-        List<Long> composites = new ArrayList<>(); // List of multiples of found primes for sieving
-        composites.add(0L);           // Dummy value to align indices
+    private static BigInteger calculatePrimes(long maxPrimes) {
+        // Variable declarations
+        BigInteger x = BigInteger.ONE; // Current candidate number
+        BigInteger square = new BigInteger("4"); // First square (2^2)
+        int lim = 1;
+        List<BigInteger> primes = new ArrayList<>(); // List of found primes
+        primes.add(BigInteger.TWO); // Add the first prime
+        List<BigInteger> multiples = new ArrayList<>(); // List of multiples of primes
+        BigInteger count = BigInteger.ONE;
+        boolean isPrime;
 
-        while (candidate < limit) {
-            while (true) {
-                candidate += 2; // Only test odd numbers for primality
-                if (candidate >= limit) {
-                    return primes;
+        for (long i = 2; i <= maxPrimes; i++) {
+            do {
+                x = x.add(BigInteger.TWO); // Increment candidate by 2 (odd numbers only)
+
+                if (x.compareTo(BigInteger.valueOf(maxPrimes)) >= 0) {
+                    return count;
                 }
 
-                // Update the list of composite values if we’ve reached the next prime square
-                if (nextSquare <= candidate) {
-                    composites.add(nextSquare);
-                    numPrimes++;
-                    nextSquare = primes.get(numPrimes - 1) * primes.get(numPrimes - 1);
+                // Check and update square and multiples
+                if (square.compareTo(x) <= 0) {
+                    multiples.add(square);
+                    lim++;
+                    square = primes.get(lim - 1).pow(2);
                 }
 
-                int index = 1;
-                boolean isPrime = true;
+                int k = 0;
+                isPrime = true;
 
-                // Check if candidate is a prime by verifying it is not a multiple of any smaller primes
-                while (isPrime && index < numPrimes) {
-                    if (composites.get(index) < candidate) {
-                        composites.set(index, composites.get(index) + primes.get(index - 1));
+                // Check if `x` is divisible by any of the current primes
+                while (isPrime && k < lim - 1) {
+                    if (multiples.get(k).compareTo(x) < 0) {
+                        multiples.set(k, multiples.get(k).add(primes.get(k)));
                     }
-                    isPrime = candidate != composites.get(index);
-                    index++;
+                    isPrime = !x.equals(multiples.get(k));
+                    k++;
                 }
+            } while (!isPrime);
 
-                // Exit loop if candidate was determined to be a prime
-                if (isPrime) {
-                    break;
-                }
-            }
-
-            // Add candidate to the list of primes
-            primes.add(candidate);
+            primes.add(x);
+            count = count.add(BigInteger.ONE);
         }
 
-        return primes;
+        return count;
     }
 
     public static void main(String[] args) {
-        long limit = Long.parseLong(args[0]) * 100000L;
-        List<Long> primes = calcPrimes(limit);
-        System.out.println("Number of primes less than " + limit + ": " + primes.size());
+        long n = Long.parseLong(args[0]) * 100000;
+        BigInteger c = calculatePrimes(n);
+        System.out.println("Num of primes: " + c);
     }
 }

@@ -16,4 +16,5 @@ clang -fconstant-string-class=NSConstantString \
 gfortran -O3 fortran/code.f90 -o ./fortran/code
 zig build-exe -O ReleaseFast -femit-bin=zig/code zig/code.zig
 luajit -b lua/code.lua lua/code
+# TODO: Fix swift compilation  errors
 swiftc -target x86_64-unknown-linux-gnu -O -parse-as-library -Xcc -funroll-loops -Xcc -march=native -Xcc -ftree-vectorize -Xcc -ffast-math swift/code.swift -o swift/code

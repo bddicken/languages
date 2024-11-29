@@ -2,3 +2,6 @@
 code
 .idea/
 **/*/code.jar
+*.o
+**/*/objc/code.d
+**/*/.scala-build

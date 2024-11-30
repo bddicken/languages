@@ -39,3 +39,5 @@ run "LuaJIT" "luajit ./lua/code 40"
 run "Lua" "lua ./lua/code.lua 40"
 run "Swift" "./swift/code 40"
 run "Julia" "julia ./julia/code.jl 40"
+run "OCaml" "./ocaml/code 40"
+

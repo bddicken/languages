@@ -15,4 +15,4 @@ gfortran -O3 fortran/code.f90 -o fortan/code
 zig build-exe -O ReleaseFast -femit-bin=zig/code zig/code.zig
 luajit -b lua/code.lua lua/code
 swiftc -O -parse-as-library -Xcc -funroll-loops -Xcc -march=native -Xcc -ftree-vectorize -Xcc -ffast-math swift/code.swift -o swift/code
-ocamlc ocaml/code.ml -o ocaml/code
+ocamlopt ocaml/code.ml -o ocaml/code

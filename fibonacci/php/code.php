@@ -1,6 +1,6 @@
 <?php
 
-function fibonacci($n)
+function fibonacci(int $n): int
 {
     if ($n == 0) return 0;
     if ($n == 1) return 1;

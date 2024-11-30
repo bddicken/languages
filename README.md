@@ -8,22 +8,48 @@ If you want to add a language: PR!
 
 ## Running
 
-To run one of the benchmarks:
+To run the benchmarks install Docker for your operating system and run the following from **languages** directory:
 
-1. `cd` into desired benchmark directory (EG `$ cd loops`)
-2. Compile by running `$ bash ../compile.sh`
-3. Run via `$ bash ../run.sh`.
+```
+docker build -t languages .
+
+docker run -it --name languages-container languages /bin/bash
+```
+
+1. Compile by running `$ ./compile.sh`
+3. Run via `$ ./run.sh`.
   You should see output something like:
   
   ```
   $ bash ../run.sh
-  C = 0.77
-  Go = 2.07
-  Node = 0.79
-  Bun = 0.83
-  Deno = 1.13
-  PyPy = 1.61
-  Java = 0.64
+  Benchmark[loops] Kotlin = 1.34
+  Benchmark[loops] C = 1.26
+  Benchmark[loops] Go = 1.49
+  Benchmark[loops] Rust = 1.27
+  Benchmark[loops] Node = 1.66
+  Benchmark[loops] Bun = 2.42
+  Benchmark[loops] Deno = 1.62
+  Benchmark[loops] PyPy = 5.24
+  Benchmark[loops] Java = 1.35
+  Benchmark[loops] Ruby = 68.56
+  Benchmark[loops] PHP = 14.24
+  Benchmark[loops] R = 175.21
+  Benchmark[loops] Python = 125.74
+  Benchmark[loops] Dart = 1.91
+  Benchmark[fibonacci] Kotlin = 0.45
+  Benchmark[fibonacci] C = 0.28
+  Benchmark[fibonacci] Go = 0.64
+  Benchmark[fibonacci] Rust = 0.29
+  Benchmark[fibonacci] Node = 1.52
+  Benchmark[fibonacci] Bun = 0.98
+  Benchmark[fibonacci] Deno = 1.55
+  Benchmark[fibonacci] PyPy = 4.11
+  Benchmark[fibonacci] Java = 0.48
+  Benchmark[fibonacci] Ruby = 19.53
+  Benchmark[fibonacci] PHP = 9.04
+  Benchmark[fibonacci] R = 158.52
+  Benchmark[fibonacci] Python = 20.99
+  Benchmark[fibonacci] Dart = 0.90
   $
   ```
 

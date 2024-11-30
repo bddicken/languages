@@ -1,7 +1,7 @@
 function runOnce  {
   { /usr/bin/time $2 ; } 2> /tmp/o 1> /dev/null
   printf "$1 = "
-  cat /tmp/o | awk -v N=1 '{print $N"s"}'
+  cat /tmp/o | grep user | awk -v N=1 '{print $N"s"}'
 }
 
 function run {
@@ -20,7 +20,7 @@ run "Node" "node ./js/code.js 40"
 run "Bun" "bun ./js/code.js 40"
 run "Deno" "deno ./js/code.js 40"
 run "PyPy" "pypy ./py/code.py 40"
-run "Java" "java jvm.code 40"
+run "Java" "java --add-modules jdk.incubator.vector jvm.code 40"
 run "Scala" "./scala/code 40"
 run "Ruby" "ruby ./ruby/code.rb 40"
 run "PHP JIT" "php -dopcache.enable_cli=1 -dopcache.jit=on -dopcache.jit_buffer_size=64M ./php/code.php 40"

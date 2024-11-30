@@ -1,10 +1,12 @@
 clang -O3 c/code.c -o c/code
 go build -ldflags "-s -w" -o go/code go/code.go
 javac jvm/code.java
-RUSTFLAGS="-Zlocation-detail=none" cargo +nightly build --manifest-path rust/Cargo.toml --release
+cargo build --manifest-path rust/Cargo.toml --release
 kotlinc -include-runtime kotlin/code.kt -d kotlin/code.jar
 #kotlinc-native -include-runtime kotlin/code.kt -d kotlin/code
 dart compile exe dart/code.dart -o dart/code --target-os=macos
+crystal build -o crystal/code --release crystal/code.cr
+gnatmake -O3 -gnat2022 -gnatp -flto ada/code.adb -D ada -o ada/code
 scala-cli --power package scala/code.scala -f -o scala/code
 ldc2 -O3 -release -boundscheck=off d/code.d
 odin build odin/code.odin -o:speed -file

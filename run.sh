@@ -15,7 +15,7 @@ function run {
 }
 
 run "Kotlin" "java -jar kotlin/code.jar $n"
-run "Scala" "java -jar scala/code.jar $n"
+run "Scala2" "java -jar scala3/code.jar $n"
 run "C" "./c/code $n" 
 run "Go" "./go/code $n" 
 run "Rust" "./rust/target/release/code $n"

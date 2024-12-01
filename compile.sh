@@ -6,5 +6,5 @@ cargo build  --manifest-path rust/Cargo.toml --release
 kotlinc -include-runtime kotlin/code.kt -d kotlin/code.jar
 #kotlinc-native -include-runtime kotlin/code.kt -d kotlin/code
 dart compile exe dart/code.dart -o dart/code --target-os=macos
-pushd scala; ./build.sh; popd
+pushd scala3; ./build.sh; popd
 

@@ -1,7 +1,7 @@
 n=40
 
 function runOnce  {
-  { /usr/bin/time $2 ; } 2> /tmp/o 1> /dev/null
+  { /usr/bin/time env $3 $2 ; } 2> /tmp/o 1> /dev/null
   printf "$1 = "
   tail /tmp/o | awk -v N=1 '{print $N"s"}'
 }
@@ -9,9 +9,9 @@ function runOnce  {
 function run {
   { $2 1>/dev/null 2>/dev/null; } || { echo "$1 missing"; return 1; }
   echo ""
-  runOnce "$1" "$2"
-  runOnce "$1" "$2"
-  runOnce "$1" "$2"
+  runOnce "$1" "$2" "$3"
+  runOnce "$1" "$2" "$3"
+  runOnce "$1" "$2" "$3"
 }
 
 run "Ruby YJIT" "miniruby --yjit ./ruby/code.rb 40"
@@ -20,8 +20,11 @@ run "C" "./c/code 40"
 run "Go" "./go/code 40"
 run "Rust" "./rust/target/release/code 40"
 run "Node" "node ./js/code.js 40"
+run "Node (jitless)" "node --jitless ./js/code.js 40"
 run "Bun" "bun ./js/code.js 40"
+run "Bun (jitless)" "bun ./js/code.js 40" "BUN_JSC_useJIT=0"
 run "Deno" "deno ./js/code.js 40"
+run "Deno (jitless)" "deno --v8-flags=--jitless ./js/code.js 40"
 run "PyPy" "pypy ./py/code.py 40"
 run "Java" "java jvm.code 40"
 run "Scala" "./scala/code 40"
@@ -33,6 +36,7 @@ run "R" "Rscript ./r/code.R 40"
 run "Python" "python3 ./py/code.py 40"
 run "Zig" "./zig/code 40"
 run "Dart" "./dart/code 40"
+run "Free Pascal" "./fpc/code 40"
 run "Crystal" "./crystal/code 40"
 run "Ada" "./ada/code 40"
 run "D" "./d/code 40" 
@@ -43,3 +47,7 @@ run "LuaJIT" "luajit ./lua/code 40"
 run "Lua" "lua ./lua/code.lua 40"
 run "Swift" "./swift/code 40"
 run "Julia" "julia ./julia/code.jl 40"
+run "C# AOT" "./csharp-aot/csharp 40"
+run "C#" "./csharp/csharp 40"
+run "Ruby" "ruby ./ruby/code.rb 40"
+run "Haskell" "./hs/code 40"

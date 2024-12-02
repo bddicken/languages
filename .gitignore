@@ -1,4 +1,5 @@
 *.class
 code
 .idea/
+*.user
 *.o

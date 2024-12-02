@@ -1,3 +1,5 @@
+https://benjdd.com/languages/
+
 # Languages
 
 A repo for collaboratively building small benchmarks to compare languages.
@@ -26,6 +28,12 @@ To run one of the benchmarks:
   ```
 
 4. For good measure, execute `$ bash ../clean.sh` when finished.
+
+### Interpretation
+
+The numbers represent the real execution time (wall-clock time) it took for each language to execute the given task. **A lower number indicates better performance.**
+
+`bash ../run.sh` runs each program three times using the `runOnce` function and `awk` captures the real execution time.
 
 ## Adding
 

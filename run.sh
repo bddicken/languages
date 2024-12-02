@@ -1,8 +1,21 @@
+function runOnce  {
+  { /usr/bin/time env $3 $2 ; } 2> /tmp/o 1> /dev/null
+  printf "$1 = "
+  cat /tmp/o | awk -v N=1 '{print $N"s"}'
+}
+
+
+
 function run {
   { $2 1>/dev/null 2>/dev/null; } || { echo "$1 missing"; return 1; }
   echo ""
   echo "Benchmarking $1"
-  hyperfine -i --shell=none --runs 3 --warmup 2 "$2"
+
+  which hyperfine && hyperfine -i --shell=none --runs 3 --warmup 2 "$2" || { \
+    runOnce "$1" "$2" "$3"
+    runOnce "$1" "$2" "$3"
+    runOnce "$1" "$2" "$3"
+  }
 }
 
 run "Ruby YJIT" "miniruby --yjit ./ruby/code.rb 40"

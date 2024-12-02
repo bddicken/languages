@@ -1,5 +1,5 @@
 function runOnce  {
-  { /usr/bin/time env $3 $2 ; } 2> /tmp/o 1> /dev/null
+  { /usr/bin/env time $2 ; } 2> /tmp/o 1> /dev/null
   printf "$1 = "
   cat /tmp/o | awk -v N=1 '{print $N"s"}'
 }
@@ -38,6 +38,7 @@ run "PHP" "php ./php/code.php 40"
 run "R" "Rscript ./r/code.R 40"
 run "Python" "python3 ./py/code.py 40"
 run "Dart" "./dart/code 40"
+<<<<<<< HEAD
 run "Common Lisp" "common-lisp/code 40"
 run "Zig" "./zig/code 40"
 run "Dart" "./dart/code 40"
@@ -58,3 +59,4 @@ run "C# AOT" "./csharp-aot/csharp 40"
 run "C#" "./csharp/csharp 40"
 run "Ruby" "ruby ./ruby/code.rb 40"
 run "Haskell" "./hs/code 40"
+run "Nim" "./nim/code 40"

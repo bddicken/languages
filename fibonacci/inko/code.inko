@@ -1,0 +1,22 @@
+import std.env (arguments)
+import std.int (Format)
+import std.stdio (Stdout)
+
+class async Main {
+  fn async main {
+    let u = Int.parse(arguments.get(0), Format.Decimal).get
+    let mut r = 0
+    let mut i = 1
+
+    while i < u {
+      r += fibonacci(i)
+      i += 1
+    }
+
+    Stdout.new.print(r.to_string)
+  }
+}
+
+fn fibonacci(n: Int) -> Int {
+  if n < 2 { n } else { fibonacci(n - 1) + fibonacci(n - 2) }
+}

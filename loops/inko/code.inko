@@ -1,0 +1,29 @@
+import std.env (arguments)
+import std.int (Format)
+import std.rand (Random)
+import std.stdio (Stdout)
+
+class async Main {
+  fn async main {
+    let out = Stdout.new
+    let rand = Random.new
+    let n = Int.parse(arguments.get(0), Format.Decimal).get
+    let r = rand.int_between(0, 10_000)
+    let a = Array.filled(with: 0, times: 10_000)
+    let mut i = 0
+
+    while i < 10_000 {
+      let mut j = 0
+
+      while j < 100_000 {
+        a.set(i, a.get(i) + (j % n))
+        j += 1
+      }
+
+      a.set(i, a.get(i) + r)
+      i += 1
+    }
+
+    let _ = out.print(a.get(r).to_string)
+  }
+}

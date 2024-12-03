@@ -1,9 +1,11 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "stdint.h"
+#include "time.h"
 
 int main (int argc, char** argv) {
   int u = atoi(argv[1]);               // Get an input number from the command line
+  srand(time(NULL));                   // FIX random seed
   int r = rand() % 10000;              // Get a random integer 0 <= r < 10k
   int32_t a[10000] = {0};              // Array of 10k elements initialized to 0
   for (int i = 0; i < 10000; i++) {    // 10k outer loop iterations

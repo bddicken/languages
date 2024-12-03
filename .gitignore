@@ -2,6 +2,7 @@
 code
 .idea/
 **/*/code.jar
+*.user
 *.o
 **/*/objc/code.d
 **/*/.scala-build

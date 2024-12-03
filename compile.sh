@@ -16,7 +16,7 @@ fpc -O3 fpc/code.pas
 crystal build -o crystal/code --release crystal/code.cr
 #gnatmake -O3 -gnat2022 -gnatp -flto ada/code.adb -D ada -o ada/code
 scala-cli --power package scala/code.scala -f -o scala/code
-ldc2 -O3 -release -boundscheck=off d/code.d
+ldc2 -O3 -release -boundscheck=off -mcpu=native d/code.d
 odin build odin/code.odin -o:speed -file -out:odin/code
 clang -O3 -framework Foundation objc/code.m -o objc/code
 gfortran -O3 fortran/code.f90 -o fortran/code

@@ -1,3 +1,4 @@
+
 clang -O3 c/code.c -o c/code
 clang++ -std=c++23 -march=native -O3 -Ofast -o cpp/code cpp/code.cpp
 go build -ldflags "-s -w" -o go/code go/code.go
@@ -27,3 +28,4 @@ swiftc -O -parse-as-library -Xcc -funroll-loops -Xcc -march=native -Xcc -ftree-v
 #dotnet publish csharp/csharp.csproj -o csharp/code-aot /p:PublishAot=true
 dotnet publish csharp/csharp.csproj -o csharp/code
 ghc -O2 -fllvm haskell/code.hs -o haskell/code || { echo "ghc: cannot compile with llvm backend; fallback to use default backend"; ghc -O2 haskell/code.hs -o haskell/code; }
+lake build --dir lean4 

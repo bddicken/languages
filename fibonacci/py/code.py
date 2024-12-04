@@ -10,7 +10,7 @@ def fibonacci(n):
   return fibonacci(n-1) + fibonacci(n-2)
 
 def main():
-    u = 40 #int(sys.argv[1])
+    u = int(sys.argv[1])
     r = 0
     for i in range(1, u):
       r += fibonacci(i)

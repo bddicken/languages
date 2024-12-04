@@ -4,6 +4,7 @@ function run {
   hyperfine -i --shell=none --runs 3 --warmup 2 "$2"
 }
 
+run "Bash" "./bash/code.sh 40"
 run "Dart" "./dart/code 40"
 run "Objective-C" "./objc/code 40"
 run "Kotlin" "java -jar kotlin/code.jar 40"

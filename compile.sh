@@ -1,10 +1,18 @@
+echo "Compiling all languages..."
+
 clang -O3 c/code.c -o c/code
-clang++ -std=c++23 -march=native -O3 -Ofast -o cpp/code cpp/code.cpp
+clang++ -std=c++23 -march=native -O3 -ffast-math -o cpp/code cpp/code.cpp
 go build -ldflags "-s -w" -o go/code go/code.go
 javac jvm/code.java
 bun build --bytecode --compile js/code.js --outfile js/bun
+
+# Wait for jvm/code.class to be available before running native-image
+while [ ! -f jvm/code.class ]; do
+    sleep 1
+done
+
 native-image -O3 jvm.code
-RUSTFLAGS="-Zlocation-detail=none" cargo +nightly build --manifest-path rust/Cargo.toml --release
+RUSTFLAGS="-Zlocation-detail=none"
 cargo build --manifest-path rust/Cargo.toml --release
 kotlinc -include-runtime kotlin/code.kt -d kotlin/code.jar
 #kotlinc-native -include-runtime kotlin/code.kt -d kotlin/code
@@ -26,4 +34,8 @@ swiftc -O -parse-as-library -Xcc -funroll-loops -Xcc -march=native -Xcc -ftree-v
 # haxe --class-path haxe -main Code --jvm haxe/code.jar # was getting errors running `haxelib install hxjava`
 #dotnet publish csharp/csharp.csproj -o csharp/code-aot /p:PublishAot=true
 dotnet publish csharp/csharp.csproj -o csharp/code
-ghc -O2 -fllvm haskell/code.hs -o haskell/code || { echo "ghc: cannot compile with llvm backend; fallback to use default backend"; ghc -O2 haskell/code.hs -o haskell/code; }
+cabal update
+cabal install --lib random --force
+ghc -O2 -fllvm -Wno-partial-fields haskell/code.hs -o haskell/code || { echo "ghc: cannot compile with llvm backend; fallback to use default backend"; ghc -O2 -Wno-partial-fields haskell/code.hs -o haskell/code; }
+
+echo "All languages compiled successfully."

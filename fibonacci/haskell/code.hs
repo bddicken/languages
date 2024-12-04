@@ -9,5 +9,9 @@ fibonacci n = fibonacci (n - 1) + fibonacci (n - 2)
 
 main :: IO ()
 main = do
-  u <- fmap (subtract 1 . read . head) getArgs
-  print $ sum $ [r | i <- [1 .. u], let r = fibonacci i]
+  args <- getArgs
+  case args of
+    (x:_) -> do
+      let u = subtract 1 (read x)
+      print $ sum $ [r | i <- [1 .. u], let r = fibonacci i]
+    _ -> putStrLn "Please provide an argument."

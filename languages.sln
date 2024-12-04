@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "loops", "loops", "{A3F8CB41-738D-419D-9A17-663F8A36D6FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "csharp", "loops\csharp\csharp.csproj", "{B11F8E04-474E-40D1-B9D8-F455D17F72C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fibonacci", "fibonacci", "{8FFD851C-ABF6-48D3-ADCD-B8814DC0C2A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "csharp", "fibonacci\csharp\csharp.csproj", "{30C27E9B-975B-4F48-90A7-1BC1CFC8A53B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B11F8E04-474E-40D1-B9D8-F455D17F72C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B11F8E04-474E-40D1-B9D8-F455D17F72C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B11F8E04-474E-40D1-B9D8-F455D17F72C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B11F8E04-474E-40D1-B9D8-F455D17F72C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30C27E9B-975B-4F48-90A7-1BC1CFC8A53B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30C27E9B-975B-4F48-90A7-1BC1CFC8A53B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30C27E9B-975B-4F48-90A7-1BC1CFC8A53B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30C27E9B-975B-4F48-90A7-1BC1CFC8A53B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B11F8E04-474E-40D1-B9D8-F455D17F72C6} = {A3F8CB41-738D-419D-9A17-663F8A36D6FC}
+		{30C27E9B-975B-4F48-90A7-1BC1CFC8A53B} = {8FFD851C-ABF6-48D3-ADCD-B8814DC0C2A6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FA9B4DC7-5BB1-4ACF-A79F-61DA07ADF908}
+	EndGlobalSection
+EndGlobal

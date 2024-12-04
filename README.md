@@ -6,6 +6,68 @@ A repo for collaboratively building small benchmarks to compare languages.
 If you have a suggestion for improvement: PR!
 If you want to add a language: PR!
 
+## Python
+
+To install Python and use Conda for environment management, follow these steps:
+
+### Installation
+
+1. Install Python:
+  - On Windows: `choco install python`
+  - On macOS: `brew install python`
+  - On Linux: Use your package manager, e.g., `sudo apt-get install python3`
+
+2. Install Miniconda (a minimal installer for Conda):
+  - Download the installer using `curl`:
+    - On Windows:
+      ```sh
+      curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe
+      ```
+    - On macOS:
+      ```sh
+      curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
+      ```
+    - On Linux:
+      ```sh
+      curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+      ```
+  - Follow the installation instructions for your operating system
+
+### Environment Management
+
+1. Create a new Conda environment:
+  ```sh
+  conda create --name p3_13 python=3.13
+  ```
+
+2. Activate the environment:
+  ```sh
+  conda activate p3_13
+  ```
+
+3. Install necessary packages within the environment:
+  ```sh
+  conda install numpy pandas
+  ```
+
+4. Deactivate the environment when done:
+  ```sh
+  conda deactivate
+  ```
+
+5. To remove the environment:
+  ```sh
+  conda remove --name p3_13 --all
+  ```
+
+Using Conda helps manage dependencies and avoid conflicts between different projects.
+
+
+## Compiling
+
+Make sure you run with elevated privileges as not all projects compile without administrative access (e.g. dotnet for C#)
+`sudo ../compile.sh`
+
 ## Running
 
 To run one of the benchmarks:

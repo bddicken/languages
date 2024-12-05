@@ -2,7 +2,7 @@
 args <- commandArgs(trailingOnly = TRUE)
 u <- as.integer(args[1])  # Convert to integer
 
-# Generate a random number between 0 and 10000
+# Generate a random number between 0 and 9999
 r <-  sample.int(10000, 1) - 1L
 
 # Vectored version of loop

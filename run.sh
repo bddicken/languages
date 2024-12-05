@@ -64,3 +64,4 @@ run "Babashka" "bb" "bb/code.clj"
 #run "Ada" "./ada/code"
 #run "D" "./d/code" # Seems to not have an arm / M1 version
 #run "Java GraalVM" "./jvm.code"
+#run "Gleam" "cd ./gleam/ && gleam run number 40 && cd ../"

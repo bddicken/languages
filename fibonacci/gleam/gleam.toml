@@ -1,0 +1,6 @@
+name = "glcode"
+version = "0.1.0"
+
+[dependencies]
+gleam_stdlib = ">= 0.34.0 and < 2.0.0"
+argv = ">= 1.0.2 and < 2.0.0"

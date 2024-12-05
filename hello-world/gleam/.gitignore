@@ -1,0 +1,5 @@
+*.beam
+*.ez
+/build
+manifest.toml
+erl_crash.dump

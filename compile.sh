@@ -37,3 +37,5 @@ lake build --dir lean4
 # haxe --class-path haxe -main Code --jvm haxe/code.jar # was getting errors running `haxelib install hxjava`
 #dotnet publish csharp -o csharp/code-aot /p:PublishAot=true /p:OptimizationPreference=Speed
 #gnatmake -O3 -gnat2022 -gnatp -flto ada/code.adb -D ada -o ada/code
+# gleam needs to be in the folder to build
+cd ./gleam/ && gleam build && cd ../

@@ -6,7 +6,7 @@ u <- as.integer(args[1])  # Convert to integer
 r <-  sample.int(10000, 1) - 1L
 
 # Vectored version of loop
-a <- rep(sum((seq_len(100000) - 1L) %% u), 10000) + r
+a <- rep(sum(0:99999 %% u), 10000) + r
 
 # Print a single element from the array
 print(a[r + 1])  # Adjusted for R's 1-based indexing

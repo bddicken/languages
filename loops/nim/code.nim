@@ -9,8 +9,8 @@ proc main {.inline.} =
 
   var a: array[10000, uint]
 
-  for i in 0 ..< 10000:
-    for j in 0 ..< 10000:
+  for i in 0 .. 10000:
+    for j in 0 .. 100000:
       a[i] = a[i] + j.uint mod n
 
     a[i] += r

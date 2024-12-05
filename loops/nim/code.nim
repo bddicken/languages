@@ -1,22 +1,20 @@
-import std/[random, os, strutils]
+import std/[os, random, strutils]
 
-# Get an input number from the command line
-let u: uint32 = parseInt(paramStr(1)).uint32
+proc main {.inline.} =
+  let
+    n = paramStr(1)
+      .parseUint()
+    
+    r = rand(0 .. 10000).uint64
 
-# Get a random number 0 <= r < 10k
-var r:uint32 = rand(10000).uint32
+  var a: array[10000, uint]
 
-# Array of 10k elements initialized to 0
-var a: seq[uint32]  = newSeq[uint32](10000)
+  for i in 0 .. 10000:
+    for j in 0 .. 100000:
+      a[i] = a[i] + j.uint mod n
 
-# 10k outer loop iterations
-for i in 0..9999:
-    # 100k inner loop iterations, per outer loop iteration
-    for j in 0..99999:
-        # Simple sum
-        a[i] = a[i] + j.uint32 mod u
-    # Add a random value to each element in array
-    a[i] = a[i] + r
+    a[i] += r
 
-# Print out a single element from the array
-echo a[r]
+  echo $(a[r])
+
+when isMainModule: main()

@@ -27,3 +27,5 @@ swiftc -O -parse-as-library -Xcc -funroll-loops -Xcc -march=native -Xcc -ftree-v
 #dotnet publish csharp/csharp.csproj -o csharp/code-aot /p:PublishAot=true
 dotnet publish csharp/csharp.csproj -o csharp/code
 ghc -O2 -fllvm haskell/code.hs -o haskell/code || { echo "ghc: cannot compile with llvm backend; fallback to use default backend"; ghc -O2 haskell/code.hs -o haskell/code; }
+#dotnet publish fsharp/code.fsproj -o fsharp/code-aot /p:PublishAot=true
+dotnet publish -o fsharp/code.fsproj fsharp/code

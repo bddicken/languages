@@ -22,3 +22,5 @@ rm haxe/code.jar
 rm -rf csharp-aot/code
 rm -rf csharp/code
 rm haskell/code haskell/*.hi haskell/*.o
+rm -rf fsharp/code-aot
+rm -rf fsharp/code

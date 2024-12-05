@@ -12,7 +12,7 @@ dart compile exe dart/code.dart -o dart/code --target-os=macos
 cd inko && inko build --opt=aggressive code.inko -o code && cd ..
 nim c -d:danger --opt:speed nim/code.nim
 sbcl --noinform --non-interactive --load "common-lisp/code.lisp" --build
-fpc -O3 fpc/code.pas
+fpc -O3 -Owall fpc/code.lpr -o fpc/code
 crystal build -o crystal/code --release crystal/code.cr
 #gnatmake -O3 -gnat2022 -gnatp -flto ada/code.adb -D ada -o ada/code
 scala-cli --power package scala/code.scala -f -o scala/code

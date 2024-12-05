@@ -1,0 +1,542 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{c4f88d3b-f970-426c-9e02-3913c74fa03b}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+    <DCC_DependencyCheckOutputName>code.exe</DCC_DependencyCheckOutputName>
+    <MainSource>code.dpr</MainSource>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_DebugInformation>False</DCC_DebugInformation>
+    <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+    <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    <DCC_Define>RELEASE</DCC_Define>
+    <DCC_AssertionsAtRuntime>False</DCC_AssertionsAtRuntime>
+    <DCC_IOChecking>False</DCC_IOChecking>
+    <DCC_GenerateStackFrames>True</DCC_GenerateStackFrames>
+    <DCC_ExtendedSyntax>False</DCC_ExtendedSyntax>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_Define>DEBUG</DCC_Define>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Delphi.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+<BorlandProject><Delphi.Personality><Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><VersionInfo><VersionInfo Name="IncludeVerInfo">False</VersionInfo><VersionInfo Name="AutoIncBuild">False</VersionInfo><VersionInfo Name="MajorVer">1</VersionInfo><VersionInfo Name="MinorVer">0</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">0</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">1046</VersionInfo><VersionInfo Name="CodePage">1252</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName"></VersionInfoKeys><VersionInfoKeys Name="FileDescription"></VersionInfoKeys><VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="InternalName"></VersionInfoKeys><VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys><VersionInfoKeys Name="ProductName"></VersionInfoKeys><VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments"></VersionInfoKeys></VersionInfoKeys><Source><Source Name="MainSource">code.dpr</Source></Source><Excluded_Packages>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <Excluded_Packages Name="$(BDS)\bin\applet100.bpl">CodeGear Control Panel Applet Package</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dcl31w100.bpl">Delphi 1.0 Compatibility Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclstd100.bpl">CodeGear Standard Components</Excluded_Packages>
+      <Excluded_Packages Name="C:\Windows\SYSTEM32\vclimg100.bpl">CodeGear Delphi image support library</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclact100.bpl">CodeGear ActionBar Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclbde100.bpl">CodeGear BDE DB Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dcldb100.bpl">CodeGear Database Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dbx100.bpl">CodeGear SQL Explorer UI Package</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclemacsedit100.bpl">CodeGear Editor Emacs Enhancements</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclmlwiz100.bpl">CodeGear Markup Language Wizards</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclsmpedit100.bpl">CodeGear Editor Script Enhancements</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dcldbxcds4100.bpl">CodeGear SimpleDataset Component (DBX)</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclmid100.bpl">CodeGear MyBase DataAccess Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dcldbx4100.bpl">CodeGear dbExpress Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclmcn100.bpl">CodeGear DataSnap Connection Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dcltee7100.bpl">TeeChart Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\Bin\dclib100.bpl">Borland InterBase Express Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclado100.bpl">CodeGear ADO DB Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\Bin\dclIndyCore100.bpl">Indy 10 Core Design Time</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\Bin\dclIndyProtocols100.bpl">Indy 10 Protocols Design Time</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\Bin\dclintraweb_90_100.bpl">VCL for the Web Design Package for CodeGear Delphi 2007 for Win32</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclsmp100.bpl">CodeGear Sample Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclie100.bpl">Internet Explorer Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclwebsnap100.bpl">CodeGear WebSnap Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\Bin\dclwbm100.bpl">CodeGear InternetExpress Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\Bin\dclnet100.bpl">CodeGear Internet Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclsoap100.bpl">CodeGear SOAP Components</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dclofficexp100.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+    </Excluded_Packages></Delphi.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
+  <ItemGroup>
+    <DelphiCompile Include="code.dpr">
+      <MainSource>MainSource</MainSource>
+    </DelphiCompile>
+  </ItemGroup>
+</Project>

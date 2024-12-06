@@ -7,6 +7,7 @@ local a = ffi.new("int32_t[?]", 10000)
 
 local i, j = i32(), i32()
 while i < 10000 do
+	j = i32(0)
 	while j < 100000 do
 		a[i] = (a[i] or 0) + j % u
 		j = j + 1

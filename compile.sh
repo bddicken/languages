@@ -21,7 +21,7 @@ odin build odin/code.odin -o:speed -file -out:odin/code
 clang -O3 -framework Foundation objc/code.m -o objc/code
 gfortran -O3 fortran/code.f90 -o fortran/code
 zig build-exe -O ReleaseFast -femit-bin=zig/code zig/code.zig
-luajit -b lua/code.lua lua/code
+luajit -b luajit/code.lua luajit/code
 swiftc -O -parse-as-library -Xcc -funroll-loops -Xcc -march=native -Xcc -ftree-vectorize -Xcc -ffast-math swift/code.swift -o swift/code
 # haxe --class-path haxe -main Code --jvm haxe/code.jar # was getting errors running `haxelib install hxjava`
 #dotnet publish csharp/csharp.csproj -o csharp/code-aot /p:PublishAot=true

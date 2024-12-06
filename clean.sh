@@ -16,7 +16,6 @@ rm odin/code
 rm objc/code
 rm fortran/code
 rm zig/code
-rm lua/code
 rm -f swift/code
 rm haxe/code.jar
 rm -rf csharp-aot/code

@@ -38,7 +38,7 @@ run "Crystal" "./crystal/code 40"
 #run "D" "./d/code 40" # Seems to not have an arm / M1 version
 run "Odin" "./odin/code 40"
 run "Fortran" "./fortran/code 40" 
-run "LuaJIT" "luajit ./lua/code 40"
+run "LuaJIT" "luajit ./luajit/code 40"
 run "Lua" "lua ./lua/code.lua 40"
 run "Swift" "./swift/code 40"
 run "Julia" "julia ./julia/code.jl 40"

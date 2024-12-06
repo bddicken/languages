@@ -3,6 +3,7 @@ rm go/code
 rm jvm/code.class
 rm -r rust/target
 rm -rf kotlin/code.jar
+rm kotlin/code.kexe
 rm dart/code
 rm -rf inko/build inko/code
 rm nim/code

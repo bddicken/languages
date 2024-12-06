@@ -3,3 +3,5 @@ code
 .idea/
 *.user
 *.o
+.aider*
+.env

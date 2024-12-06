@@ -7,7 +7,7 @@ native-image -O3 jvm.code
 RUSTFLAGS="-Zlocation-detail=none" cargo +nightly build --manifest-path rust/Cargo.toml --release
 cargo build --manifest-path rust/Cargo.toml --release
 kotlinc -include-runtime kotlin/code.kt -d kotlin/code.jar
-#kotlinc-native -include-runtime kotlin/code.kt -d kotlin/code
+kotlinc-native kotlin/code.kt -o kotlin/code -opt
 dart compile exe dart/code.dart -o dart/code --target-os=macos
 cd inko && inko build --opt=aggressive code.inko -o code && cd ..
 nim c -d:danger --opt:speed nim/code.nim

@@ -29,6 +29,7 @@ dotnet publish csharp -o csharp/code
 #dotnet publish fsharp -o fsharp/code-aot /p:PublishAot=true /p:OptimizationPreference=Speed
 dotnet publish fsharp -o fsharp/code
 ghc -O2 -fllvm haskell/code.hs -o haskell/code || { echo "ghc: cannot compile with llvm backend; fallback to use default backend"; ghc -O2 haskell/code.hs -o haskell/code; }
+hare build -R -o hare/code hare/code.ha
 emojicodec emojicode/code.emojic
 echo '(compile-program "chez/code.ss")' | chez --optimize-level 3 -q
 (cd clojure && mkdir -p classes && clojure -Sdeps '{:paths ["."]}' -M -e "(compile 'code)")

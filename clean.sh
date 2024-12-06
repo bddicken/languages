@@ -25,6 +25,7 @@ rm -rf csharp/code
 rm -rf fsharp/code-aot
 rm -rf fsharp/code
 rm haskell/code haskell/*.hi haskell/*.o
+rm hare/code
 rm emojicode/code emojicode/code.o
 rm -f chez/code.so
 rm -rf clojure/classes clojure/.cpcache

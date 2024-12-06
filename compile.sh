@@ -1,4 +1,4 @@
-clang -O3 c/code.c -o c/code
+clang -march=native -O3 -Ofast -o c/code c/code.c
 clang++ -std=c++23 -march=native -O3 -Ofast -o cpp/code cpp/code.cpp
 go build -ldflags "-s -w" -o go/code go/code.go
 javac jvm/code.java

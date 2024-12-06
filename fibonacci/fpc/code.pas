@@ -3,7 +3,7 @@ program FibonacciPascal;
 uses
   SysUtils;
 
-function Fibonacci(n: Int32): Int32;
+function Fibonacci(n: UInt32): UInt32; inline;
 begin
   if n = 0 then
     Fibonacci := 0
@@ -14,15 +14,8 @@ begin
 end;
 
 var
-  u, r, i: Int32;
-
+  u, r, i: UInt32;
 begin
-  if ParamCount < 1 then
-  begin
-    WriteLn('Usage: ', ParamStr(0), ' <number>');
-    Exit;
-  end;
-
   u := StrToInt(ParamStr(1));
   r := 0;
   for i := 1 to u - 1 do

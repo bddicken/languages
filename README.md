@@ -1,4 +1,4 @@
-https://benjdd.com/languages/
+https://benjdd.com/languages/ and https://benjdd.com/languages2/
 
 # Languages
 

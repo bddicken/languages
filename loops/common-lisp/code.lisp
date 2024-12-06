@@ -13,7 +13,7 @@
 
     (loop for i of-type (mod 10001) from 0 below 10000 do
       (loop for j of-type (mod 100001) from 0 below 100000 do
-        (setf (aref a i) (mod j u)))
+        (incf (aref a i) (mod j u)))
       (setf (aref a i) (+ (aref a i) r)))
     (format t "~a" (aref a r))))
 

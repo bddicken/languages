@@ -26,9 +26,9 @@ luajit -b lua/code.lua lua/code
 swiftc -O -parse-as-library -Xcc -funroll-loops -Xcc -march=native -Xcc -ftree-vectorize -Xcc -ffast-math swift/code.swift -o swift/code
 # haxe --class-path haxe -main Code --jvm haxe/code.jar # was getting errors running `haxelib install hxjava`
 #dotnet publish csharp -o csharp/code-aot /p:PublishAot=true /p:OptimizationPreference=Speed
-dotnet publish csharp -o csharp/code
+dotnet publish -c Release csharp -o csharp/code
 #dotnet publish fsharp -o fsharp/code-aot /p:PublishAot=true /p:OptimizationPreference=Speed
-dotnet publish fsharp -o fsharp/code
+dotnet publish -c Release fsharp -o fsharp/code
 ghc -O2 -fllvm haskell/code.hs -o haskell/code || { echo "ghc: cannot compile with llvm backend; fallback to use default backend"; ghc -O2 haskell/code.hs -o haskell/code; }
 v -prod -cc clang -d no_backtrace -gc none -o v/code v/code.v
 emojicodec emojicode/code.emojic

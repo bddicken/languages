@@ -22,3 +22,4 @@ rm haxe/code.jar
 rm -rf csharp-aot/code
 rm -rf csharp/code
 rm haskell/code haskell/*.hi haskell/*.o
+rm -rf clojure/classes clojure/.cpcache

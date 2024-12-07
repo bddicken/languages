@@ -36,3 +36,4 @@ rm emojicode/code emojicode/code.o
 rm -f chez/code.so
 rm -rf clojure/classes clojure/.cpcache
 rm cobol/main
+rm -f cython/code.c cython/code

@@ -35,3 +35,4 @@ emojicodec emojicode/code.emojic
 echo '(compile-program "chez/code.ss")' | chez --optimize-level 3 -q
 (cd clojure && mkdir -p classes && clojure -Sdeps '{:paths ["."]}' -M -e "(compile 'code)")
 cobc -I /opt/homebrew/include/ -O -O2 -O3 -Os -x -o cobol/main cobol/main.cbl
+cd cython && pip install cython && cython code.pyx --embed && clang $(python-config --includes) $(python-config --libs) -lpython3.13 -O3 code.c -o code

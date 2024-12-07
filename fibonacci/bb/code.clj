@@ -1,20 +1,14 @@
-(ns code
-  (:gen-class))
+(defn- fibonacci [n]
+  (if (<= n 1)
+    n
+    (+ (fibonacci (- n 1))
+       (fibonacci (- n 2)))))
 
-(set! *unchecked-math* :warn-on-boxed)
-
-(defn- fibonacci ^long [^long n]
-  ((fn fib ^long [^long n]
-    (if (<= n 1)
-      n
-      (+ (long (fib (- n 1)))
-         (long (fib (- n 2)))))) n))
-
-(defn -main [& args]
-  (let [u (long (parse-long (first args)))
-        r (loop [i 1
-                 sum 0]
-            (if (< i u)
-              (recur (inc i) (+ sum (long (fibonacci i))))
-              sum))]
+(defn main [u]
+  (let [r (reduce (fn [sum i] 
+                    (+ sum (fibonacci i)))
+                  0 
+                  (range 1 u))]
     (println r)))
+
+(main (-> *command-line-args* first parse-long))

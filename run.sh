@@ -63,3 +63,4 @@ run "COBOL" "" "./cobol/main"
 #run "Ada" "./ada/code"
 #run "D" "./d/code" # Seems to not have an arm / M1 version
 #run "Java GraalVM" "./jvm.code"
+run "Cython" "./cython/code"

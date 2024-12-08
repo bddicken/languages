@@ -1,0 +1,56 @@
+name: Test Modified Files on PR
+
+on:
+  pull_request:
+
+jobs:
+  test-modified-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Fetch branches and list modified files
+      - name: Get modified files
+        id: modified-files
+        run: |
+          git fetch origin ${{ github.event.pull_request.base.ref }} \
+              ${{ github.event.pull_request.head.ref }}
+          git diff --name-only origin/${{ github.event.pull_request.base.ref }} \
+              origin/${{ github.event.pull_request.head.ref }} > modified_files.txt
+          echo "files=$(cat modified_files.txt | tr '\n' ',')" >> $GITHUB_ENV
+
+      # Step 3: Run tests for each modified file containing 'code'
+      - name: Run tests
+        run: |
+          echo "Benchmark Result" > runtime.txt
+          IFS=',' read -r -a files <<< "$files"
+          for file in "${files[@]}"; do
+            if [[ "$file" == *code* ]]; then
+              echo "Running test for $file"
+              ./run-test.sh "$file" || exit 1
+            else
+              echo "Skipping $file as it is not a 'code' file"
+            fi
+          done
+          echo "results=$(cat runtime.txt | sed 's/%/%25/g; s/\n/%0A/g; s/\r/%0D/g')" >> $GITHUB_ENV
+        env:
+          files: ${{ env.files }}
+
+      # Step 4: Post test results as a comment
+      - name: Comment on PR
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const results = process.env.results;
+            const { github, context } = require('@actions/github');
+            await github.rest.issues.createComment({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `### Test Results\n${results}`
+            });
+        env:
+          results: ${{ env.results }}

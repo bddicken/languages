@@ -1,7 +1,7 @@
 function run {
   echo ""
   echo "Benchmarking $1"
-  hyperfine -i --shell=none --runs 3 --warmup 2 "$2"
+  # hyperfine -i --shell=none --runs 3 --warmup 2 "$2"
 }
 
 run "Zig" "./zig/code 40"
@@ -60,3 +60,4 @@ run "MAWK" "mawk -f ./awk/code.awk 40"
 run "Clojure" "java -cp clojure/classes:$(clojure -Spath) code 40"
 run "Babashka" "bb -cp clojure -m code 40"
 run "COBOL" "./cobol/main"
+run "Gleam" "(cd gleam && gleam run 40)"

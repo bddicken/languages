@@ -10,7 +10,7 @@ cdef int fibonacci(int n):
 
 
 def main():
-    cdef u, r, i
+    cdef int u, r, i
 
     u = int(sys.argv[1])
     r = 0

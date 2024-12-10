@@ -2,6 +2,7 @@ rm c/code
 rm cpp/code
 rm go/code
 rm jvm/code.class
+rm scala/code scala/code-native
 rm -r rust/target
 rm -rf kotlin/code.jar
 rm kotlin/code.kexe

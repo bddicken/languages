@@ -17,6 +17,7 @@ sbcl --noinform --non-interactive --load "common-lisp/code.lisp" --build
 fpc -O3 fpc/code.pas
 crystal build -o crystal/code --release crystal/code.cr
 scala-cli --power package scala/code.scala -f -o scala/code
+scala-cli --power package --native scala/code.scala -f -o scala/code-native --native-mode release-full
 ldc2 -O3 -release -boundscheck=off -mcpu=native flto=thin d/code.d
 odin build odin/code.odin -o:speed -file -out:odin/code
 clang -O3 -framework Foundation objc/code.m -o objc/code

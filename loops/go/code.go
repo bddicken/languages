@@ -13,10 +13,12 @@ func main() {
   r := rand.Int31n(10000)              // Get a random number 0 <= r < 10k
   var a[10000]int32                      // Array of 10k elements initialized to 0
   for i := int32(0); i < 10000; i++ {         // 10k outer loop iterations
+    tmp := a[i]
     for j := int32(0); j < 100000; j++ {      // 100k inner loop iterations, per outer loop iteration
-      a[i] = a[i] + j%u                // Simple sum
+      tmp = tmp + j%u                // Simple sum
     }
-    a[i] += r                          // Add a random value to each element in array
+    tmp += r                          // Add a random value to each element in array
+    a[i] = tmp
   }
   fmt.Println(a[r])                    // Print out a single element from the array
 }

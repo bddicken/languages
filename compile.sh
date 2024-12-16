@@ -10,7 +10,7 @@ cargo build --manifest-path rust/Cargo.toml --release
 kotlinc -include-runtime kotlin/code.kt -d kotlin/code.jar
 kotlinc-native kotlin/code.kt -o kotlin/code -opt
 dart compile exe dart/code.dart -o dart/code --target-os=macos
-cd inko && inko build --opt=aggressive code.inko -o code && cd ..
+cd inko; inko build --opt=aggressive code.inko -o code; cd ..
 nim c -d:danger --opt:speed -d:passC -x:off -a:off nim/code.nim
 nim -d:release --threads:off --stackTrace:off --lineTrace:off --opt:speed -x:off -o:nim/code c nim/code.nim
 sbcl --noinform --non-interactive --load "common-lisp/code.lisp" --build
@@ -38,3 +38,5 @@ lake build --dir lean4
 # haxe --class-path haxe -main Code --jvm haxe/code.jar # was getting errors running `haxelib install hxjava`
 #dotnet publish csharp -o csharp/code-aot /p:PublishAot=true /p:OptimizationPreference=Speed
 #gnatmake -O3 -gnat2022 -gnatp -flto ada/code.adb -D ada -o ada/code
+cd py; pip install cython setuptools; CFLAGS=-O3 cythonize -3 -i cythonized.py; cd ..
+

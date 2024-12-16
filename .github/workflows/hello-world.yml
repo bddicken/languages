@@ -50,7 +50,11 @@ jobs:
 
       # - name: Setup zig
       #   uses: mlugg/setup-zig@v1
-
+      
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.x
       - name: Setup Dart
         uses: dart-lang/setup-dart@v1
 

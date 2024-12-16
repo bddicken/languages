@@ -33,8 +33,9 @@ emojicodec emojicode/code.emojic
 echo '(compile-program "chez/code.ss")' | chez --optimize-level 3 -q
 (cd clojure && mkdir -p classes && clojure -Sdeps '{:paths ["."]}' -M -e "(compile 'code)")
 cobc -I /opt/homebrew/include/ -O -O2 -O3 -Os -x -o cobol/main cobol/main.cbl
-lake build --dir lean4 
+lake build --dir lean4
 #dotnet publish fsharp -o fsharp/code-aot /p:PublishAot=true /p:OptimizationPreference=Speed
 # haxe --class-path haxe -main Code --jvm haxe/code.jar # was getting errors running `haxelib install hxjava`
 #dotnet publish csharp -o csharp/code-aot /p:PublishAot=true /p:OptimizationPreference=Speed
 #gnatmake -O3 -gnat2022 -gnatp -flto ada/code.adb -D ada -o ada/code
+cd cython && pip install cython && cython code.pyx --embed && clang $(python-config --includes) $(python-config --libs) -lpython3.13 -O3 code.c -o code

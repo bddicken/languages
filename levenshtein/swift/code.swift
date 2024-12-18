@@ -1,3 +1,5 @@
+import Darwin
+
 /// Calculates the Levenshtein distance between two strings using Wagner-Fischer algorithm
 /// Space Complexity: O(min(m,n)) - only uses two arrays instead of full matrix
 /// Time Complexity: O(m*n) where m and n are the lengths of the input strings
@@ -44,7 +46,9 @@ func levenshteinDistance(_ s1: String, _ s2: String) -> Int {
 }
 
 // Main program
-func main() {
+@main
+struct Main {
+static func main() {
     // Get command line arguments (skipping the program name)
     let args = Array(CommandLine.arguments.dropFirst())
 
@@ -70,6 +74,7 @@ func main() {
     print("times: \(times)")
     print("min_distance: \(minDistance)")
 }
+}
 
 // Run main program
-main()
+//main()

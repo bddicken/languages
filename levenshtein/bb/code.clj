@@ -1,7 +1,9 @@
-(defn levenshtein-distance [s1 s2]
+(defn levenshtein-distance
+  "Calculates the Levenshtein distance between two strings using a functional approach."
+  [s1 s2]
   (let [m (count s1)
         n (count s2)]
-          ;; Create a matrix to store distances
+    ;; Create a matrix to store distances
     (as-> (vec (map vec (repeat (inc m) (repeat (inc n) 0)))) matrix
       ;; Initialize first row and column
       (reduce (fn [matrix i] (assoc-in matrix [i 0] i)) matrix (range (inc m)))
@@ -19,7 +21,10 @@
               matrix (range 1 (inc m)))
       (get-in matrix [m n]))))
 
-(defn main [& args]
+(defn main
+  "Main method that processes command line arguments and finds the minimum
+  Levenshtein distance between any pair of input strings."
+  [& args]
   (let [strings (vec args)
         n (count strings)
         distances (for [i (range n)
@@ -27,7 +32,7 @@
                         :when (not= i j)]
                     (levenshtein-distance (nth strings i) (nth strings j)))
         min-distance (apply min distances)]
-    (println "times:" (* n (dec n)))
+    (println "times:" (count distances))
     (println "min_distance:" min-distance)))
 
 (when (= *file* (System/getProperty "babashka.file"))
@@ -39,7 +44,7 @@
   ;; times: 110
   ;; min_distance: 2
   ;; "Elapsed time: 1.320292 msecs"
-  (def words (clojure.string/split (slurp "levenshtein/input.txt") #"\s"))
+  (def words (clojure.string/split (slurp "levenshtein/input.txt") #"\s+"))
   (time (apply main words))
   ;; times: 2756
   ;; min_distance: 1

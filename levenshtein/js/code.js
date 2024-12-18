@@ -27,8 +27,8 @@ function levenshteinDistance(str1, str2) {
   const n = str2.length;
 
   // Use TypedArrays for better performance
-  const prevRow = new Uint32Array(m + 1);
-  const currRow = new Uint32Array(m + 1);
+  let prevRow = new Uint32Array(m + 1);
+  let currRow = new Uint32Array(m + 1);
 
   // Initialize the first row
   for (let i = 0; i <= m; i++) {

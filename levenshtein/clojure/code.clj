@@ -3,26 +3,39 @@
 
 (set! *unchecked-math* :warn-on-boxed)
 
-(defn levenshtein-distance ^long [^String s1 ^String s2]
-  (let [m (int (count s1))
+(defn levenshtein-distance
+  "Calculates and returns the Levenshtein distance between `s1` and `s2` using an optimized
+  version of Wagner-Fischer algorithm that uses O(min(m,n)) space."
+  ^long [^String s1 ^String s2]
+  ;; Optimize by ensuring s1 is the shorter string to minimize space usage
+  (let [[^String s1 ^String s2] (if (> (count s1) (count s2)) [s2 s1] [s1 s2])
+        m (int (count s1))
         n (int (count s2))
-        matrix (long-array (* (inc m) (inc n)))]
+        ;; Only need two rows for the dynamic programming matrix
+        prev (long-array (inc m))
+        curr (long-array (inc m))]
+    ;; Initialize the first row
     (dotimes [i (inc m)]
-      (aset matrix (* i (inc n)) i))
-    (dotimes [j (inc n)]
-      (aset matrix j j))
-    (dotimes [i m]
-      (dotimes [j n]
-        (let [cost (if (= (.charAt s1 i) (.charAt s2 j)) 0 1)
-              del (inc (aget matrix (+ (* i (inc n)) (inc j))))
-              ins (inc (aget matrix (+ (* (inc i) (inc n)) j)))
-              sub (+ (aget matrix (+ (* i (inc n)) j)) cost)
-              idx (+ (* (inc i) (inc n)) (inc j))
-              v (min del (min ins sub))]
-          (aset matrix idx v))))
-    (aget matrix (+ (* m (inc n)) n))))
+      (aset prev i i))
+    ;; Fill the matrix row by row
+    (dotimes [i n]
+      (aset curr 0 (inc i))
+      (dotimes [j m]
+        ;; Calculate cost - 0 if characters are same, 1 if different
+        (let [cost (if (= (.charAt s1 j) (.charAt s2 i)) 0 1)
+              ;; Calculate minimum of deletion, insertion, and substitution
+              del (inc (aget prev (inc j)))
+              ins (inc (aget curr j))
+              sub (+ (aget prev j) cost)]
+          (aset curr (inc j) (min del (min ins sub)))))
+      ;; Swap rows
+      (System/arraycopy curr 0 prev 0 (inc m)))
+    (aget prev m)))
 
-(defn -main [& args]
+(defn -main
+  "Main method that processes command line arguments and finds the minimum
+  Levenshtein distance between any pairing of the input strings."
+  [& args]
   (let [strings (vec args)
         n (count strings)
         distances (for [i (range n)

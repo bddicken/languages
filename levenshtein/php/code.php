@@ -4,33 +4,40 @@ declare(strict_types=1);
 
 function levenshtein_distance(string $str1, string $str2): int
 {
+    if (strlen($str2) < strlen($str1)) {
+        return levenshtein_distance($str2, $str1);
+    }
     $m = strlen($str1);
     $n = strlen($str2);
   
-    // Create a matrix to store distances
-    $matrix = [];
+    $prev = [];
+    $curr = [];
 
-    // Initialize first row and column
     for ($i = 0; $i <= $m; $i++) {
-        $matrix[$i][0] = $i;
-    }
-    for ($j = 0; $j <= $n; $j++) {
-        $matrix[0][$j] = $j;
+        $prev[$i] = $i;
     }
  
     // Compute Levenshtein distance
-    for ($i = 1; $i <= $m; $i++) {
-        for ($j = 1; $j <= $n; $j++) {
-            $cost = (int) $str1[$i - 1] != $str2[$j - 1];
-            $matrix[$i][$j] = min(
-                $matrix[$i - 1][$j] + 1,        // Deletion
-                $matrix[$i][$j - 1] + 1,        // Insertion
-                $matrix[$i - 1][$j - 1] + $cost // Substitution
+    for ($i = 1; $i <= $n; $i++) {
+        $curr[0] = $i;
+        for ($j = 1; $j <= $m; $j++) {
+            $cost = 0;
+            if($str1[$j - 1] != $str2[$i - 1]) {
+                $cost = 1;
+            }
+            $curr[$j] = min(
+                $prev[$j] + 1,        // Deletion
+                $curr[$j - 1] + 1,        // Insertion
+                $prev[$j - 1] + $cost // Substitution
             );
         }
+        for ($j = 0; $j <= $m; $j++) {
+            $prev[$j] = $curr[$j];
+        }
     }
-  
-  return $matrix[$m][$n];
+ 
+  //var_dump($prev);
+  return $prev[$m];
 }
 
 // Main function to mimic C program's behavior

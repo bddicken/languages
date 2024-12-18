@@ -79,8 +79,8 @@ pub fn main() !void {
         while (j < args.len) : (j += 1) {
             if (i != j) {
                 const distance = try levenshteinDistance(allocator, args[i], args[j]);
-                if (min_distance == -1 or distance < @intCast(usize, min_distance)) {
-                    min_distance = @intCast(isize, distance);
+                if (min_distance == -1 or distance < @as(usize, @intCast(min_distance))) {
+                    min_distance = @as(isize, @intCast(distance));
                 }
                 times += 1;
             }

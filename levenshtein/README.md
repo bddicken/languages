@@ -18,6 +18,8 @@ All languages should do the equivalent amount of work and meet these requirement
 #include <string.h>
 #include <stdlib.h>
 
+// Can either define your own min function 
+// or use a language / standard library function
 int min(int a, int b, int c) {
   int min = a;
   if (b < min) min = b;
@@ -25,23 +27,27 @@ int min(int a, int b, int c) {
   return min;
 }
 
-// Compute Levenshtein distance between two strings
 int levenshtein_distance(const char *str1t, const char *str2t) {
+  // Get lengths of both strings
   int mt = strlen(str1t);
   int nt = strlen(str2t);
+  // Assign shorter one to str1, longer one to str2
   const char* str1 = mt <= nt ? str1t : str2t;
   const char* str2 = mt <= nt ? str2t : str1t;
+  // store the lengths of shorter in m, longer in n
   int m = str1 == str1t ? mt : nt;
   int n = str1 == str1t ? nt : mt;
-  
+ 
+  // Create two rows, previous and current
   int prev[m+1];
   int curr[m+1];
-  
+ 
+  // initialize the previous row
   for (int i = 0; i <= m; i++) {
     prev[i] = i;
   }
- 
-  // Compute Levenshtein distance
+
+  // Iterate and compute distance
   for (int i = 1; i <= n; i++) {
     curr[0] = i;
     for (int j = 1; j <= m; j++) {
@@ -57,14 +63,17 @@ int levenshtein_distance(const char *str1t, const char *str2t) {
     }
   }
   
+  // Return final distance, stored in prev[m]
   return prev[m];
 }
 
 int main(int argc, char *argv[]) {
   int min_distance = -1;
   int times = 0;
+  // Iterate through all combinations of command line args
   for (int i = 1; i < argc; i++) {
     for (int j = 1; j < argc; j++) {
+      // Don't compare the same string to itself
       if (i != j) {
         int distance = levenshtein_distance(argv[i], argv[j]);
         if (min_distance == -1 || min_distance > distance) {

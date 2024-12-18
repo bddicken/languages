@@ -14,5 +14,5 @@ int main (int argc, char** argv) {
     }
     a[i] += r;                         // Add a random value to each element in array
   }
-  printf("%d \n", a[r]);                // Print out a single element from the array
+  printf("%d\n", a[r]);                // Print out a single element from the array
 }

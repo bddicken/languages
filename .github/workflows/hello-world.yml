@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - '**'
+    paths:
+      - 'hello-world/**'
   pull_request:
     branches:
       - main
+    paths:
+      - 'hello-world/**'
 
 jobs:
   hello-world:

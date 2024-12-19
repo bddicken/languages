@@ -21,8 +21,10 @@ fn levenshteinDistance(s1: []const u8, s2: []const u8) usize {
     var curr_row: [256]usize = undefined;
 
     // Initialize first row
-    for (0..m + 1) |i| {
-        prev_row[i] = i;
+    prev_row[0] = 0;
+    comptime var init: usize = 1;
+    inline while (init <= 255) : (init += 1) {
+        prev_row[init] = init;
     }
 
     // Main computation loop
@@ -30,17 +32,19 @@ fn levenshteinDistance(s1: []const u8, s2: []const u8) usize {
     while (j <= n) : (j += 1) {
         curr_row[0] = j;
 
+        const char2 = str2[j - 1];  // Cache character
+
         var i: usize = 1;
         while (i <= m) : (i += 1) {
-            const cost: usize = if (str1[i - 1] == str2[j - 1]) 0 else 1;
-            
+            const cost = @intFromBool(str1[i - 1] != char2);
+
             // Calculate minimum of three operations
             curr_row[i] = @min(
+                prev_row[i - 1] + cost,    // substitution
                 @min(
-                    prev_row[i] + 1,      // deletion
-                    curr_row[i - 1] + 1,  // insertion
-                ),
-                prev_row[i - 1] + cost    // substitution
+                    prev_row[i] + 1,       // deletion
+                    curr_row[i - 1] + 1    // insertion
+                )
             );
         }
 
@@ -65,21 +69,18 @@ pub fn main() !void {
         std.process.exit(1);
     }
 
-    var min_distance: isize = -1;
+    var min_distance: usize = std.math.maxInt(usize);
     var times: usize = 0;
 
     // Compare all pairs of strings
     var i: usize = 1;
+
     while (i < args.len) : (i += 1) {
-        var j: usize = 1;
+        var j: usize = i + 1;
         while (j < args.len) : (j += 1) {
-            if (i != j) {
-                const distance = levenshteinDistance(args[i], args[j]);
-                if (min_distance == -1 or distance < @as(usize, @intCast(min_distance))) {
-                    min_distance = @as(isize, @intCast(distance));
-                }
-                times += 1;
-            }
+            const distance = levenshteinDistance(args[i], args[j]);
+            min_distance = @min(min_distance, distance);
+            times += 1;
         }
     }
 

@@ -11,7 +11,12 @@ object LevenshteinDistance {
     if (s2.isEmpty) return s1.length
 
     // Make s1 the shorter string for space optimization
-    val (str1, str2) = if (s1.length > s2.length) (s2, s1) else (s1, s2)
+    var str1 = s1
+    var str2 = s2
+    if (s1.length > s2.length) {
+      str1 = s2
+      str2 = s1
+    }
 
     val m = str1.length
     val n = str2.length

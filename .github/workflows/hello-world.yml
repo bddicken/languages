@@ -4,9 +4,19 @@ on:
   push:
     branches:
       - '**'
+    # White list
+    paths:
+      - 'run.sh'
+      - 'compile.sh'
+      - 'hello-world/**'
   pull_request:
     branches:
       - main
+    # White list
+    paths:
+      - 'run.sh'
+      - 'compile.sh'
+      - 'hello-world/**'
 
 jobs:
   hello-world:
@@ -28,7 +38,6 @@ jobs:
         with:
           java-version: '23'
           distribution: 'graalvm-community'
-          components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install clojure tools

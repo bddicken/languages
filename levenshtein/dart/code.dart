@@ -1,10 +1,14 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 int levenshteinDistance(String word1, String word2) {
   final m = word1.length;
   final n = word2.length;
   // Create a matrix to store distances
-  var matrix = List.generate(m + 1, (i) => List.generate(n + 1, (j) => 0));
+  var matrix = List.generate(
+    m + 1,
+    (i) => Int16List(n + 1),
+  );
 
   // Initialize first row and column
   for (int i = 1; i <= m; i++) {

@@ -8,6 +8,7 @@ int levenshteinDistance(String word1, String word2) {
   var matrix = List.generate(
     m + 1,
     (i) => Int16List(n + 1),
+    growable: false,
   );
 
   // Initialize first row and column

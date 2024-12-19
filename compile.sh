@@ -39,7 +39,7 @@ compile 'swift' 'swiftc -O -parse-as-library -Xcc -funroll-loops -Xcc -march=nat
 compile 'csharp' 'dotnet publish csharp -o csharp/code'
 compile 'fsharp' 'dotnet publish fsharp -o fsharp/code'
 compile 'haskell' 'ghc -O2 -fllvm haskell/code.hs -o haskell/code || { echo "ghc: cannot compile with llvm backend; fallback to use default backend"; ghc -O2 haskell/code.hs -o haskell/code; }'
-compile 'v' 'v -prod -cc clang -d no_backtrace -gc none -o v/code v/code.v'
+compile 'v' 'v -prod -cc clang -cflags -march=native -d no_backtrace -o v/code v/code.v'
 compile 'emojicode' 'emojicodec emojicode/code.emojic'
 compile 'chez' "echo '(compile-program \"chez/code.ss\")' | chez --optimize-level 3 -q"
 compile 'clojure' "(cd clojure && mkdir -p classes && clojure -Sdeps '{:paths [\".\"]}' -M -e \"(compile 'code)\")"

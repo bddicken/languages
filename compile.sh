@@ -27,7 +27,7 @@ compile 'nim' 'nim -d:release --threads:off --stackTrace:off --lineTrace:off --o
 compile 'sbcl' 'sbcl --noinform --non-interactive --load "common-lisp/code.lisp" --build'
 compile 'fpc' 'fpc -O3 fpc/code.pas'
 compile 'crystal' 'crystal build -o crystal/code --release crystal/code.cr'
-compile 'scala' 'scala-cli --power package scala/code.scala -f -o scala/code'
+compile 'scala' 'scala-cli --power package --assembly scala/code.scala -f -o scala/code'
 compile 'scala' 'scala-cli --power package --native scala/code.scala -f -o scala/code-native --native-mode release-full'
 compile 'ldc2' 'ldc2 -O3 -release -boundscheck=off -mcpu=native flto=thin d/code.d'
 compile 'odin' 'odin build odin/code.odin -o:speed -file -out:odin/code'

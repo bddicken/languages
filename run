@@ -1,0 +1,103 @@
+#! /bin/zsh
+
+setopt pipe_fail
+
+shorten_bench_name() {
+  local name="$*"
+  if (($#name > 80)); then
+    print ${name:0:60}...
+  else
+    print $name
+  fi
+}
+
+local -A benches=(
+  ["java -cp clojure/classes:$(clojure -Spath) code"]=clojure/classes/code.class
+  ['bun js/code.js BUN_JSC_useJIT=0']=js/code.js
+  ['bun js/code.js']=js/code.js
+  ['bun scala/code.js']=scala/code.js
+  ['c/code']=c/code
+  ['c3/code']=c3/code
+  ['chez --program chez/code.so']=chez/code.so
+  ['clojure-native-image/code']=clojure-native-image/code
+  ['cobol/main']=cobol/main
+  ['cpp/code']=cpp/code
+  ['crystal/code']=crystal/code
+  ['csharp/code-aot/code']=csharp/code-aot/code
+  ['csharp/code/code']=csharp/code/code
+  ['dart/code']=dart/code
+  ['deno --v8-flags=--jitless js/code.js']=js/code.js
+  ['deno run js/code.js']=js/code.js
+  ['elixir elixir/bench.exs']=elixir/bench.exs
+  ['emacs -Q --batch --load emacs-lisp/code.elc']=emacs-lisp/code.elc
+  ['emacs -Q --batch --load emacs-lisp/code.eln']=emacs-lisp/code.eln
+  ['emojicode/code']=emojicode/code
+  ['fortran/code']=fortran/code
+  ['fpc/code']=fpc/code
+  ['fsharp/code-aot/code']=fsharp/code-aot/code
+  ['fsharp/code/code']=fsharp/code/code
+  ['go/code']=go/code
+  ['haskell/code']=haskell/code
+  ['hs/code']=hs/code
+  ['inko/code']=inko/code
+  ['java -jar kotlin/code.jar']=kotlin/code.jar
+  ['java jvm.code']=jvm/code.class
+  ['java-native-image/code']=java-native-image/code
+  ['js/code']=js/code
+  ['julia julia/code.jl']=julia/code.jl
+  ['kotlin/code.kexe']=kotlin/code.kexe
+  ['lua lua/code.lua']=lua/code.lua
+  ['luajit lua/code']=lua/code
+  ['miniruby --yjit ruby/code.rb']=ruby/code.rb
+  ['modula2/code']=modula2/code
+  ['nim/code']=nim/code
+  ['nim/code']=nim/code
+  ['node --jitless js/code.js']=js/code.js
+  ['node js/code.js']=js/code.js
+  ['objc/code']=objc/code
+  ['odin/code']=odin/code
+  ['php -dopcache.enable_cli=1 -dopcache.jit=on -dopcache.jit_buffer_size=64M php/code.php']=php/code.php
+  ['php php/code.php']=php/code.php
+  ['pypy py/code.py']=py/code.py
+  ['python3.13 py/code.py']=py/code.py
+  ['racket/code']=racket/code
+  ['ruby ruby/code.rb']=ruby/code.rb
+  ['rust/target/release/code']=rust/target/release/code
+  ['sbcl --script common-lisp/code.lisp']=common-lisp/code.lisp
+  ['scala/bun']=scala/bun
+  ['scala/code']=scala/code
+  ['scala/code-native']=scala/code-native
+  ['swift/code']=swift/code
+  ['v/code']=v/code
+  ['zig/code']=zig/code
+)
+
+bench=()
+case "$*" in
+  (*check*)
+    input=$(cat input.txt)
+
+    for runner in ${(k)benches}; do
+      comm=($=runner)
+      comm=${comm[1]}
+      if test -r $benches[$runner] && { command -v $comm >/dev/null 2>&1 || { test -x $comm && ! test -d $comm } } ; then
+        print "checking $runner" >&2
+        ./check.sh "$("$runner" "$=input")" ||
+          { print "$runner failed" >&2; exit 1; }
+      fi
+    done
+    ;;
+  (*)
+    input=${"${@}":-$(cat input.txt)}
+
+    for runner in ${(k)benches}; do
+      comm=($=runner)
+      comm=${comm[1]}
+      if test -r $benches[$runner] && { command -v $comm >/dev/null 2>&1 || { test -x $comm && ! test -d $comm } } ; then
+        bench+=(--command-name "$(shorten_bench_name "$runner" "$input")" "$runner $input")
+      fi
+    done
+
+    hyperfine -i --shell=none --warmup 5 $bench
+    ;;
+esac

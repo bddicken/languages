@@ -11,11 +11,11 @@ To run one of the benchmarks:
 
 1. `cd` into desired benchmark directory (EG `$ cd loops`)
 2. Compile by running `$ ../compile.sh`
-3. Run via `$ ../run.sh`.
+3. Run via `$ ../run`.
   You should see output something like:
   
   ```
-  $ ../run.sh
+  $ ../run
 
   Benchmarking Zig
   Benchmark 1: ./zig/code 40
@@ -49,7 +49,7 @@ To add a language:
 2. Create a new subdirectory for the language (EG `$ mkdir rust`)
 3. Implement the code in the appropriately named file (EG: `code.rs`)
 4. If the language is compiled, add appropriate command to `../compile.sh` and `../clean.sh`
-5. Add appropriate line to `../run.sh`
+5. Add appropriate line to `../run`
 
 You are also welcome to add new top-level benchmarks dirs
 

@@ -12,43 +12,34 @@ fn levenshteinDistance(s1: []const u8, s2: []const u8) usize {
     // Make s1 the shorter string for space optimization
     const str1 = if (s1.len > s2.len) s2 else s1;
     const str2 = if (s1.len > s2.len) s1 else s2;
-
     const m = str1.len;
     const n = str2.len;
 
     // Use two arrays instead of full matrix for space optimization
-    var prev_row: [256]usize = undefined;
-    var curr_row: [256]usize = undefined;
+    var prev_row: [1024]usize = undefined;
+    var curr_row: [1024]usize = undefined;
 
-    // Initialize first row
-    prev_row[0] = 0;
-    comptime var init: usize = 1;
-    inline while (init <= 255) : (init += 1) {
-        prev_row[init] = init;
+    for (0..m + 1) |i| {
+        prev_row[i] = i;
     }
 
-    // Main computation loop
     var j: usize = 1;
     while (j <= n) : (j += 1) {
         curr_row[0] = j;
-
-        const char2 = str2[j - 1];  // Cache character
-
         var i: usize = 1;
         while (i <= m) : (i += 1) {
-            const cost = @intFromBool(str1[i - 1] != char2);
 
-            // Calculate minimum of three operations
+            const cost: usize = if (str1[i - 1] == str2[j - 1]) 0 else 1;
+            
             curr_row[i] = @min(
-                prev_row[i - 1] + cost,    // substitution
                 @min(
-                    prev_row[i] + 1,       // deletion
-                    curr_row[i - 1] + 1    // insertion
-                )
+                    prev_row[i] + 1,      // deletion
+                    curr_row[i - 1] + 1   // insertion
+                ),
+                prev_row[i - 1] + cost    // substitution
             );
         }
-
-        // Swap rows
+	// Swap rows
         @memcpy(prev_row[0..m + 1], curr_row[0..m + 1]);
     }
 
@@ -69,17 +60,18 @@ pub fn main() !void {
         std.process.exit(1);
     }
 
-    var min_distance: usize = std.math.maxInt(usize);
+    var min_distance: isize = -1;
     var times: usize = 0;
 
     // Compare all pairs of strings
     var i: usize = 1;
-
     while (i < args.len) : (i += 1) {
-        var j: usize = i + 1;
+        var j: usize = i + 1;  // Start from i+1 to avoid redundant comparisons
         while (j < args.len) : (j += 1) {
             const distance = levenshteinDistance(args[i], args[j]);
-            min_distance = @min(min_distance, distance);
+            if (min_distance == -1 or distance < @as(usize, @intCast(min_distance))) {
+                min_distance = @as(isize, @intCast(distance));
+            }
             times += 1;
         }
     }

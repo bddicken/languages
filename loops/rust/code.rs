@@ -10,10 +10,12 @@ fn main() {
         
     let mut a = [0u32; 10000];    // Array of 10k elements initialized to 0
     for i in 0..10000 {                  // 10k outer loop iterations
-        for j in 0..100000 {               // 100k inner loop iterations, per outer loop iteration
-            a[i] = a[i] + j % n;                // Simple sum
-        }
-        a[i] += r;                              // Add a random value to each element in array
+        let d = (100_000 - 1) / n;
+        let m = (100_000 - 1) % n;
+
+        a[i] += d * (n - 1) * n / 2 + m * (m + 1) / 2;
+
+        a[i] += r; // Add a random value to each element in array
     }
     println!("{}", a[r as usize]);              // Print out a single element from the array
 }

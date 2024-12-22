@@ -60,33 +60,32 @@ int levenshtein(const string_view& str1, const string_view& str2) {
     const size_t n = s2.length();
 
     // Only need two rows for the dynamic programming matrix
-    vector<int> prev(m + 1);
-    vector<int> curr(m + 1);
+    vector<vector<int>> rows(2, vector<int>(m+1));
 
     // Initialize first row with incremental values
     for (size_t j = 0; j <= m; ++j) {
-        prev[j] = j;
+        rows[0][j] = j;
     }
 
     // Fill the matrix row by row
     for (size_t i = 1; i <= n; ++i) {
-        curr[0] = i;  // Initialize first column
+        size_t curr = (i&1);
+        size_t prev = curr^1;
+        rows[curr][0] = i;  // Initialize first column
         for (size_t j = 1; j <= m; ++j) {
             // Calculate cost - 0 if characters are same, 1 if different
             const int cost = (s1[j - 1] == s2[i - 1]) ? 0 : 1;
             
             // Calculate minimum of deletion, insertion, and substitution
-            curr[j] = min({
-                prev[j] + 1,        // deletion
-                curr[j - 1] + 1,    // insertion
-                prev[j - 1] + cost  // substitution
-            });
+            rows[curr][j] = min({
+                rows[prev][j] + 1,        // deletion
+                rows[curr][j - 1] + 1,    // insertion
+                rows[prev][j - 1] + cost  // substitution
+                });
         }
-        // Swap rows using vector's efficient swap
-        prev.swap(curr);
     }
 
-    return prev[m];  // Final distance is in the last cell
+    return rows[n&1][m];  // Final distance is in the last cell
 }
 
 int main(int argc, char* argv[]) {

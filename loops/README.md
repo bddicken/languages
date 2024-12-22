@@ -29,6 +29,6 @@ int main (int argc, char** argv) {     // EVERY PROGRAM IN THIS BENCHMARK MUST..
 
 ## Critique
 
-Soon after publication, whole benchmark approach was heavily criticized, and in particular, reference code above is considered to be contrived example that should't had be created in the first place. 
+Soon after publication, the entire benchmark approach was heavily criticized. In particular, the reference code mentioned above is considered a contrived example that shouldn't have been created in the first place.
 
 - Language Performance Comparisons Are Junk https://www.youtube.com/watch?v=RrHGX1wwSYM

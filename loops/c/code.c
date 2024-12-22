@@ -12,9 +12,9 @@ int main (int argc, char** argv) {
   for (int i = 0; i < 10000; i++) {    // 10k outer loop iterations
     for (int j = 0; j < 100000; j++) { // 100k inner loop iterations, per outer loop iteration
       double quotient = (double)j / (double)u;
-	    quotient = trunc(quotient);
-	    double remainder = (double)j - (double)u*quotient;
-	    a[i] = a[i] + (int)remainder;
+      quotient = trunc(quotient);
+      double remainder = (double)j - (double)u*quotient;
+      a[i] = a[i] + (int)remainder;
     }
     a[i] += r;                         // Add a random value to each element in array
   }

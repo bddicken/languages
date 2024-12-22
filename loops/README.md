@@ -26,3 +26,9 @@ int main (int argc, char** argv) {     // EVERY PROGRAM IN THIS BENCHMARK MUST..
   printf("%d\n", a[r]);                // Print out a single element from the array
 }
 ```
+
+## Critique
+
+Soon after publication, whole benchmark approach was heavily criticized, and in particular, reference code above is considered to be contrived example that should't had be created in the first place. 
+
+- Language Performance Comparisons Are Junk https://www.youtube.com/watch?v=RrHGX1wwSYM

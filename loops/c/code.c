@@ -4,7 +4,7 @@
 #include "time.h"
 
 // A casey inspired macro
-#define REM(a, b) (long long)(((double)a) - ((double)b)*trunc(((double)a) / ((double)b)))
+#define REM(a, b) (int)(((double)a) - ((double)b)*trunc(((double)a) / ((double)b)))
 
 int main (int argc, char** argv) {
   int u = atoi(argv[1]);               // Get an input number from the command line

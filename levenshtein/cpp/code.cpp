@@ -81,7 +81,7 @@ int levenshtein(const string_view& str1, const string_view& str2) {
                 rows[prev][j] + 1,        // deletion
                 rows[curr][j - 1] + 1,    // insertion
                 rows[prev][j - 1] + cost  // substitution
-                });
+            });
         }
     }
 

@@ -35,4 +35,5 @@ rm v/code
 rm emojicode/code emojicode/code.o
 rm -f chez/code.so
 rm -rf clojure/classes clojure/.cpcache
+rm -rf clojure-native-image/classes clojure-native-image/.cpcache clojure-native-image/code
 rm cobol/main

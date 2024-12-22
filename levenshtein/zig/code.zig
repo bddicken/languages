@@ -3,7 +3,7 @@ const std = @import("std");
 /// Calculates the Levenshtein distance between two strings using Wagner-Fischer algorithm
 /// Space Complexity: O(min(m,n)) - only uses two arrays instead of full matrix
 /// Time Complexity: O(m*n) where m and n are the lengths of the input strings
-fn levenshteinDistance(allocator: std.mem.Allocator, s1: []const u8, s2: []const u8) !usize {
+fn levenshteinDistance(s1: []const u8, s2: []const u8) usize {
     // Early termination checks
     if (std.mem.eql(u8, s1, s2)) return 0;
     if (s1.len == 0) return s2.len;
@@ -17,14 +17,12 @@ fn levenshteinDistance(allocator: std.mem.Allocator, s1: []const u8, s2: []const
     const n = str2.len;
 
     // Use two arrays instead of full matrix for space optimization
-    var prev_row = try allocator.alloc(usize, m + 1);
-    defer allocator.free(prev_row);
-    var curr_row = try allocator.alloc(usize, m + 1);
-    defer allocator.free(curr_row);
+    var prev_row: [256]usize = undefined;
+    var curr_row: [256]usize = undefined;
 
     // Initialize first row
-    for (prev_row, 0..) |*cell, i| {
-        cell.* = i;
+    for (0..m + 1) |i| {
+        prev_row[i] = i;
     }
 
     // Main computation loop
@@ -47,9 +45,7 @@ fn levenshteinDistance(allocator: std.mem.Allocator, s1: []const u8, s2: []const
         }
 
         // Swap rows
-        const temp = prev_row;
-        prev_row = curr_row;
-        curr_row = temp;
+        @memcpy(prev_row[0..m + 1], curr_row[0..m + 1]);
     }
 
     return prev_row[m];
@@ -78,7 +74,7 @@ pub fn main() !void {
         var j: usize = 1;
         while (j < args.len) : (j += 1) {
             if (i != j) {
-                const distance = try levenshteinDistance(allocator, args[i], args[j]);
+                const distance = levenshteinDistance(args[i], args[j]);
                 if (min_distance == -1 or distance < @as(usize, @intCast(min_distance))) {
                     min_distance = @as(isize, @intCast(distance));
                 }

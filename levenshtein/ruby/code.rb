@@ -17,21 +17,21 @@ def levenshtein_distance(s1, s2)
   curr_row = Array.new(m + 1)
 
   # Convert strings to bytes for faster access
-  s1_bytes = s1.bytes.to_a.freeze
-  s2_bytes = s2.bytes.to_a.freeze
+  s1_bytes = s1.bytes.freeze
+  s2_bytes = s2.bytes.freeze
 
   # Main computation loop
-  (1..n).each do |j|
-    curr_row[0] = j
+  n.times do |j|
+    curr_row[0] = j+1
 
-    (1..m).each do |i|
-      cost = (s1_bytes[i-1] == s2_bytes[j-1]) ? 0 : 1
-      
+    m.times do |i|
+      cost = (s1_bytes[i] == s2_bytes[j]) ? 0 : 1
+
       # Calculate minimum of three operations
-      curr_row[i] = [
-        prev_row[i] + 1,      # deletion
-        curr_row[i-1] + 1,    # insertion
-        prev_row[i-1] + cost  # substitution
+      curr_row[i+1] = [
+        prev_row[i+1] + 1,      # deletion
+        curr_row[i] + 1,    # insertion
+        prev_row[i] + cost  # substitution
       ].min
     end
 

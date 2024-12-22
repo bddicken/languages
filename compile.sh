@@ -29,6 +29,8 @@ compile 'fpc' 'fpc -O3 fpc/code.pas'
 compile 'crystal' 'crystal build -o crystal/code --release crystal/code.cr'
 compile 'scala' 'scala-cli --power package scala/code.scala -f -o scala/code'
 compile 'scala' 'scala-cli --power package --native scala/code.scala -f -o scala/code-native --native-mode release-full'
+compile 'scala' 'scala-cli --power package --js scala/codeJS.scala -f -o scala/code.js --js-mode fullLinkJS'
+compile 'scala' 'bun build --bytecode --compile scala/code.js --outfile scala/bun'
 compile 'ldc2' 'ldc2 -O3 -release -boundscheck=off -mcpu=native flto=thin d/code.d'
 compile 'odin' 'odin build odin/code.odin -o:speed -file -out:odin/code'
 compile 'objc' 'clang -O3 -framework Foundation objc/code.m -o objc/code'
@@ -43,6 +45,9 @@ compile 'v' 'v -prod -cc clang -d no_backtrace -gc none -o v/code v/code.v'
 compile 'emojicode' 'emojicodec emojicode/code.emojic'
 compile 'chez' "echo '(compile-program \"chez/code.ss\")' | chez --optimize-level 3 -q"
 compile 'clojure' "(cd clojure && mkdir -p classes && clojure -Sdeps '{:paths [\".\"]}' -M -e \"(compile 'code)\")"
+#compile 'clojure-native-image' "(cd clojure-native-image && clojure -M:native-image)"
+#Using `compile` for clojure-native-image silently fails
+(cd clojure-native-image && clojure -M:native-image)
 compile 'cobol' 'cobc -I /opt/homebrew/include/ -O -O2 -O3 -Os -x -o cobol/main cobol/main.cbl'
 compile 'lean4' 'lake build --dir lean4 '
 # compile 'fsharp' 'dotnet publish fsharp -o fsharp/code-aot /p:PublishAot=true /p:OptimizationPreference=Speed'

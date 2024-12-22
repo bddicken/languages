@@ -1,4 +1,4 @@
-name: Hello World
+name: Compile, Check & Run
 
 on:
   push:
@@ -50,11 +50,12 @@ jobs:
 
       # - name: Setup zig
       #   uses: mlugg/setup-zig@v1
-      
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.x
+
       - name: Setup Dart
         uses: dart-lang/setup-dart@v1
 
@@ -96,3 +97,44 @@ jobs:
           cd hello-world
           bash ../run.sh
         continue-on-error: true
+
+      ## Compiling and checking all the benchmark sequentially takes a lot of time
+      ## Trying to run them in parallell in different jobs runs into cache problems
+      ## It takes a lot of time to restore the cache, and creating the large cache
+      ## Sometimes fails.
+      
+      # - name: Compile Loops programs
+      #   run: |
+      #     cd loops
+      #     bash ../compile.sh
+      #   continue-on-error: true
+
+      # - name: Check Loops programs
+      #   run: |
+      #     cd loops
+      #     bash ../run.sh check
+      #   continue-on-error: true
+
+      # - name: Compile Fibonacci programs
+      #   run: |
+      #     cd fibonacci
+      #     bash ../compile.sh
+      #   continue-on-error: true
+
+      # - name: Check Fibonacci programs
+      #   run: |
+      #     cd fibonacci
+      #     bash ../run.sh check
+      #   continue-on-error: true
+
+      # - name: Compile Levenshtein programs
+      #   run: |
+      #     cd levenshtein
+      #     bash ../compile.sh
+      #   continue-on-error: true
+
+      # - name: Check Levenshtein programs
+      #   run: |
+      #     cd levenshtein
+      #     bash ../run.sh check
+      #   continue-on-error: true

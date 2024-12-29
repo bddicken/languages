@@ -4,7 +4,7 @@ function compile {
     echo "Compiling $1"
     ${2} 2> /dev/null
     result=$?
-    if [ $result -eq 1 ]; then
+    if [ $result -ne 0 ]; then
         echo "Failed to compile ${1} with command: ${2}"
     fi
   fi

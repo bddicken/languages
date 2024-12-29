@@ -1,0 +1,14 @@
+import { floor } from math;
+import { rand } from numbers;
+import { fill } from arrays;
+
+let u = to_int(args[0]);
+var r = floor(rand() * 10000);
+var a = fill(0, 10000);
+for (var i = 0; i < 10000; i++) {
+  for (var j = 0; j < 100000; j++) {
+    a[i] = a[i] + j % u;
+  }
+  a[i] += r;
+}
+println(a[r]);

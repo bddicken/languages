@@ -66,6 +66,7 @@ run "Free Pascal" "./fpc/code" "./fpc/code" "${input}"
 run "Go" "./go/code" "./go/code" "${input}"
 run "Haskell" "./haskell/code" "./haskell/code" "${input}"
 #run "Haxe JVM" "haxe/code.jar" "java -jar haxe/code.jar" "${input}" # was getting errors running `haxelib install hxjava` 
+run "Hook" "./hook/code.hk" "hook ./hook/code.hk" "${input}"
 run "Inko" "./inko/code" "./inko/code" "${input}"
 run "Java" "./jvm/code.class" "java jvm.code" "${input}"
 #run "Java Native" "./jvm.code" "./jvm.code" "${input}"

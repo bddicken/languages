@@ -1,0 +1,10 @@
+fn fibonacci(n) =>
+  if (n < 2) n
+  else fibonacci(n - 1) + fibonacci(n - 2);
+
+let u = to_int(args[0]);
+var r = 0;
+for (var i = 1; i < u; i++) {
+  r += fibonacci(i);
+}
+println(r);

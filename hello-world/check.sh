@@ -1,6 +1,6 @@
 expected_output="hello, world!"
 
-trimmed_output=$(echo "${*}" | awk '{$1=$1};1' | tr '[:upper:]' '[:lower:]')
+trimmed_output=$(echo "${*}" | sed 's/\x1b\[[0-9;]*m//g' | awk '{$1=$1};1' | tr '[:upper:]' '[:lower:]')
 
 if [ "${trimmed_output}" == "${expected_output}" ]; then
   echo "Check passed"

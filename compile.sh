@@ -10,6 +10,7 @@ function compile {
   fi
 }
 
+compile 'c3' 'c3c compile c3/code.c3 -o c3/code'
 compile 'c' 'clang -O3 c/code.c -o c/code'
 compile 'cpp' 'clang++ -std=c++23 -march=native -O3 -Ofast -o cpp/code cpp/code.cpp'
 #compile 'go' 'go build -ldflags "-s -w" -o go/code go/code.go'

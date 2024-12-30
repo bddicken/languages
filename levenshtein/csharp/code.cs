@@ -1,4 +1,6 @@
-﻿int min_distance = -1;
+using System.Runtime.CompilerServices;
+
+int min_distance = -1;
 int times = 0;
 for (int i = 0; i < args.Length; i++)
 {
@@ -18,32 +20,61 @@ for (int i = 0; i < args.Length; i++)
 Console.WriteLine($"times: {times}");
 Console.WriteLine($"min_distance: {min_distance}");
 
-static int levenshtein(string str1, string str2)
+[MethodImpl(MethodImplOptions.AggressiveOptimization)]
+static int levenshtein(ReadOnlySpan<char> str1, ReadOnlySpan<char> str2)
 {
-    int n = str1.Length;
-    int m = str2.Length;
-    int[,] matrix = new int[m + 1, n + 1];
-
-    for (int i = 0; i <= m; i++)
+    // Early termination checks
+    if (str1.SequenceEqual(str2))
     {
-        matrix[i, 0] = i;
+        return 0;
+    }
+    if (str1.IsEmpty)
+    {
+        return str2.Length;
+    }
+    if (str2.IsEmpty)
+    {
+        return str1.Length;
     }
 
-    for (int j = 0; j <= n; j++)
+    // Ensure str1 is the shorter string
+    if (str1.Length > str2.Length)
     {
-        matrix[0, j] = j;
+        var strtemp = str2;
+        str2 = str1;
+        str1 = strtemp;
     }
 
-    for (int i = 1; i <= m; i++)
+    // Create two rows, previous and current
+    Span<int> prev = stackalloc int[str1.Length + 1];
+    Span<int> curr = stackalloc int[str1.Length + 1];
+
+    // initialize the previous row
+    for (int i = 0; i <= str1.Length; i++)
     {
-        for (int j = 1; j <= n; j++)
+        prev[i] = i;
+    }
+
+    // Iterate and compute distance
+    for (int i = 1; i <= str2.Length; i++)
+    {
+        curr[0] = i;
+        for (int j = 1; j <= str1.Length; j++)
         {
-            int cost = (str1[i - 1] == str2[j - 1] ? 0 : 1);
-            matrix[i, j] = int.Min(
-                matrix[i - 1, j] + 1, int.Min(matrix[i, j - 1] + 1,
-                          matrix[i - 1, j - 1] + cost));
+            int cost = (str1[j - 1] == str2[i - 1]) ? 0 : 1;
+            curr[j] = Math.Min(
+              prev[j] + 1,      // Deletion
+              Math.Min(curr[j - 1] + 1,    // Insertion
+              prev[j - 1] + cost)  // Substitution
+            );
         }
-    }
 
-    return matrix[m, n];
+        // Swap spans
+        var temp = prev;
+        prev = curr;
+        curr = temp;
+    }
+    
+    // Return final distance, stored in prev[m]
+    return prev[str1.Length];
 }

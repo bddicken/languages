@@ -62,3 +62,4 @@ compile 'lean4' 'lake build --dir lean4 '
 #Using `compile` for Emacs Lisp silently fails
 (cd emacs-lisp && emacs -Q --batch --eval '(byte-compile-file "code.el")')
 (cd emacs-lisp && emacs -Q --batch --eval '(native-compile "code.el" (expand-file-name "code.eln"))')
+(cd racket && raco make code.rkt && raco demod -o code.zo code.rkt && raco exe -o code code.zo)

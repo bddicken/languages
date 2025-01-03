@@ -32,3 +32,5 @@ Cargo.lock
 */scala/code-native
 */scala/code.js
 levenshtein.mod
+*/racket/compiled/
+*.zo

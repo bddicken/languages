@@ -1,37 +1,33 @@
- loopy: proc options(main);
-
-		declare input_number fixed dec(5) init(0);
-		declare random_number fixed dec(6) init(0);
-		declare 1 array(1:10000),
-			element fixed bin(31) init(0);
-		declare i fixed dec(5) init(1);
-		declare j fixed dec(6) init(1);
-		declare modulo_result fixed bin(15);
-		declare element_result fixed bin(31);
-
-		/* Get an input number from the standard input */
-		get list(input_number); 
-
-		/* Get a random number 0 <= r < 10k */
-		random_number = random() * 10000;
-
-		/* 10k outer loop iterations */
-		do i = 1 to 10000;
-			/* 100k inner loop iterations, per outer loop iteration */
-			do j = 1 to 100000;
-				/* Simple sum */
-				array(i).element = mod(j, input_number);                   
-			end;
-			/* Add a random value to each element in array */
-			array(i).element = array(i).element + random_number;
-		end;
-
-		/* Move an element from the array to a variable */
-		element_result = array(random_number + 1).element;
-
-		/* Print out a single element from the array */
-		put skip data(element_result);
-
-		stop;
-
- end loopy;
+loopy: proc(parms) options(main);
+        dcl parms  char(100) var;
+        dcl u          fixed bin(31); /*parameter value in fixed bin*/ 
+	dcl r          fixed bin(31); /* a random value 0001-9999   */
+	dcl (i,j,m)    fixed bin(31);
+	dcl a(10000)   fixed bin(31);		
+	dcl sysprint   file stream output;		
+	 
+	u = parms;		
+	r = randomm();	         
+        do i = 1 to 10000;       
+            a(i) = 0;		
+            do j = 1 to 100000;   
+                m = mod(j,u);			
+                a(i) = a(i) + m; 				
+            end;
+            a(i) = a(i) + r;                             			
+        end;		         
+	put file(sysprint) skip edit(a(r))(f(8));
+        close file(sysprint); 		
+		
+	randomm: proc; 
+	  /* a somewhat dummy random number generator */
+	  dcl ts    char(15) var;
+	  dcl rand  char(4);
+	  dcl randi  fixed bin(15);
+		
+	  ts = time();
+	  rand = substr(ts,6,4);
+	  randi = rand;  
+	  return(randi);
+	end randomm;		
+end;

@@ -1,4 +1,4 @@
-loopy: proc(parms) options(main);
+code: proc(parms) options(main);
         dcl parms  char(100) var;
         dcl u          fixed bin(31); /*parameter value in fixed bin*/ 
 	dcl r          fixed bin(31); /* a random value 0001-9999   */

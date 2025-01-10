@@ -11,7 +11,7 @@ fn main() {
     let mut a = [0u32; 10000];    // Array of 10k elements initialized to 0
     for el in a.iter_mut() {                  // 10k outer loop iterations
         for j in 0..100000 {               // 100k inner loop iterations, per outer loop iteration
-            *el += *el + j % n;                // Simple sum
+            *el = *el + j % n;                // Simple sum
         }
         *el += r;                              // Add a random value to each element in array
     }

@@ -31,15 +31,13 @@ fn levenshtein_distance(s1: &str, s2: &str) -> usize {
 
     // Use two rows instead of full matrix for space optimization
     let mut prev_row = Vec::with_capacity(m + 1);
-    let mut curr_row = Vec::with_capacity(m + 1);
-
+    for j in 0..=prev_row.capacity() {prev_row.push(j as i32);}
+    let mut curr_row:Vec<i32> = vec![0;m+1];
     // Initialize first row
-    prev_row.extend(0..=m);
-    curr_row.resize(m + 1, 0);
 
     // Main computation loop
     for j in 1..=n {
-        curr_row[0] = j;
+        curr_row[0] = j as i32;
 
         for i in 1..=m {
             let cost = if s1_bytes[i - 1] == s2_bytes[j - 1] { 0 } else { 1 };
@@ -52,13 +50,13 @@ fn levenshtein_distance(s1: &str, s2: &str) -> usize {
                 ),
                 prev_row[i - 1] + cost    // substitution
             );
-        }
+            }
 
         // Swap rows
         std::mem::swap(&mut prev_row, &mut curr_row);
     }
 
-    prev_row[m]
+    prev_row[m].try_into().unwrap()
 }
 
 fn main() {
@@ -69,7 +67,7 @@ fn main() {
         return;
     }
 
-    let mut min_distance = None;
+    let mut min_distance = usize::MAX;
     let mut times = 0;
 
     // Compare all pairs of strings
@@ -77,18 +75,12 @@ fn main() {
         for j in 0..args.len() {
             if i != j {
                 let distance = levenshtein_distance(&args[i], &args[j]);
-                if let Some(current_min) = min_distance {
-                    if distance < current_min {
-                        min_distance = Some(distance);
-                    }
-                } else {
-                    min_distance = Some(distance);
-                }
+                min_distance = std::cmp::min(distance, min_distance);
                 times += 1;
             }
         }
     }
 
     println!("times: {}", times);
-    println!("min_distance: {}", min_distance.unwrap_or(usize::MAX));
+    println!("min_distance: {}", min_distance);
 }

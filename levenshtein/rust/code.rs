@@ -38,10 +38,10 @@ fn levenshtein_distance(s1: &str, s2: &str) -> usize {
     curr_row.resize(m + 1, 0);
 
     // Main computation loop
-    for j in 1..=n {
+    for j in 1..n + 1 {
         curr_row[0] = j;
 
-        for i in 1..=m {
+        for i in 1..m + 1 {
             let cost = if s1_bytes[i - 1] == s2_bytes[j - 1] { 0 } else { 1 };
             
             // Calculate minimum of three operations

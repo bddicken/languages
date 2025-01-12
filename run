@@ -98,6 +98,6 @@ case "$*" in
       fi
     done
 
-    hyperfine -i --shell=none --warmup 5 $bench
+    hyperfine --shell=none --warmup 5 $bench
     ;;
 esac

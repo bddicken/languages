@@ -64,8 +64,8 @@ pub fn main() !void {
     const max_inp_len = std.mem.max(usize, input_lengths);
 
     // Reuse prev and curr row to minimize allocations
-    const prev_row = try allocator.alloc(usize, max_inp_len);
-    const curr_row = try allocator.alloc(usize, max_inp_len);
+    const prev_row = try allocator.alloc(usize, max_inp_len + 1);
+    const curr_row = try allocator.alloc(usize, max_inp_len + 1);
 
     var min_distance: isize = -1;
     var times: usize = 0;

@@ -1,3 +1,3 @@
 hello: proc options(main);
-  put skip list("Hello World!");
+  put skip list('Hello World!');
 end hello; 

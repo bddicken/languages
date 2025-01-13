@@ -3,7 +3,7 @@ const std = @import("std");
 /// Calculates the Levenshtein distance between two strings using Wagner-Fischer algorithm
 /// Space Complexity: O(min(m,n)) - only uses two arrays instead of full matrix
 /// Time Complexity: O(m*n) where m and n are the lengths of the input strings
-fn levenshteinDistance(s1: []const u8, s2: []const u8, prev_row: []usize, curr_row: []usize) usize {
+fn levenshteinDistance(s1: []const u8, s2: []const u8) usize {
     // Early termination checks
     if (std.mem.eql(u8, s1, s2)) return 0;
     if (s1.len == 0) return s2.len;
@@ -15,6 +15,10 @@ fn levenshteinDistance(s1: []const u8, s2: []const u8, prev_row: []usize, curr_r
 
     const m = str1.len;
     const n = str2.len;
+
+    // Initialize arrays
+    var prev_row: [1024]usize = undefined;
+    var curr_row: [1024]usize = undefined;
 
     // Initialize first row
     for (0..m + 1) |i| {
@@ -30,8 +34,7 @@ fn levenshteinDistance(s1: []const u8, s2: []const u8, prev_row: []usize, curr_r
             const cost: usize = if (str1[i - 1] == str2[j - 1]) 0 else 1;
 
             // Calculate minimum of three operations
-            curr_row[i] = @min(
-                prev_row[i] + 1, // deletion
+            curr_row[i] = @min(prev_row[i] + 1, // deletion
                 curr_row[i - 1] + 1, // insertion
                 prev_row[i - 1] + cost // substitution
             );
@@ -57,17 +60,7 @@ pub fn main() !void {
         std.process.exit(1);
     }
 
-    // Calculate length of longest input string
-    const input_lengths = try allocator.alloc(usize, args.len);
-    for (0..input_lengths.len) |i| input_lengths[i] = args[i].len;
-
-    const max_inp_len = std.mem.max(usize, input_lengths);
-
-    // Reuse prev and curr row to minimize allocations
-    const prev_row = try allocator.alloc(usize, max_inp_len);
-    const curr_row = try allocator.alloc(usize, max_inp_len);
-
-    var min_distance: isize = -1;
+    var min_distance: usize = std.math.maxInt(usize);
     var times: usize = 0;
 
     // Compare all pairs of strings
@@ -75,9 +68,9 @@ pub fn main() !void {
     for (1..args.len) |i| {
         for (1..args.len) |j| {
             if (i != j) {
-                const distance = levenshteinDistance(args[i], args[j], prev_row, curr_row);
-                if (min_distance == -1 or distance < @as(usize, @intCast(min_distance))) {
-                    min_distance = @as(isize, @intCast(distance));
+                const distance = levenshteinDistance(args[i], args[j]);
+                if (distance < min_distance) {
+                    min_distance = distance;
                 }
                 times += 1;
             }

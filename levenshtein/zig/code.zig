@@ -5,7 +5,6 @@ const std = @import("std");
 /// Time Complexity: O(m*n) where m and n are the lengths of the input strings
 fn levenshteinDistance(s1: []const u8, s2: []const u8) usize {
     // Early termination checks
-    if (std.mem.eql(u8, s1, s2)) return 0;
     if (s1.len == 0) return s2.len;
     if (s2.len == 0) return s1.len;
 

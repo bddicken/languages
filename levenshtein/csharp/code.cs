@@ -69,7 +69,7 @@ static int LevenshteinDistance(string str1, string str2)
             );
         }
 
-        // Swap spans
+        // Swap arrays
         (prev, curr) = (curr, prev);
     }
 

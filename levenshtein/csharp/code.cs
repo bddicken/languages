@@ -32,12 +32,12 @@ static int LevenshteinDistance(string str1, string str2)
         return 0;
     }
 
-    if (string.IsNullOrEmpty(str1))
+    if (str1.Length == 0)
     {
         return str2.Length;
     }
 
-    if (string.IsNullOrEmpty(str2))
+    if (str2.Length == 0)
     {
         return str1.Length;
     }

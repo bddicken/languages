@@ -7,58 +7,50 @@ fn levenshtein_distance(s1: &str, s2: &str) -> usize {
     // Early termination checks
     if s1 == s2 {
         return 0;
-    }
-    if s1.is_empty() {
+    } else if s1.is_empty() {
         return s2.len();
-    }
-    if s2.is_empty() {
+    } else if s2.is_empty() {
         return s1.len();
     }
 
-    // Convert to bytes for faster access
-    let s1_bytes = s1.as_bytes();
-    let s2_bytes = s2.as_bytes();
+    // Correctness checks
+    assert!(s1.len().max(s2.len()) < u32::MAX as usize / 2);
+    assert!(s1.is_ascii() && s2.is_ascii());
 
-    // Make s1 the shorter string for space optimization
-    let (s1_bytes, s2_bytes) = if s1_bytes.len() > s2_bytes.len() {
-        (s2_bytes, s1_bytes)
-    } else {
-        (s1_bytes, s2_bytes)
+    // Convert to bytes for faster access
+    // And make s1 the shorter string for space optimization
+    let (s1, s2) = match s1.len() < s2.len() {
+        true => (s1.as_bytes(), s2.as_bytes()),
+        false => (s2.as_bytes(), s1.as_bytes()),
     };
 
-    let m = s1_bytes.len();
-    let n = s2_bytes.len();
-
     // Use two rows instead of full matrix for space optimization
-    let mut prev_row = Vec::with_capacity(m + 1);
-    let mut curr_row = Vec::with_capacity(m + 1);
-
-    // Initialize first row
-    prev_row.extend(0..=m);
-    curr_row.resize(m + 1, 0);
+    let mut prev_row: Vec<_> = (0..=s1.len() as _).collect();
+    let mut curr_row = vec![0u32; s1.len() + 1];
 
     // Main computation loop
-    for j in 1..=n {
-        curr_row[0] = j;
+    for (j, &ch2) in s2.iter().enumerate() {
+        curr_row[0] = (j + 1) as _;
 
-        for i in 1..=m {
-            let cost = if s1_bytes[i - 1] == s2_bytes[j - 1] { 0 } else { 1 };
-            
+        // Iterate on 2-sized windows of curr_row and prev_row to remove out-of-bounds checks
+        let mut curr_window0 = curr_row[0];
+        for (&ch1, (curr_window1, prev_window)) in
+            (s1.iter()).zip(curr_row[1..].iter_mut().zip(prev_row.windows(2)))
+        {
+            let cost = (ch1 != ch2) as u32;
+
             // Calculate minimum of three operations
-            curr_row[i] = std::cmp::min(
-                std::cmp::min(
-                    prev_row[i] + 1,      // deletion
-                    curr_row[i - 1] + 1,  // insertion
-                ),
-                prev_row[i - 1] + cost    // substitution
-            );
+            *curr_window1 = (prev_window[1] + 1) // deletion
+                .min(curr_window0 + 1) // insertion
+                .min(prev_window[0] + cost); // substitution
+            curr_window0 = *curr_window1;
         }
 
         // Swap rows
-        std::mem::swap(&mut prev_row, &mut curr_row);
+        (prev_row, curr_row) = (curr_row, prev_row);
     }
 
-    prev_row[m]
+    *prev_row.last().unwrap() as _
 }
 
 fn main() {
@@ -69,26 +61,21 @@ fn main() {
         return;
     }
 
-    let mut min_distance = None;
+    let mut min_distance = usize::MAX;
     let mut times = 0;
 
     // Compare all pairs of strings
-    for i in 0..args.len() {
-        for j in 0..args.len() {
-            if i != j {
-                let distance = levenshtein_distance(&args[i], &args[j]);
-                if let Some(current_min) = min_distance {
-                    if distance < current_min {
-                        min_distance = Some(distance);
-                    }
-                } else {
-                    min_distance = Some(distance);
-                }
-                times += 1;
+    for (i, arg0) in args.iter().enumerate() {
+        for (j, arg1) in args.iter().enumerate() {
+            if i == j {
+                continue;
             }
+            let distance = levenshtein_distance(arg0, arg1);
+            min_distance = min_distance.min(distance);
+            times += 1;
         }
     }
 
-    println!("times: {}", times);
-    println!("min_distance: {}", min_distance.unwrap_or(usize::MAX));
+    println!("times: {times}");
+    println!("min_distance: {min_distance}");
 }

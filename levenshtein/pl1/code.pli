@@ -1,1 +1,156 @@
+ leven1: procedure(parm1) options(main);
 
+  dcl parm1     char(100)   varying; /* for future use */                
+  dcl (s1, s2)              char(300) varying; /*adjust lngt as needed*/ 
+  dcl (m, n, i, j, k, ctr)  fixed bin(31) init(0);
+  dcl (cost, min_distance, act_distance)
+                            fixed bin(31);                              
+  dcl distance(0:256,0:256) fixed bin(31);
+  dcl comparisons           fixed bin(31);
+  dcl prev(0:300)           fixed bin(31);                               
+  dcl curr(0:300)           fixed bin(31);                               
+  dcl arg(100)              char(300) varying;                           
+  dcl arg_count             fixed bin(31) init(0);
+  dcl (in_string,eof)       bit(1) init('0'b);
+  dcl sysprint              file stream output;
+
+  /* declarations to read parameter from input file */
+  dcl infil                 file record input env(v recsize(3000) lf);
+  dcl parm                  char(3000);
+  dcl (pos,
+       start,
+       len,
+       index,
+       char_len)           fixed bin(31);
+
+  on subscriptrange begin;
+     on error system;
+     put skip list('subrg error!');
+     put skip list('-----------');
+  end;
+
+  on error begin;
+     on error system;
+     put skip list('ONCODE value: ', oncode);
+     put list('');
+  end;
+
+  on endfile(infil) begin;
+    put skip list('EOF input,no parm defined!');
+    stop;
+  end;
+
+  /* get command line arguments: cut substrings from parm */
+  open file(infil) title('input.txt');
+  read file(infil) into(parm);
+  close file(infil);
+  parm = trim(parm);
+  index = 1;
+  pos = 1;
+  char_len = length(parm); 
+  do while (pos < char_len);
+    /* skip leading spaces */
+    do while (substr(parm, pos, 1) = ' ' & pos <= char_len);
+        pos = pos + 1;
+    end;
+    /* find the next substring */
+    start = pos;
+    do while (substr(parm, pos, 1) > ' ' & pos <= char_len);
+      pos = pos + 1;
+    end;
+    /* extract the substring */
+    len = pos - start;
+    if len > 0 then do;
+        arg(index) = substr(parm, start, len);        
+        index = index + 1;
+    end;
+    /* skip trailing spaces before the next substring */
+    do while (substr(parm, pos, 1) = ' ' & pos <= char_len);
+        pos = pos + 1;
+    end;
+  end; 
+
+  arg_count = index - 1;
+  /* check if enough input parameters */
+  if arg_count < 2 then do;
+    put skip list('usage: program_name <string1> <string2> ...');
+    return;
+  end;
+
+  /* execute the algorithm for the input strings */
+  min_distance = 2**30; /* equivalent to long.max_value */
+  comparisons = 0;
+  do i = 1 to arg_count;   
+    do j = 1 to arg_count;
+      if i = j
+      then
+        ;
+      else do;
+        s1 = arg(i);
+        s2 = arg(j);
+        act_distance = levendis(s1, s2);
+        min_distance = min(min_distance, act_distance);
+        comparisons = comparisons + 1;
+      end;
+    end;
+  end;
+  
+  /* print results in the form required by check.sh */
+  put edit ('times: ' || trim(comparisons) || '0a'x || ' min_distance: ' || trim(min_distance))
+                (a(30));                
+
+  return;
+
+  /* this function returns the levenshtein distance for two strings */
+  levendis: procedure(s1, s2) returns (fixed bin(31));
+    dcl (s1, s2) char(*) varying;
+    dcl temp char(100) varying;
+    dcl (m, n) fixed bin(31);
+    dcl (i, j, del, ins, sub) fixed bin(31);
+    dcl cost fixed bin(31);
+    dcl (prev(0:256), curr(0:256)) fixed bin(31);                        
+    dcl tempi fixed bin(31);
+
+    /* Optimize by ensuring s1 is the shorter string */
+    if length(s1) > length(s2) then do;
+        temp = s1;
+        s1 = s2;
+        s2 = temp;
+    end;
+
+    m = length(s1);
+    n = length(s2);
+
+    /* Initialize the first row */
+    do j = 0 to m;
+        prev(j) = j;
+    end;
+
+    /* Fill the matrix row by row */
+    do i = 1 to n;
+        curr(0) = i;
+        do j = 1 to m;
+            /* Calculate cost */
+            if substr(s1, j, 1) = substr(s2, i, 1) then
+                cost = 0;
+            else
+                cost = 1;
+
+            del = prev(j);
+            ins = curr(j - 1);
+            sub = prev(j - 1);
+            curr(j) = min(min(del + 1, ins + 1), sub + cost);
+        end;
+
+        /* Swap rows */                                                  
+        do j = 0 to m;
+            tempi = prev(j);
+            prev(j) = curr(j);
+            curr(j) = tempi;
+        end;
+    end;
+    return(prev(m));
+ end levendis;
+
+ end leven1;
+

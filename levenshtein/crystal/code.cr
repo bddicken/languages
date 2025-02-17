@@ -14,35 +14,31 @@ def levenshtein_distance(s1 : String, s2 : String) : Int32
   n = s2.size
 
   # Use two arrays instead of full matrix for space optimization
-  prev_row = StaticArray(Int32, 1024).new(0)
+  prev_row = StaticArray(Int32, 1024).new {|i| i}
   curr_row = StaticArray(Int32, 1024).new(0)
 
-  # Initialize first row
-  (0..m).each do |i|
-    prev_row[i] = i
-  end
 
   # Convert strings to bytes for faster access
-  s1_bytes = s1.bytes
-  s2_bytes = s2.bytes
+  s1_bytes = s1.to_slice
+  s2_bytes = s2.to_slice
 
   # Main computation loop
-  (1..n).each do |j|
-    curr_row[0] = j
+  (1..n).each do |i|
+    curr_row[0] = i
 
-    (1..m).each do |i|
-      cost = s1_bytes[i - 1] == s2_bytes[j - 1] ? 0 : 1
+    (1..m).each do |j|
+      cost = s1_bytes[j &- 1] == s2_bytes[i &- 1] ? 0 : 1
       
       # Calculate minimum of three operations
-      curr_row[i] = [
-        prev_row[i] + 1,      # deletion
-        curr_row[i - 1] + 1,  # insertion
-        prev_row[i - 1] + cost # substitution
-      ].min
+      curr_row[j] = {
+        prev_row[j] &+ 1,      # deletion
+        curr_row[j &- 1] &+ 1,  # insertion
+        prev_row[j &- 1] &+ cost # substitution
+		}.min
     end
 
     # Swap rows
-    prev_row, curr_row = curr_row, prev_row
+    prev_row = curr_row
   end
 
   prev_row[m]
@@ -57,14 +53,11 @@ end
 min_distance = -1
 times = 0
 
-# Compare all pairs of strings
-ARGV.each_with_index do |str1, i|
-  ARGV.each_with_index do |str2, j|
-    next if i == j
-    distance = levenshtein_distance(str1, str2)
-    min_distance = distance if min_distance == -1 || distance < min_distance
-    times += 1
-  end
+# Compare all permutations of strings
+ARGV.each_permutation(2) do |pair|
+	distance = levenshtein_distance(pair[0], pair[1])
+	min_distance = distance if distance < min_distance || min_distance == -1
+	times += 1
 end
 
 puts "times: #{times}"

@@ -2,7 +2,9 @@
 
 I have:
 
-* [ ] Read the project [README](../README.md), including the [benchmark descriptions](../README.md#available-benchmarks)
+* [ ] Read the project [README](../../blob/main/README.md), including the [benchmark descriptions](../../blob/main/README.md#available-benchmarks)
+* [ ] Read the PR template instructions before I deleted them
+* [ ] Understood that if I have changed something that could impact performance of one or more contributions, I should provide results benchmark runs, using the `run.sh` script, from before and after the change.
 
 ## Description of changes
 
@@ -16,7 +18,7 @@ Please include a descrition for your change. Things like:
 
 Please help us understand the changes and the rationale even if we are not experts or even familiar with the particular language you are providing changes for.
 
-If you provide changes to the implementation of one or more language, for one or more benchmark, please include output from benchmark runs, before and after the change.
+If you provide changes to the implementation of one or more language, for one or more benchmark, please include output from benchmark runs, using run.sh, from before and after the change. (TIPS: You can use a copy of run.sh to avoid running the benchmarks for other languages.) Please provide the results as text rather than as screen dumps.
 
 Thanks again for contributing!
 -->

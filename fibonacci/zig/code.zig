@@ -1,23 +1,33 @@
 const std = @import("std");
-const stdout = std.io.getStdOut().writer();
 
-fn fib(n: u64) u64 {
-    return switch (n) {
-        0 => 0,
-        1 => 1,
-        else => fib(n - 1) + fib(n - 2),
-    };
-}
+const fibonacci = @import("./fibonacci.zig").fibonacci;
 
 pub fn main() !void {
-    var args = std.process.args();
-    _ = args.next() orelse unreachable; // skip first, which is program name
-    const arg = args.next() orelse unreachable;
-    const u = try std.fmt.parseInt(usize, arg, 10);
+    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer arena.deinit();
+    const allocator = arena.allocator();
 
-    var r: u64 = 0;
-    for (1..u) |i| {
-        r += fib(i);
+    const args_cli = try std.process.argsAlloc(allocator);
+
+    if (args_cli.len < 2) {
+        const stderr = std.io.getStdErr().writer();
+        try stderr.writeAll("Please provide a number as argument.\n");
+        std.process.exit(1);
     }
-    try stdout.print("{d}\n", .{r});
+
+    const args = args_cli[1..];
+
+    // try different integer sizes (u32/u64/u128/usize) to see their impact on performance
+    const runs = try std.fmt.parseInt(u32, args[0], 0);
+
+    const fn_fib = fibonacci(@TypeOf(runs));
+
+    var sum: @TypeOf(runs) = 0;
+
+    for (0..@intCast(runs)) |i| {
+        sum += fn_fib(@intCast(i));
+    }
+
+    const stdout = std.io.getStdOut().writer();
+    try stdout.print("{d}\n", .{sum});
 }

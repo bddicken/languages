@@ -1,1 +1,2 @@
-{:paths ["."]}
+{:paths ["."]
+ :deps {languages/tooling {:local/root "../../lib/clojure"}}}

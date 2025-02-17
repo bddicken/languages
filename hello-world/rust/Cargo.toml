@@ -1,11 +1,10 @@
 [package]
-name = "code"
+name = "hello-world"
 version = "0.1.0"
 edition = "2021"
+default-run = "run"
 
-[[bin]]
-name = "code"
-path = "code.rs"
+[dependencies]
 
 [profile.release]
 lto = true

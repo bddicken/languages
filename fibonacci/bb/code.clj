@@ -1,11 +1,6 @@
-(defn- fibonacci [n]
-  (case n
-    0 0
-    1 1
-    (+ (fibonacci (- n 1))
-       (fibonacci (- n 2)))))
+(require 'fibonacci)
 
 (defn main [u]
-  (println (reduce + (map fibonacci (range u)))))
+  (println (reduce + (map fibonacci/fibonacci (range u)))))
 
 (main (-> *command-line-args* first parse-long))

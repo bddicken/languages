@@ -1,0 +1,17 @@
+[package]
+name = "benchmark"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["rlib"]
+bench = false
+
+[dependencies]
+
+[profile.release]
+lto = true
+strip = true
+opt-level = 3
+panic = "abort"
+codegen-units = 1

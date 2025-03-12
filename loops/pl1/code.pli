@@ -1,0 +1,33 @@
+code: proc(parms) options(main);
+        dcl parms  char(100) var;
+        dcl u          fixed bin(31); /*parameter value in fixed bin*/ 
+	dcl r          fixed bin(31); /* a random value 0001-9999   */
+	dcl (i,j,m)    fixed bin(31);
+	dcl a(10000)   fixed bin(31);		
+	dcl sysprint   file stream output;		
+	 
+	u = parms;		
+	r = randomm();	         
+        do i = 1 to 10000;       
+            a(i) = 0;		
+            do j = 1 to 100000;   
+                m = mod(j,u);			
+                a(i) = a(i) + m; 				
+            end;
+            a(i) = a(i) + r;                             			
+        end;		         
+	put file(sysprint) skip edit(a(r))(f(8));
+        close file(sysprint); 		
+		
+	randomm: proc; 
+	  /* a somewhat dummy random number generator */
+	  dcl ts    char(15) var;
+	  dcl rand  char(4);
+	  dcl randi  fixed bin(15);
+		
+	  ts = time();
+	  rand = substr(ts,6,4);
+	  randi = rand;  
+	  return(randi);
+	end randomm;		
+end;

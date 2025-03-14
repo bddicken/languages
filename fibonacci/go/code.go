@@ -1,23 +1,32 @@
 package main
+
 import (
-    "fmt"
-    "strconv"
-    "os"
+	"fmt"
+	"os"
+	"strconv"
 )
 
 func fibonacci(n int) int {
-  if n == 0 { return 0 }
-  if n == 1 { return 1 }
-  return fibonacci(n-1) + fibonacci(n-2)
+	if n < 2 {
+		return n
+	}
+	a, b := 0, 1
+	for i := 2; i <= n; i++ {
+		a, b = b, a+b
+	}
+	return b
 }
 
 func main() {
-  input, e := strconv.Atoi(os.Args[1])
-  if e != nil { panic(e) }
-  u := int(input)
-  r := 0
-  for i := 0; i < u; i++ {
-    r += fibonacci(i)
-  }
-  fmt.Println(r)
+	if len(os.Args) < 2 {
+		fmt.Println("Uso: go run main.go <numero>")
+		return
+	}
+	u, err := strconv.Atoi(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	result := fibonacci(u+1) - 1
+
+	fmt.Println(result)
 }

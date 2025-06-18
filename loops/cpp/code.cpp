@@ -1,9 +1,10 @@
 #include <string>
 #include <random>
 #include <array>
-#include <print>
+#include <iostream>
 #include <cstdint>
 #include <ranges>
+using namespace std;
 
 int main (int argc, char* argv[])
 {
@@ -20,5 +21,5 @@ int main (int argc, char* argv[])
             array[i] += j % mod;                                // Simple sum
         array[i] += picked_number;                              // Add a random value to each element in array
     }
-    std::println("{}", array[picked_number]);                   // Print out a single element from the array
+     cout <<  array[picked_number] << endl;                     // Print out a single element from the array  
 }

@@ -1,0 +1,16 @@
+[package]
+name = "levenshtein"
+version = "0.1.0"
+edition = "2021"
+default-run = "run"
+
+[dependencies]
+benchmark = { path = "../../lib/rust" }
+num = "^0.4.3"
+
+[profile.release]
+lto = true
+strip = true
+opt-level = 3
+panic = "abort"
+codegen-units = 1

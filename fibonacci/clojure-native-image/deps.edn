@@ -1,0 +1,19 @@
+{:paths ["."]
+ :deps {code/clojure {:local/root "../clojure"}
+        clj.native-image/clj.native-image
+        {:git/url "https://github.com/taylorwood/clj.native-image.git"
+         :sha "4604ae76855e09cdabc0a2ecc5a7de2cc5b775d6"}} 
+ :aliases {:native-image
+           {:main-opts ["-m" "clj.native-image" "code"
+                        "-O3"
+                        "--initialize-at-build-time"
+                        "-H:+UnlockExperimentalVMOptions"
+                        "-H:Name=code"]
+            :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}
+           :native-image-run
+           {:main-opts ["-m" "clj.native-image" "run"
+                        "-O3"
+                        "--initialize-at-build-time"
+                        "-H:+UnlockExperimentalVMOptions"
+                        "-H:Name=run"]
+            :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}}}

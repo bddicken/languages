@@ -1,30 +1,88 @@
-clang -O3 c/code.c -o c/code
-clang++ -std=c++23 -march=native -O3 -Ofast -o cpp/code cpp/code.cpp
-go build -ldflags "-s -w" -o go/code go/code.go
-javac jvm/code.java
-bun build --bytecode --compile js/code.js --outfile js/bun
-native-image -O3 jvm.code
-RUSTFLAGS="-Zlocation-detail=none" cargo +nightly build --manifest-path rust/Cargo.toml --release
-cargo build --manifest-path rust/Cargo.toml --release
-kotlinc -include-runtime kotlin/code.kt -d kotlin/code.jar
-kotlinc-native kotlin/code.kt -o kotlin/code -opt
-dart compile exe dart/code.dart -o dart/code --target-os=macos
-cd inko && inko build --opt=aggressive code.inko -o code && cd ..
-nim c -d:danger --opt:speed nim/code.nim
-sbcl --noinform --non-interactive --load "common-lisp/code.lisp" --build
-fpc -O3 fpc/code.pas
-crystal build -o crystal/code --release crystal/code.cr
-#gnatmake -O3 -gnat2022 -gnatp -flto ada/code.adb -D ada -o ada/code
-scala-cli --power package scala/code.scala -f -o scala/code
-ldc2 -O3 -release -boundscheck=off -mcpu=native flto=thin d/code.d
-odin build odin/code.odin -o:speed -file -out:odin/code
-clang -O3 -framework Foundation objc/code.m -o objc/code
-gfortran -O3 fortran/code.f90 -o fortran/code
-zig build-exe -O ReleaseFast -femit-bin=zig/code zig/code.zig
-luajit -b lua/code.lua lua/code
-swiftc -O -parse-as-library -Xcc -funroll-loops -Xcc -march=native -Xcc -ftree-vectorize -Xcc -ffast-math swift/code.swift -o swift/code
-# haxe --class-path haxe -main Code --jvm haxe/code.jar # was getting errors running `haxelib install hxjava`
-#dotnet publish csharp/csharp.csproj -o csharp/code-aot /p:PublishAot=true
-dotnet publish csharp/csharp.csproj -o csharp/code
-ghc -O2 -fllvm haskell/code.hs -o haskell/code || { echo "ghc: cannot compile with llvm backend; fallback to use default backend"; ghc -O2 haskell/code.hs -o haskell/code; }
-(cd clojure && mkdir -p classes && clojure -Sdeps '{:paths ["."]}' -M -e "(compile 'code)")
+#!/bin/bash
+
+benchmark=$(basename "${PWD}")
+
+# Defaults
+only_langs=false
+
+while getopts "cst:u:l:h" opt; do
+  case $opt in
+    l) only_langs="${OPTARG}" ;;    # Languages to benchmark, comma separated
+    *) ;;
+  esac
+done
+shift $((OPTIND-1))
+
+if [ -n "${only_langs}" ] && [ "${only_langs}" != "false" ]; then
+    IFS=',' read -r -a only_langs <<< "${only_langs}"
+fi
+
+function compile {
+  local language_name=${1}
+  local directory=${2}
+  local compile_cmd=${3}
+
+  if [ "$only_langs" != false ]; then
+    local should_run=false
+    for lang in "${only_langs[@]}"; do
+      if [ "$lang" = "$language_name" ]; then
+        should_run=true
+        break
+      fi
+    done
+    if [ "$should_run" = false ]; then
+      return
+    fi
+  fi
+
+  if [ -d ${directory} ]; then
+    echo ""
+    echo "Compiling ${language_name}"
+    echo "${compile_cmd}"
+    eval "${compile_cmd}"
+    result=$?
+    if [ $result -ne 0 ]; then
+        echo "Failed to compile ${language_name} with command: ${compile_cmd}"
+    fi
+  fi
+}
+
+function compile_benchmark {
+  local benchmark_dir=${1}
+  local benchmark=$(basename ${benchmark_dir})
+  cd "${benchmark_dir}" || return
+
+  echo "Starting compiles for ${benchmark}"
+
+  source ../languages.sh
+  compile_languages
+
+  echo
+  echo "Done with compiles for ${benchmark}"
+}
+
+available_benchmarks=("loops" "fibonacci" "levenshtein" "hello-world")
+benchmarks_to_compile=()
+current_benchmark=$(basename "${PWD}")
+
+benchmark_found=false
+for benchmark in "${available_benchmarks[@]}"; do
+  if [[ "${benchmark}" == "${current_benchmark}" ]]; then
+    benchmark_found=true
+    break
+  fi
+done
+
+if [ "${benchmark_found}" = true ]; then
+  benchmarks_to_compile=("${PWD}")
+else
+  for benchmark in "${available_benchmarks[@]}"; do
+    if [ -d "${PWD}/${benchmark}" ]; then
+      benchmarks_to_compile+=("${PWD}/${benchmark}")
+    fi
+  done
+fi
+
+for benchmark_dir in "${benchmarks_to_compile[@]}"; do
+  compile_benchmark "${benchmark_dir}"
+done

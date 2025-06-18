@@ -1,0 +1,14 @@
+{
+  "name": "levenshtein-distance",
+  "version": "1.0.0",
+  "description": "Levenshtein distance implementation in TypeScript",
+  "main": "code.js",
+  "scripts": {
+    "build": "tsc code.ts",
+    "start": "node code.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

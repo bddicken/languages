@@ -1,11 +1,18 @@
-import std/[strutils, os]
-proc fibonacci(n: uint32): uint32 =
-    if n <= 1:
-        return n
-    return fibonacci(n - 1) + fibonacci(n - 2)
+import std/[
+  strutils,
+  cmdline
+  ]
 
-let u: uint32 = paramStr(1).parseInt().uint32
-var r: uint32
-for i in 1..u:
+proc fibonacci(n: uint64): uint64 =
+  if n <= 1:
+    return n
+  return fibonacci(n - 1) + fibonacci(n - 2)
+
+proc main() =
+  let u = uint64 parseUInt paramStr 1
+  var r: uint64 = 0
+  for i in 1..u:
     r += fibonacci(i)
-echo r
+  echo r
+
+main()

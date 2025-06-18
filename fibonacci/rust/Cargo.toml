@@ -1,13 +1,13 @@
 [package]
-name = "code"
+name = "fibonacci"
 version = "0.1.0"
 edition = "2021"
+default-run = "run"
 
 [dependencies]
-
-[[bin]]
-name = "code"
-path = "code.rs"
+benchmark = { path = "../../lib/rust" }
+num = "^0.4.3"
+num_convert = "0.7.2"
 
 [profile.release]
 lto = true

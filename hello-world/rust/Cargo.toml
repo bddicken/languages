@@ -1,0 +1,14 @@
+[package]
+name = "hello-world"
+version = "0.1.0"
+edition = "2021"
+default-run = "run"
+
+[dependencies]
+
+[profile.release]
+lto = true
+strip = true
+opt-level = 3
+panic = "abort"
+codegen-units = 1

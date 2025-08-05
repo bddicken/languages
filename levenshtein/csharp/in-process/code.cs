@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 var runMs = int.Parse(args[0]);
 var warmupMs = int.Parse(args[1]);
@@ -64,36 +65,56 @@ static int LevenshteinDistance(ReadOnlySpan<char> str1, ReadOnlySpan<char> str2)
         str1 = strtemp;
     }
 
+    ref char str1Ref = ref MemoryMarshal.GetReference(str1);
+    ref char str2Ref = ref MemoryMarshal.GetReference(str2);
+
     // Create two rows, previous and current
     Span<int> prev = stackalloc int[str1.Length + 1];
     Span<int> curr = stackalloc int[str1.Length + 1];
+    ref int prevRef = ref MemoryMarshal.GetReference(prev);
+    ref int currRef = ref MemoryMarshal.GetReference(curr);
 
     // initialize the previous row
-    for (var i = 0; i <= str1.Length; i++)
+    for (int i = 0; i < prev.Length; i++)
     {
-        prev[i] = i;
+        Unsafe.Add(ref prevRef , i) = i;
     }
 
     // Iterate and compute distance
-    for (var i = 1; i <= str2.Length; i++)
+    for (int i = 0; i < str2.Length; i++)
     {
-        curr[0] = i;
-        for (var j = 1; j <= str1.Length; j++)
+        currRef = i + 1;
+        for (int j = 0; j < str1.Length; j++)
         {
-            var cost = (str1[j - 1] == str2[i - 1]) ? 0 : 1;
-            curr[j] = Math.Min(
-                prev[j] + 1, // Deletion
-                Math.Min(curr[j - 1] + 1, // Insertion
-                    prev[j - 1] + cost) // Substitution
+            int cost = Unsafe.Add(ref str1Ref, j) == Unsafe.Add(ref str2Ref, i) ? 0 : 1;
+            Unsafe.Add(ref currRef, j + 1) = Math.Min(
+                Unsafe.Add(ref prevRef, j + 1) + 1, // Deletion
+                Math.Min(Unsafe.Add(ref currRef, j) + 1, // Insertion
+                    Unsafe.Add(ref prevRef, j) + cost) // Substitution
             );
         }
 
-        // Swap spans
-        var temp = prev;
-        prev = curr;
-        curr = temp;
+        ++i;
+        if (i >= str2.Length)
+        {
+            break;
+        }
+
+        // prevRef and currRef are swapped
+        prevRef = i + 1;
+        for (int j = 0; j < str1.Length; j++)
+        {
+            int cost = Unsafe.Add(ref str1Ref, j) == Unsafe.Add(ref str2Ref, i) ? 0 : 1;
+            Unsafe.Add(ref prevRef, j + 1) = Math.Min(
+                Unsafe.Add(ref currRef, j + 1) + 1, // Deletion
+                Math.Min(Unsafe.Add(ref prevRef, j) + 1, // Insertion
+                    Unsafe.Add(ref currRef, j) + cost) // Substitution
+            );
+        }
     }
 
-    // Return final distance, stored in prev[m]
-    return prev[str1.Length];
+    // Return final distance, stored in
+    // prev[m] if str2 length is even or in
+    // curr[m] if str2 length is odd
+    return Unsafe.Add(ref ((str2.Length & 1) == 0) ? ref prevRef : ref currRef, str1.Length);
 }

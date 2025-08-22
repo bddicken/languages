@@ -68,3 +68,8 @@ a.out
 *.cmx
 *.cmo
 *.dbg
+*.dll
+*.so
+*.pdb
+**/bin/Release
+**/obj

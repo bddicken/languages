@@ -63,11 +63,8 @@ erl_crash.dump
 manifest.toml
 
 .DS_Store
-loops/ocaml/code.cmi
-loops/ocaml/code.cmx
-loops/ocaml/code.ml
-loops/ocaml/loops.cmi
-loops/ocaml/loops.cmo
-loops/ocaml/run.cmi
-loops/ocaml/run.cmo
-loops/ocaml/a.out
+a.out
+*.cmi
+*.cmx
+*.cmo
+*.dbg

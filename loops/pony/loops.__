@@ -1,0 +1,28 @@
+use "time"
+
+class RNG
+  var _state: U64
+  new create(seed: U64) =>
+    _state = if seed == 0 then 1 else seed end
+  fun ref next(): U64 =>
+    _state = (_state * 6364136223846793005) + 1
+    _state
+
+primitive Loops
+  fun apply(u: I64): I64 =>
+    let rng = RNG(Time.nanos())
+    let r: I64 = (rng.next() % 10000).i64()
+    let a = Array[I64].init(0, 10000)
+    var i: I64 = 0
+    while i < 10000 do
+      var j: I64 = 0
+      while j < 10000 do
+        let idx = i.usize()
+        try a.update(idx, (a(idx)? + (j % u)))? end
+        j = j + 1
+      end
+      let idx2 = i.usize()
+      try a.update(idx2, a(idx2)? + r)? end
+      i = i + 1
+    end
+    try a(r.usize())? else 0 end

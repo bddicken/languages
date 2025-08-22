@@ -29,6 +29,8 @@ pub fn main() !void {
 
     const result = fn_loops(divisor);
 
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("{d}\n", .{result}); // Print out a single element from the array
+    const stdout = std.fs.File.stdout();
+    var buffer: [1024]u8 = undefined;
+    const output = try std.fmt.bufPrint(&buffer, "{d}\n", .{result});
+    try stdout.writeAll(output); // Print out a single element from the array
 }

@@ -111,7 +111,7 @@ pub fn createContext(comptime benchmark_fn: anytype) type {
                 const elapsed = time_end - time_start;
                 elapsed_total += elapsed;
 
-                try benchmark_results.append(TimedResult(return_type){
+                try benchmark_results.append(allocator, TimedResult(return_type){
                     .elapsed_total = elapsed_total,
                     .elapsed = elapsed,
                     .value = current_value,
@@ -230,13 +230,13 @@ pub fn fileReadLines(allocator: Allocator, file_path: []const u8) !std.ArrayList
     const stat = try file.stat();
     const file_buffer = try file.readToEndAlloc(allocator, stat.size);
 
-    var word_list = std.ArrayList([]const u8).init(allocator);
+    var word_list = try std.ArrayList([]const u8).initCapacity(allocator, 8);
 
     // Split by "\r?\n" and iterate through the resulting slices of "[]const u8"
     var lines = std.mem.tokenizeAny(u8, file_buffer, "\r\n");
 
     while (lines.next()) |line| {
-        try word_list.append(line);
+        try word_list.append(allocator, line);
     }
 
     return word_list;

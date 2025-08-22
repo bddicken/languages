@@ -39,7 +39,10 @@ pub fn main() !void {
         }
     }
 
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("times: {d}\n", .{times});
-    try stdout.print("min_distance: {d}\n", .{min_distance});
+    const stdout = std.fs.File.stdout();
+    var buffer: [1024]u8 = undefined;
+    var output = try std.fmt.bufPrint(&buffer, "times: {d}\n", .{times});
+    try stdout.writeAll(output);
+    output = try std.fmt.bufPrint(&buffer, "min_distance: {d}\n", .{min_distance});
+    try stdout.writeAll(output);
 }

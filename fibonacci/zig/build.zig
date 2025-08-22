@@ -11,11 +11,16 @@ pub fn build(b: *std.Build) void {
     const benchmark = b.createModule(.{ .root_source_file = b.path("../../lib/zig/benchmark.zig") });
     // const submod = b.createModule(.{ .root_source_file = b.path("src/submod/mod.zig") });
 
-    const exe = b.addExecutable(.{
-        .name = "run",
+    // Create root module
+    const root_module = b.createModule(.{
         .root_source_file = b.path("run.zig"),
         .target = target,
         .optimize = optimize,
+    });
+
+    const exe = b.addExecutable(.{
+        .name = "run",
+        .root_module = root_module,
     });
 
     exe.root_module.addImport("benchmark", benchmark);
@@ -41,10 +46,15 @@ pub fn build(b: *std.Build) void {
     const run_step = b.step("run", "Run the application");
     run_step.dependOn(&run_cmd.step);
 
-    const unit_tests = b.addTest(.{
+    // Create test module
+    const test_module = b.createModule(.{
         .root_source_file = b.path("run.zig"),
         .target = target,
         .optimize = optimize,
+    });
+
+    const unit_tests = b.addTest(.{
+        .root_module = test_module,
     });
 
     unit_tests.root_module.addImport("benchmark", benchmark);

@@ -11,7 +11,7 @@ pub const ArgumentList = struct {
 };
 
 pub fn FnReturnType(comptime function: anytype) type {
-    return @typeInfo(@TypeOf(function)).Fn.return_type.?;
+    return @typeInfo(@TypeOf(function)).@"fn".return_type.?;
 }
 
 pub fn TimedResult(comptime T: type) type {
@@ -55,8 +55,10 @@ pub fn BenchmarkResult(comptime T: type) type {
         pub fn printOutput(self: *const Self, allocator: Allocator, check_value: anytype) !void {
             const formatted_output = try self.formatOutput(allocator, check_value);
 
-            const stdout = std.io.getStdOut().writer();
-            try stdout.print("{s}\n", .{formatted_output});
+            const stdout = std.fs.File.stdout();
+            var buffer: [4096]u8 = undefined;
+            const final_output = try std.fmt.bufPrint(&buffer, "{s}\n", .{formatted_output});
+            try stdout.writeAll(final_output);
         }
     };
 }
@@ -74,7 +76,8 @@ pub fn createContext(comptime benchmark_fn: anytype) type {
         /// args:
         ///   e.g.: .{ allocator, &arg1, arg2 }
         pub fn run(allocator: Allocator, run_ms: usize, args: anytype) !?BenchmarkResult(return_type) {
-            const stderr = std.io.getStdErr().writer();
+            // Note: Using debug.print for stderr output - it's simpler with the new API
+            // const stderr = std.fs.File.stderr();
 
             var benchmark_results = try std.ArrayList(TimedResult(return_type)).initCapacity(allocator, INITIAL_CAPACITY);
 
@@ -82,7 +85,7 @@ pub fn createContext(comptime benchmark_fn: anytype) type {
                 return null;
             } else if (run_ms > 1) {
                 // start with a status dot, but not if this is a check-output run
-                try stderr.writeAll(".");
+                std.debug.print(".", .{});
             }
 
             const run_ns: usize = run_ms * 1_000_000;
@@ -102,7 +105,7 @@ pub fn createContext(comptime benchmark_fn: anytype) type {
                 // print status dots every second if it isn't a check-output run
                 if (run_ms > 1 and (time_start - last_time) > 1_000_000_000) {
                     last_time = time_end;
-                    try stderr.writeAll(".");
+                    std.debug.print(".", .{});
                 }
 
                 const elapsed = time_end - time_start;
@@ -117,7 +120,7 @@ pub fn createContext(comptime benchmark_fn: anytype) type {
 
             // add newline for non check-output runs
             if (run_ms > 1) {
-                try stderr.writeAll("\n");
+                std.debug.print("\n", .{});
             }
 
             // calculate timings after completing the run
@@ -198,8 +201,7 @@ pub fn loadArguments(allocator: Allocator) !ArgumentList {
     const args_cli = try std.process.argsAlloc(allocator);
 
     if (args_cli.len < 4) {
-        const stderr = std.io.getStdErr().writer();
-        try stderr.print("Usage: {s} <run_ms> <warmup_ms> ...<program args>\n", .{args_cli[0]});
+        std.debug.print("Usage: {s} <run_ms> <warmup_ms> ...<program args>\n", .{args_cli[0]});
         std.process.exit(1);
     }
 
@@ -208,10 +210,16 @@ pub fn loadArguments(allocator: Allocator) !ArgumentList {
     const run_ms: usize = try std.fmt.parseInt(usize, args[0], 0);
     const warmup_ms: usize = try std.fmt.parseInt(usize, args[1], 0);
 
+    // Convert [:0]u8 strings to []u8 slices
+    var program_args = try allocator.alloc([]u8, args[2..].len);
+    for (args[2..], 0..) |arg, i| {
+        program_args[i] = try allocator.dupe(u8, arg);
+    }
+
     return ArgumentList{
         .run_ms = run_ms,
         .warmup_ms = warmup_ms,
-        .program_args = args[2..],
+        .program_args = program_args,
     };
 }
 

@@ -28,6 +28,8 @@ pub fn main() !void {
         sum += fn_fib(@intCast(i));
     }
 
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("{d}\n", .{sum});
+    const stdout = std.fs.File.stdout();
+    var buffer: [1024]u8 = undefined;
+    const output = try std.fmt.bufPrint(&buffer, "{d}\n", .{sum});
+    try stdout.writeAll(output);
 }

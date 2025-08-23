@@ -1,7 +1,74 @@
+#!/bin/bash
+
 # We run the benchmark with input.txt as arguments
 # unless the script is run with arguments, then those will be used instead
 # With arguments the check will be skipped, unless the only argument is "check"
-# The special argument "check" makes the input always input.txt, and skips the benchmark
+# The special argument "check" makes the input always input.txt
+
+# Determine input and whether to skip checks
+input=""
+skip_check=false
+
+if [ $# -gt 0 ]; then
+	if [ "$1" = "check" ]; then
+		# Force canonical input from check-output.sh if available, otherwise input.txt
+		if [ -x ./check-output.sh ]; then
+			input=$(./check-output.sh -i)
+		elif [ -f input.txt ]; then
+			input=$(cat input.txt)
+		fi
+		# keep skip_check=false to validate outputs
+	else
+		# Use provided args as input and skip checks
+		skip_check=true
+		input="$*"
+	fi
+else
+	# No args: prefer canonical input from check-output.sh, fallback to input.txt
+	if [ -x ./check-output.sh ]; then
+		input=$(./check-output.sh -i)
+	elif [ -f input.txt ]; then
+		input=$(cat input.txt)
+	fi
+fi
+
+# Minimal runner similar in spirit to compile() in compile-legacy.sh
+function run {
+	# "Language" "File that should exist" "Command" "Arguments"
+	local language_name="$1"
+	local file_that_should_exist="$2"
+	local partial_command="$3"
+	local args="$4"
+
+		if [ -f "${file_that_should_exist}" ]; then
+		echo "Running ${language_name}"
+		local command_line
+		if [ -n "${args}" ]; then
+			command_line="${partial_command} ${args}"
+		else
+			command_line="${partial_command}"
+		fi
+
+			if [ "${skip_check}" = false ] && [ -x ./check-output.sh ]; then
+				local program_output
+				local tmp_time
+				tmp_time=$(mktemp)
+				# Time to stderr; capture stdout for check
+				program_output=$({ /usr/bin/time -p bash -lc "${command_line}"; } 2>"${tmp_time}")
+				cat "${tmp_time}" 1>&2
+				rm -f "${tmp_time}"
+				if ./check-output.sh "${program_output}" >/dev/null; then
+				echo "Check passed for ${language_name}"
+			else
+				echo "Check failed for ${language_name}"
+			fi
+		else
+				/usr/bin/time -p bash -lc "${command_line}"
+		fi
+	else
+		echo "No executable or script found for ${language_name}. Skipping."
+	fi
+}
 
 ## run "Hare" "./hare/code 40"
 # run "Language" "Executable" "Command" "Arguments"
@@ -67,7 +134,7 @@ run "F#" "./fsharp/code/code" "./fsharp/code/code" "${input}"
 # run "Bun Scala-JS" "./scala/code.js" "bun ./scala/code.js" "${input}"
 # run "Swift" "./swift/code" "./swift/code" "${input}"
 # run "V" "./v/code" "./v/code" "${input}"
-run "Zig" "./zig/code" "./zig/code" "${input}"
+# run "Zig" "./zig/code" "./zig/code" "${input}"
 # run "Emacs Lisp Bytecode" "./emacs-lisp/code.elc" "emacs -Q --batch --load ./emacs-lisp/code.elc" "${input}"
 # run "Emacs Lisp Native" "./emacs-lisp/code.eln" "emacs -Q --batch --load ./emacs-lisp/code.eln" "${input}"
 

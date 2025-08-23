@@ -17,7 +17,7 @@ function compile_languages {
   compile 'Java' 'jvm' 'javac -cp ../lib/java jvm/*.java'
   compile 'Java Native' 'java-native-image' '(cd java-native-image ; native-image -cp ..:../../lib/java --no-fallback -O3 --pgo-instrument -march=native jvm.run) && ./java-native-image/jvm.run -XX:ProfilesDumpFile=java-native-image/run.iprof 10000 2000 $(./check-output.sh -i) && (cd java-native-image ; native-image -cp ..:../../lib/java -O3 --pgo=run.iprof -march=native jvm.run -o run)'
   compile 'Kotlin' 'kotlin' 'javac ../lib/java/*/*.java && kotlinc -cp ../lib/java kotlin/*.kt -d kotlin'
-  compile 'OCaml' 'ocaml' '(cd ocaml && PATH=/usr/bin:/bin:$HOME/.opam/default/bin CC=/usr/bin/gcc LD=/usr/bin/ld ocamlopt -cc /usr/bin/gcc -I +unix -I ../../lib/ocaml unix.cmxa -o run ../../lib/ocaml/benchmark.ml *.ml)'
+  compile 'OCaml' 'ocaml' '(cd ocaml && bash -c "shopt -s nullglob; CC=/usr/bin/gcc LD=/usr/bin/ld ocamlopt -cc /usr/bin/gcc -I +unix -I ../../lib/ocaml unix.cmxa -o run ../../lib/ocaml/benchmark.ml *.ml")'
   compile 'Objective C' 'objc' 'clang -O3 -I../lib/c -framework Foundation objc/*.m ../lib/c/benchmark.c -o objc/run'
   compile 'Pony' 'pony' '(cd pony && CC=/usr/bin/gcc LD=/usr/bin/ld ponyc -b run -s)'
   compile 'Racket' 'racket' '(cd racket && raco make run.rkt && raco demod -o run.zo run.rkt && raco exe -o run run.zo)'

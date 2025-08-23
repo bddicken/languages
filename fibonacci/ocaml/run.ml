@@ -1,4 +1,4 @@
-(* OCaml non-legacy runner for fibonacci, modeled after the Python version *)
+(* OCaml modern runner for fibonacci, based on the Python version *)
 open Printf
 
 let () =

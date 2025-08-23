@@ -1,3 +1,4 @@
+// based on the Python implementation
 use "time"
 use "files"
 use "../../lib/pony/benchmark"

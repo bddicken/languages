@@ -19,6 +19,10 @@ function clean_benchmark {
   rm -rf kotlin/META-INF
   rm -rf kotlin/*.class
   rm kotlin/code.kexe
+  rm ocaml/run
+  rm ocaml/legacy/code
+  rm -f ocaml/*.{o,cmx,cmi,a,cmxa,cma}
+  rm -f ocaml/legacy/*.{o,cmx,cmi,a,cmxa,cma}
   rm dart/code
   rm -rf inko/build inko/code
   rm nim/code
@@ -36,6 +40,7 @@ function clean_benchmark {
   rm lua/code
   rm -f swift/code
   rm haxe/code.jar
+  rm -rf pony/run pony/run.o pony/*.o pony/*.a pony/*.so pony/*.dll pony/*.dylib pony/*.il pony/*.s pony/*.cc pony/*.cpp pony/*.h
   rm -rf csharp/legacy/bin
   rm -rf csharp/legacy/obj
   rm -rf csharp/legacy/code-aot

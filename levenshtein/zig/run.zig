@@ -19,7 +19,7 @@ pub fn calculateDistances(comptime T: type) (fn (allocator: Allocator, word_list
 
                 for (cmp_words, 0..cmp_words.len) |wordB, _| {
                     const distance = fn_levenshtein(allocator, &wordA, &wordB);
-                    try results.append(distance);
+                    try results.append(allocator, distance);
                 }
             }
 

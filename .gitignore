@@ -63,3 +63,13 @@ erl_crash.dump
 manifest.toml
 
 .DS_Store
+a.out
+*.cmi
+*.cmx
+*.cmo
+*.dbg
+*.dll
+*.so
+*.pdb
+**/bin/Release
+**/obj

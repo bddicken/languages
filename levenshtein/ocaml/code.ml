@@ -1,71 +1,36 @@
-(* Calculates the Levenshtein distance between two strings using Wagner-Fischer algorithm
-   Space Complexity: O(min(m,n)) - only uses two arrays instead of full matrix
-   Time Complexity: O(m*n) where m and n are the lengths of the input strings *)
 let levenshtein_distance s1 s2 =
-  (* Early termination checks *)
-  if s1 = s2 then 0
-  else if String.length s1 = 0 then String.length s2
-  else if String.length s2 = 0 then String.length s1
+  let m = String.length s1 in
+  let n = String.length s2 in
+  if m = 0 then n
+  else if n = 0 then m
+  else if s1 = s2 then 0
   else
-    (* Make s1 the shorter string for space optimization *)
-    let (s1, s2) =
-      if String.length s1 > String.length s2
-      then (s2, s1)
-      else (s1, s2)
-    in
-    
-    let m = String.length s1 in
-    let n = String.length s2 in
-
-    (* Use two arrays instead of full matrix for space optimization *)
-    let prev_row = Array.init (m + 1) (fun i -> i) in
-    let curr_row = Array.make (m + 1) 0 in
-
-    (* Main computation loop *)
+    let s1, s2, m, n = if m > n then s2, s1, n, m else s1, s2, m, n in
+    let prev = Array.init (m + 1) (fun i -> i) in
+    let curr = Array.make (m + 1) 0 in
     for j = 1 to n do
-      curr_row.(0) <- j;
-
+      curr.(0) <- j;
       for i = 1 to m do
-        let cost = if s1.[i-1] = s2.[j-1] then 0 else 1 in
-        
-        (* Calculate minimum of three operations *)
-        curr_row.(i) <- min
-          (min
-            (prev_row.(i) + 1)      (* deletion *)
-            (curr_row.(i-1) + 1)    (* insertion *)
-          )
-          (prev_row.(i-1) + cost)   (* substitution *)
+        let cost = if s1.[i - 1] = s2.[j - 1] then 0 else 1 in
+        let del = prev.(i) + 1 in
+        let ins = curr.(i - 1) + 1 in
+        let sub = prev.(i - 1) + cost in
+        curr.(i) <- min (min del ins) sub
       done;
-
-      (* Copy current row to previous row *)
-      Array.blit curr_row 0 prev_row 0 (m + 1)
+      Array.blit curr 0 prev 0 (m + 1)
     done;
+    prev.(m)
 
-    prev_row.(m)
-
-(* Main program *)
-let () =
-  let args = Array.to_list (Array.sub Sys.argv 1 (Array.length Sys.argv - 1)) in
-  
-  if List.length args < 2 then begin
-    Printf.printf "Please provide at least two strings as arguments.\n";
-    exit 1
-  end;
-
-  let min_distance = ref (-1) in
-  let times = ref 0 in
-
-  (* Compare all pairs of strings *)
-  List.iteri (fun i str1 ->
-    List.iteri (fun j str2 ->
-      if i <> j then begin
-        let distance = levenshtein_distance str1 str2 in
-        if !min_distance = -1 || distance < !min_distance then
-          min_distance := distance;
-        incr times
-      end
-    ) args
-  ) args;
-
-  Printf.printf "times: %d\n" !times;
-  Printf.printf "min_distance: %d\n" !min_distance
+let distances_sum strings =
+  let rec outer i acc =
+    if i >= Array.length strings then acc
+    else
+      let rec inner j acc2 =
+        if j >= Array.length strings then acc2
+        else
+          let d = levenshtein_distance strings.(i) strings.(j) in
+          inner (j + 1) (acc2 + d)
+      in
+      outer (i + 1) (inner (i + 1) acc)
+  in
+  outer 0 0

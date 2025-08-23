@@ -19,6 +19,10 @@ function clean_benchmark {
   rm -rf kotlin/META-INF
   rm -rf kotlin/*.class
   rm kotlin/code.kexe
+  rm ocaml/run
+  rm ocaml/legacy/code
+  rm -f ocaml/*.{o,cmx,cmi,a,cmxa,cma}
+  rm -f ocaml/legacy/*.{o,cmx,cmi,a,cmxa,cma}
   rm dart/code
   rm -rf inko/build inko/code
   rm nim/code

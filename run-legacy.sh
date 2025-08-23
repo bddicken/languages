@@ -71,5 +71,5 @@ run "Zig" "./zig/code" "./zig/code" "${input}"
 # run "Emacs Lisp Bytecode" "./emacs-lisp/code.elc" "emacs -Q --batch --load ./emacs-lisp/code.elc" "${input}"
 # run "Emacs Lisp Native" "./emacs-lisp/code.eln" "emacs -Q --batch --load ./emacs-lisp/code.eln" "${input}"
 
-run "OCaml" "./ocaml/code" "./ocaml/code" "${input}"
-run "Pony" "./pony/code" "./pony/code" "${input}"
+run "OCaml" "./ocaml/legacy/code" "./ocaml/legacy/code" "${input}"
+run "Pony" "./pony/legacy/code" "./pony/legacy/code" "${input}"

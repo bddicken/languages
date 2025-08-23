@@ -3,7 +3,7 @@ let levenshtein_distance s1 s2 =
   let n = String.length s2 in
   if m = 0 then n
   else if n = 0 then m
-  else if m = n then 0
+  else if s1 = s2 then 0
   else
     let s1, s2, m, n = if m > n then s2, s1, n, m else s1, s2, m, n in
     let prev = Array.init (m + 1) (fun i -> i) in

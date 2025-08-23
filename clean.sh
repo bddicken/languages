@@ -40,6 +40,7 @@ function clean_benchmark {
   rm lua/code
   rm -f swift/code
   rm haxe/code.jar
+  rm -rf pony/run pony/run.o pony/*.o pony/*.a pony/*.so pony/*.dll pony/*.dylib pony/*.il pony/*.s pony/*.cc pony/*.cpp pony/*.h
   rm -rf csharp/legacy/bin
   rm -rf csharp/legacy/obj
   rm -rf csharp/legacy/code-aot

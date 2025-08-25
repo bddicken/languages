@@ -1,0 +1,26 @@
+code: proc(parm) options(main);
+    dcl parm       char(100) var;  
+    dcl (i,u,r)    fixed bin(31);
+	dcl sysprint   file stream output;
+	
+    u = trim(parm);
+    r = 0; 
+    
+    do i = 1 by 1 while(i < u);
+      r = r + fibonacci(i);
+    end;
+
+    put skip data(r); 	
+	
+	fibonacci: procedure(n) recursive returns(fixed bin(31));
+	  dcl n        fixed bin(31);
+	  if n = 0
+	  then
+	    return(0);
+	  if n = 1
+          then	  
+	    return(1);
+	  return(fibonacci(n - 1) + fibonacci(n - 2)); 	
+	end fibonacci;    
+
+end code;

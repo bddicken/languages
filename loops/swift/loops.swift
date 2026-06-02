@@ -1,5 +1,5 @@
 public func loops(_ u: Int) -> Int {
-    let r = Int.random(in: 0..<10000)
+    let r = Int.random(in: 0..<100)
 
     return withUnsafeTemporaryAllocation(of: Int.self, capacity: 10000) { a in
         a.initialize(repeating: 0)

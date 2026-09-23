@@ -9,6 +9,7 @@ function clean_benchmark {
 
   rm c3/code
   rm c/{code,run}
+  rm -f chapel/run
   rm cpp/code
   rm go/code
   rm -rf jvm/{*.class,*.iprof}

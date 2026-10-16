@@ -14,6 +14,7 @@ function compile_languages {
   compile 'C# AOT' 'csharp' 'dotnet publish csharp/in-process -o csharp/in-process/code-aot /p:PublishAot=true /p:OptimizationPreference=Speed /p:IlcInstructionSet=native'
   compile 'Fortran' 'fortran' 'gfortran -O3 -J../lib/fortran ../lib/fortran/benchmark.f90 fortran/*.f90 -o fortran/run'
   compile 'Gleam' 'maelg' '(cd maelg && gleam build --target erlang)'
+  compile 'Goose' 'goose' 'goose -O2 --standalone -o goose/run.c goose/run.goose && gcc -O3 -march=native goose/run.c -o goose/run -lm -pthread'
   compile 'Java' 'jvm' 'javac -cp ../lib/java jvm/*.java'
   compile 'Java Native' 'java-native-image' '(cd java-native-image ; native-image -cp ..:../../lib/java --no-fallback -O3 --pgo-instrument -march=native jvm.run) && ./java-native-image/jvm.run -XX:ProfilesDumpFile=java-native-image/run.iprof 10000 2000 $(./check-output.sh -i) && (cd java-native-image ; native-image -cp ..:../../lib/java -O3 --pgo=run.iprof -march=native jvm.run -o run)'
   compile 'Kotlin' 'kotlin' 'javac ../lib/java/*/*.java && kotlinc -cp ../lib/java kotlin/*.kt -d kotlin'
@@ -36,6 +37,7 @@ function run_languages {
   run 'C# AOT' './csharp/in-process/code-aot/code' './csharp/in-process/code-aot/code'
   run 'Fortran' './fortran/run' './fortran/run'
   run 'Gleam' './maelg/build/dev/erlang/run/ebin/run.beam' "./maelg/run.sh"
+  run 'Goose' './goose/run' './goose/run'
   run 'Java' './jvm/run.class' 'java -cp .:../lib/java jvm.run'
   run 'Java Native' './java-native-image/run' './java-native-image/run'
   run 'Kotlin' './kotlin/RunKt.class' 'kotlin -cp kotlin:../lib/java RunKt'

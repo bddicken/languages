@@ -53,6 +53,8 @@ hello-world/*/run
 
 */fortran/*.mod
 
+*/goose/run.c
+
 */py/__pycache__/
 */py-jit/__pycache__/
 

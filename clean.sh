@@ -11,6 +11,7 @@ function clean_benchmark {
   rm c/{code,run}
   rm cpp/code
   rm go/code
+  rm -f goose/{run,run.c}
   rm -rf jvm/{*.class,*.iprof}
   rm -rf java-native-image/{jvm.run,run,code,jvm.code,*.iprof}
   rm scala/code scala/code-native
